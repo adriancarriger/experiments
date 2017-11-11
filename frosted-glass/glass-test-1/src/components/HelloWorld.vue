@@ -76,6 +76,6 @@ a {
 
 .hello {
   min-height: 120vh;
-  padding-top: 150px;
+  padding-top: 120px;
 }
 </style>

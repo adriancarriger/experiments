@@ -1,8 +1,5 @@
 export default {
   inserted (el, binding, vnode) {
-    const position = window.getComputedStyle(el).position
-    if (position !== 'fixed') { return }
-
     const app = vnode.context.$root.$el
     el.classList.add('blur-1123')
     const copy = document.importNode(app, true)
@@ -28,11 +25,14 @@ export default {
     document.querySelector('body').appendChild(blurContainer)
 
     // Setup
-    window.addEventListener('scroll', onScroll)
+    if (window.getComputedStyle(el).position === 'fixed') {
+      window.addEventListener('scroll', onScroll)
+    }
     window.addEventListener('resize', onResize)
     onResize()
 
-    function onResize () {
+    // Resizing
+    function resizeUpdate () {
       const elementStyle = window.getComputedStyle(el)
       const appStyle = window.getComputedStyle(app)
       topOffset = parseInt(elementStyle.top, 10);
@@ -46,23 +46,35 @@ export default {
       })
 
       blurContent.style.width = appStyle.width
-      requestTick()
+      scrollUpdate()
+
+      vnode.context.resizeTicking = false
     }
 
-    function update () {
+    function requestResizeTick () {
+      if (!vnode.context.resizeTicking) { requestAnimationFrame(resizeUpdate) }
+      vnode.context.resizeTicking = true
+    }
+
+    function onResize () {
+      requestResizeTick()
+    }
+
+    // Scrolling
+    function scrollUpdate () {
       const scrollOffset = vnode.context.latestKnownScrollY + topOffset
       blurContent.style.top = `-${scrollOffset}px`
-      vnode.context.ticking = false
+      vnode.context.scrollTicking = false
     }
 
-    function requestTick () {
-      if (!vnode.context.ticking) { requestAnimationFrame(update) }
-      vnode.context.ticking = true
+    function requestScrollTick () {
+      if (!vnode.context.scrollTicking) { requestAnimationFrame(scrollUpdate) }
+      vnode.context.scrollTicking = true
     }
 
     function onScroll () {
       vnode.context.latestKnownScrollY = window.scrollY
-      requestTick()
+      requestScrollTick()
     }
   }
 }
