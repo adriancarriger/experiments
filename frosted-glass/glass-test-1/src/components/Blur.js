@@ -1,5 +1,6 @@
 export default {
   inserted (el, binding, vnode) {
+    const directions = ['top', 'left', 'right']
     const app = vnode.context.$root.$el
     el.classList.add('blur-1123')
     const copy = document.importNode(app, true)
@@ -37,14 +38,11 @@ export default {
       const appStyle = window.getComputedStyle(app)
       topOffset = parseInt(elementStyle.top, 10);
 
-      ['position', 'height', 'top', 'left', 'right'].forEach((item) => {
+      ['position', 'height', ...directions].forEach((item) => {
         blurContainer.style[item] = elementStyle[item]
-      });
-
-      ['top', 'right', 'left'].forEach((item) => {
-        blurContent.style[item] = `-${elementStyle[item]}`
       })
 
+      directions.forEach((item) => { blurContent.style[item] = `-${elementStyle[item]}` })
       blurContent.style.width = appStyle.width
       scrollUpdate()
 
