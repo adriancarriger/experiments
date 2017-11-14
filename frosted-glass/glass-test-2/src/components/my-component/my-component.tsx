@@ -40,9 +40,10 @@ export class MyComponent {
 
   private createNewElements() {
     this.background = document.querySelector(this.backgroundSelector);
-    this.el.classList.add('blur-1123');
+    const blurId = `${Math.random()}`;
+    this.el.dataset.blurId = blurId;
     const copy = document.importNode(this.background, true);
-    copy.querySelector('.blur-1123').remove();
+    copy.querySelector(`[data-blur-id="${blurId}"]`).remove();
 
     this.blurContainer = document.createElement('div');
     this.blurContent = document.createElement('div');
