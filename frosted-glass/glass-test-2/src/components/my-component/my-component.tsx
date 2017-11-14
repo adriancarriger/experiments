@@ -1,6 +1,5 @@
 import { Component, Element, Prop } from '@stencil/core';
 
-
 @Component({
   tag: 'my-component',
   styleUrl: 'my-component.scss',
@@ -10,87 +9,88 @@ export class MyComponent {
   @Prop() first: string;
   @Prop() last: string;
   @Element() el: HTMLElement;
-  
-  context = {}
+
+  directions = ['top', 'left', 'right'];
+  topOffset = 0;
+  context: any = {};
+  blurContainer: HTMLElement;
+  blurContent: HTMLElement;
+  app: HTMLElement;
 
   componentDidLoad() {
-    const context: any = this.context;
-    const el: any = this.el
-    const directions = ['top', 'left', 'right']
-    const app = document.getElementById('app')
-    this.el.classList.add('blur-1123')
-    const copy = document.importNode(app, true)
-    copy.querySelector('.blur-1123').remove()
+    this.app = document.getElementById('app');
+    this.el.classList.add('blur-1123');
+    const copy = document.importNode(this.app, true);
+    copy.querySelector('.blur-1123').remove();
 
-    const blurContainer = document.createElement('div')
-    const blurContent = document.createElement('div')
-    let topOffset = 0
+    this.blurContainer = document.createElement('div');
+    this.blurContent = document.createElement('div');
 
     // Styles
-    Object.assign(blurContainer.style, {
+    Object.assign(this.blurContainer.style, {
       overflow: 'hidden',
       transform: 'translate3d(0, 0, 0)'
-    })
+    });
 
-    Object.assign(blurContent.style, {
+    Object.assign(this.blurContent.style, {
       position: 'absolute',
       filter: 'blur(5px)'
-    })
+    });
 
-    blurContent.appendChild(copy)
-    blurContainer.appendChild(blurContent)
-    document.querySelector('body').appendChild(blurContainer)
+    this.blurContent.appendChild(copy);
+    this.blurContainer.appendChild(this.blurContent);
+    document.querySelector('body').appendChild(this.blurContainer);
 
     // Setup
     if (window.getComputedStyle(this.el).position === 'fixed') {
-      window.addEventListener('scroll', onScroll)
+      window.addEventListener('scroll', this.onScroll.bind(this));
     }
-    window.addEventListener('resize', onResize)
-    onResize()
+    window.addEventListener('resize', this.onResize.bind(this));
+    this.onResize();
+  }
 
-    // Resizing
-    function resizeUpdate () {
-      const elementStyle = window.getComputedStyle(el)
-      const appStyle = window.getComputedStyle(app)
-      topOffset = parseInt(elementStyle.top, 10);
+  // Resizing
+  resizeUpdate () {
+    const elementStyle = window.getComputedStyle(this.el);
+    const appStyle = window.getComputedStyle(this.app);
+    this.topOffset = parseInt(elementStyle.top, 10);
 
-      ['position', 'height', ...directions].forEach((item) => {
-        blurContainer.style[item] = elementStyle[item]
-      })
+    ['position', 'height', ...this.directions].forEach((item) => {
+      this.blurContainer.style[item] = elementStyle[item];
+    })
 
-      directions.forEach((item) => { blurContent.style[item] = `-${elementStyle[item]}` })
-      blurContent.style.width = appStyle.width
-      scrollUpdate()
+    this.directions.forEach((item) => { this.blurContent.style[item] = `-${elementStyle[item]}` });
+    this.blurContent.style.width = appStyle.width;
 
-      context.resizeTicking = false
-    }
+    this.onScroll();
 
-    function requestResizeTick () {
-      if (!context.resizeTicking) { requestAnimationFrame(resizeUpdate) }
-      context.resizeTicking = true
-    }
+    this.context.resizeTicking = false;
+  }
 
-    function onResize () {
-      requestResizeTick()
-    }
+  requestResizeTick () {
+    if (!this.context.resizeTicking) { requestAnimationFrame(this.resizeUpdate.bind(this)); }
+    this.context.resizeTicking = true;
+  }
 
-    // Scrolling
-    function scrollUpdate () {
-      const scrollOffset = context.latestKnownScrollY + topOffset
-      blurContent.style.top = `-${scrollOffset}px`
-      context.scrollTicking = false
-    }
+  onResize () {
+    this.requestResizeTick();
+  }
 
-    function requestScrollTick () {
-      if (!context.scrollTicking) { requestAnimationFrame(scrollUpdate) }
-      context.scrollTicking = true
-    }
+  // Scrolling
+  scrollUpdate () {
+    const scrollOffset = this.context.latestKnownScrollY + this.topOffset;
+    this.blurContent.style.top = `-${scrollOffset}px`;
+    this.context.scrollTicking = false;
+  }
 
-    function onScroll () {
-      context.latestKnownScrollY = window.scrollY
-      requestScrollTick()
-    }
+  requestScrollTick () {
+    if (!this.context.scrollTicking) { requestAnimationFrame(this.scrollUpdate.bind(this)); }
+    this.context.scrollTicking = true;
+  }
 
+  onScroll () {
+    this.context.latestKnownScrollY = window.scrollY;
+    this.requestScrollTick();
   }
 
   render() {
