@@ -30,6 +30,10 @@ export class MyComponent {
     this.requestScrollTick();
   }
 
+  onBackgroundUpdate() {
+    this.requestBackgroundUpdateTick();
+  }
+
   render() {
     return (
       <div>
@@ -39,18 +43,13 @@ export class MyComponent {
   }
 
   private createNewElements() {
-    this.background = document.querySelector(this.backgroundSelector);
-    const blurId = `${Math.random()}`;
-    this.el.dataset.blurId = blurId;
-    const copy = document.importNode(this.background, true);
-    copy.querySelector(`[data-blur-id="${blurId}"]`).remove();
-
     this.blurContainer = document.createElement('div');
     this.blurContent = document.createElement('div');
 
-    this.blurContent.appendChild(copy);
     this.blurContainer.appendChild(this.blurContent);
     document.querySelector('body').appendChild(this.blurContainer);
+    
+    this.onBackgroundUpdate();
   }
 
   private addBaseStyles() {
@@ -102,5 +101,20 @@ export class MyComponent {
   private requestScrollTick () {
     if (!this.context.scrollTicking) { requestAnimationFrame(this.scrollUpdate.bind(this)); }
     this.context.scrollTicking = true;
+  }
+
+  private requestBackgroundUpdateTick () {
+    if (!this.context.backgroundUpdateTicking) { requestAnimationFrame(this.backgroundUpdate.bind(this)); }
+    this.context.backgroundUpdateTicking = true;
+  }
+
+  private backgroundUpdate() {
+    this.background = document.querySelector(this.backgroundSelector);
+    const blurId = `${Math.random()}`;
+    this.el.dataset.blurId = blurId;
+    const copy = document.importNode(this.background, true);
+    copy.querySelector(`[data-blur-id="${blurId}"]`).remove();
+    this.blurContent.innerHTML = ''
+    this.blurContent.appendChild(copy);
   }
 }
