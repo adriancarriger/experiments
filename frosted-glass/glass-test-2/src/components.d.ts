@@ -32,8 +32,7 @@ declare global {
           mode?: string,
           color?: string,
         
-          first?: string,
-          last?: string
+          test?: string
       }
   }
 }
