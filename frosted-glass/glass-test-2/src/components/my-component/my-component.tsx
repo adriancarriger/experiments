@@ -5,7 +5,7 @@ import { Component, Element, Prop } from '@stencil/core';
   styleUrl: 'my-component.scss'
 })
 export class MyComponent {
-  @Prop() test: string;
+  @Prop() backgroundSelector: string;
   @Element() el: HTMLElement;
 
   private directions = ['top', 'left', 'right'];
@@ -13,7 +13,7 @@ export class MyComponent {
   private context: any = {};
   private blurContainer: HTMLElement;
   private blurContent: HTMLElement;
-  private app: HTMLElement;
+  private background: Element;
 
   componentDidLoad() {
     this.createNewElements();
@@ -39,9 +39,9 @@ export class MyComponent {
   }
 
   private createNewElements() {
-    this.app = document.getElementById('app');
+    this.background = document.querySelector(this.backgroundSelector);
     this.el.classList.add('blur-1123');
-    const copy = document.importNode(this.app, true);
+    const copy = document.importNode(this.background, true);
     copy.querySelector('.blur-1123').remove();
 
     this.blurContainer = document.createElement('div');
@@ -74,7 +74,7 @@ export class MyComponent {
 
   private resizeUpdate () {
     const elementStyle = window.getComputedStyle(this.el);
-    const appStyle = window.getComputedStyle(this.app);
+    const appStyle = window.getComputedStyle(this.background);
     this.topOffset = parseInt(elementStyle.top, 10);
 
     ['position', 'height', ...this.directions].forEach((item) => {
