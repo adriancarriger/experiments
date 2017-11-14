@@ -1,4 +1,4 @@
-import { Component, Element, Prop } from '@stencil/core';
+import { Component, Element, Listen, Prop } from '@stencil/core';
 
 @Component({
   tag: 'my-component',
@@ -7,6 +7,9 @@ import { Component, Element, Prop } from '@stencil/core';
 export class MyComponent {
   @Prop() backgroundSelector: string;
   @Element() el: HTMLElement;
+
+  @Listen('body:updateBackground')
+  todoCompletedHandler() { this.onBackgroundUpdate() }
 
   private directions = ['top', 'left', 'right'];
   private topOffset = 0;
