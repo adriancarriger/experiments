@@ -30,11 +30,11 @@ export class MyComponent {
     this.removeListeners();
   }
 
-  onResize () {
+  onResize() {
     this.requestResizeTick();
   }
 
-  onScroll () {
+  onScroll() {
     this.context.latestKnownScrollY = window.scrollY;
     this.requestScrollTick();
   }
@@ -88,9 +88,10 @@ export class MyComponent {
     this.onResize = this.onResize.bind(this);
     window.addEventListener('resize', this.onResize);
     this.onResize();
+    this.onScroll();
   }
 
-  private resizeUpdate () {
+  private resizeUpdate() {
     const elementStyle = window.getComputedStyle(this.el);
     const appStyle = window.getComputedStyle(this.background);
     this.topOffset = parseInt(elementStyle.top, 10);
@@ -99,29 +100,29 @@ export class MyComponent {
       this.blurContainer.style[item] = elementStyle[item];
     });
 
-    this.directions.forEach((item) => { this.blurContent.style[item] = `-${elementStyle[item]}` });
+    this.directions.forEach((item) => { this.blurContent.style[item] = `-${elementStyle[item]}`; });
     this.blurContent.style.width = appStyle.width;
-    this.onScroll();
+    this.scrollUpdate();
     this.context.resizeTicking = false;
   }
 
-  private requestResizeTick () {
+  private requestResizeTick() {
     if (!this.context.resizeTicking) { requestAnimationFrame(this.resizeUpdate.bind(this)); }
     this.context.resizeTicking = true;
   }
   
-  private scrollUpdate () {
+  private scrollUpdate() {
     const scrollOffset = this.context.latestKnownScrollY + this.topOffset;
     this.blurContent.style.top = `-${scrollOffset}px`;
     this.context.scrollTicking = false;
   }
 
-  private requestScrollTick () {
+  private requestScrollTick() {
     if (!this.context.scrollTicking) { requestAnimationFrame(this.scrollUpdate.bind(this)); }
     this.context.scrollTicking = true;
   }
 
-  private requestBackgroundUpdateTick () {
+  private requestBackgroundUpdateTick() {
     if (!this.context.backgroundUpdateTicking) { requestAnimationFrame(this.backgroundUpdate.bind(this)); }
     this.context.backgroundUpdateTicking = true;
   }
