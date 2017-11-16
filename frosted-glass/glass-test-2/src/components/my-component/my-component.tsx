@@ -10,7 +10,7 @@ export class MyComponent {
   @Element() el: HTMLElement;
 
   @Listen('body:updateBackground')
-  todoCompletedHandler() { this.onBackgroundUpdate() }
+  backgroundUpdatedHandler() { this.onBackgroundUpdate(); }
 
   private directions: string[] = ['top', 'left', 'right'];
   private topOffset = 0;
@@ -23,6 +23,11 @@ export class MyComponent {
     this.createNewElements();
     this.addBaseStyles();
     this.initListeners();
+  }
+
+  componentDidUnload() {
+    this.removeElements();
+    this.removeListeners();
   }
 
   onResize () {
@@ -54,6 +59,15 @@ export class MyComponent {
     this.onBackgroundUpdate();
   }
 
+  private removeElements() {
+    this.blurContainer.remove();
+  }
+
+  private removeListeners() {
+    window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('resize', this.onResize);
+  }
+
   private addBaseStyles() {
     Object.assign(this.blurContainer.style, {
       overflow: 'hidden',
@@ -68,9 +82,11 @@ export class MyComponent {
 
   private initListeners() {
     if (window.getComputedStyle(this.el).position === 'fixed') {
-      window.addEventListener('scroll', this.onScroll.bind(this));
+      this.onScroll = this.onScroll.bind(this);
+      window.addEventListener('scroll', this.onScroll);
     }
-    window.addEventListener('resize', this.onResize.bind(this));
+    this.onResize = this.onResize.bind(this);
+    window.addEventListener('resize', this.onResize);
     this.onResize();
   }
 
