@@ -12,7 +12,7 @@ export class MyComponent {
   @Listen('body:updateBackground')
   todoCompletedHandler() { this.onBackgroundUpdate() }
 
-  private directions = ['top', 'left', 'right'];
+  private directions: string[] = ['top', 'left', 'right'];
   private topOffset = 0;
   private context: any = {};
   private blurContainer: HTMLElement;
@@ -40,9 +40,7 @@ export class MyComponent {
 
   render() {
     return (
-      <div>
-        <slot />
-      </div>
+      <slot />
     );
   }
 
