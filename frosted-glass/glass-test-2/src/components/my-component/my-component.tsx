@@ -97,7 +97,7 @@ export class MyComponent {
 
     ['position', 'height', ...this.directions].forEach((item) => {
       this.blurContainer.style[item] = elementStyle[item];
-    })
+    });
 
     this.directions.forEach((item) => { this.blurContent.style[item] = `-${elementStyle[item]}` });
     this.blurContent.style.width = appStyle.width;
@@ -130,9 +130,9 @@ export class MyComponent {
     this.background = document.querySelector(this.backgroundSelector);
     const blurId = `${Math.random()}`;
     this.el.dataset.blurId = blurId;
-    const copy = document.importNode(this.background, true);
-    copy.querySelector(`[data-blur-id="${blurId}"]`).remove();
-    this.blurContent.innerHTML = ''
-    this.blurContent.appendChild(copy);
+    const backgroundClone = document.importNode(this.background, true);
+    backgroundClone.querySelector(`[data-blur-id="${blurId}"]`).remove();
+    this.blurContent.innerHTML = '';
+    this.blurContent.appendChild(backgroundClone);
   }
 }
