@@ -32,7 +32,8 @@ declare global {
           mode?: string,
           color?: string,
         
-          backgroundSelector?: string
+          backgroundSelector?: string,
+          blurAmount?: string
       }
   }
 }

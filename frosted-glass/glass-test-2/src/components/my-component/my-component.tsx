@@ -6,6 +6,7 @@ import { Component, Element, Listen, Prop } from '@stencil/core';
 })
 export class MyComponent {
   @Prop() backgroundSelector: string;
+  @Prop() blurAmount = '5px';
   @Element() el: HTMLElement;
 
   @Listen('body:updateBackground')
@@ -63,7 +64,7 @@ export class MyComponent {
 
     Object.assign(this.blurContent.style, {
       position: 'absolute',
-      filter: 'blur(5px)'
+      filter: `blur(${this.blurAmount})`
     });
   }
 
