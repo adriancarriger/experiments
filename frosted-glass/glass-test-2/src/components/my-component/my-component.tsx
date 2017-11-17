@@ -1,4 +1,4 @@
-import { Component, Element, Listen, Prop } from '@stencil/core';
+import { Component, Element, Listen, Prop, PropWillChange } from '@stencil/core';
 
 @Component({
   tag: 'my-component',
@@ -7,6 +7,12 @@ import { Component, Element, Listen, Prop } from '@stencil/core';
 export class MyComponent {
   @Prop() backgroundSelector: string;
   @Prop() blurAmount = '5px';
+
+  @PropWillChange('blurAmount')
+  blurAmountChangeHandler(newValue: string) {
+    this.updateFilter(newValue);
+  }
+
   @Element() el: HTMLElement;
 
   @Listen('body:updateBackground')
@@ -55,7 +61,7 @@ export class MyComponent {
 
     this.blurContainer.appendChild(this.blurContent);
     document.querySelector('body').appendChild(this.blurContainer);
-    
+
     this.onBackgroundUpdate();
   }
 
@@ -74,10 +80,12 @@ export class MyComponent {
       transform: 'translate3d(0, 0, 0)'
     });
 
-    Object.assign(this.blurContent.style, {
-      position: 'absolute',
-      filter: `blur(${this.blurAmount})`
-    });
+    this.blurContent.style.position = 'absolute';
+    this.updateFilter(this.blurAmount);
+  }
+
+  private updateFilter(blurAmount) {
+    this.blurContent.style.filter = `blur(${blurAmount})`;
   }
 
   private initListeners() {

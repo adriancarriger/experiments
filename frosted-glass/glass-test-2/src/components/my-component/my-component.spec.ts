@@ -1,41 +1,45 @@
-import { flush, render } from '@stencil/core/testing';
+import { render } from '@stencil/core/testing';
 import { MyComponent } from './my-component';
 
 describe('my-component', () => {
+  beforeAll(() => {
+    window.requestAnimationFrame = (someFunction: any) => {
+      setTimeout(someFunction)
+      return 1
+    }
+  });
+
   it('should build', () => {
     expect(new MyComponent()).toBeTruthy();
   });
 
-  describe('rendering', () => {
-    let element;
-    beforeEach(async () => {
-      element = await render({
-        components: [MyComponent],
-        html: '<my-component></my-component>'
-      });
+  let element;
+  beforeEach(async () => {
+    element = await render({
+      components: [MyComponent],
+      html: '<my-component></my-component>'
     });
+  });
 
-    it('should work without parameters', () => {
-      expect(element.textContent.trim()).toEqual('Hello, World! I\'m');
-    });
+  it('should create background elements', () => {
+    const instance = element._instance
+    expect(instance.blurContainer).toBeDefined();
+    expect(instance.blurContent).toBeDefined();
+  });
 
-    it('should work with a first name', async () => {
-      element.first = 'Peter';
-      await flush(element);
-      expect(element.textContent.trim()).toEqual('Hello, World! I\'m Peter');
-    });
+  it('should create background styles', () => {
+    const containerStyle = element._instance.blurContainer.style;
+    expect(containerStyle.overflow).toEqual('hidden');
+    expect(containerStyle.transform).toEqual('translate3d(0, 0, 0)');
 
-    it('should work with a last name', async () => {
-      element.last = 'Parker';
-      await flush(element);
-      expect(element.textContent.trim()).toEqual('Hello, World! I\'m  Parker');
-    });
+    const contentStyle = element._instance.blurContent.style;
+    expect(contentStyle.position).toEqual('absolute');
+    expect(contentStyle.filter).toEqual('blur(5px)');
+  });
 
-    it('should work with both a first and a last name', async () => {
-      element.first = 'Peter'
-      element.last = 'Parker';
-      await flush(element);
-      expect(element.textContent.trim()).toEqual('Hello, World! I\'m Peter Parker');
-    });
+  it('should change the blur amount', async () => {
+    element.blurAmount = '10px';
+    const contentStyle = element._instance.blurContent.style;
+    expect(contentStyle.filter).toEqual('blur(10px)');
   });
 });
