@@ -1,4 +1,4 @@
-import { Component, Element, Listen, Prop, PropWillChange } from '@stencil/core';
+import { Component, Element, Method, Prop, PropWillChange } from '@stencil/core';
 
 @Component({
   tag: 'my-component',
@@ -8,6 +8,11 @@ export class MyComponent {
   @Prop() backgroundSelector: string;
   @Prop() blurAmount = '5px';
 
+  @Method()
+  updateBackground() {
+    this.requestTick('backgroundUpdate');
+  }
+
   @PropWillChange('blurAmount')
   blurAmountChangeHandler(newValue: string) {
     this.updateFilter(newValue);
@@ -15,17 +20,17 @@ export class MyComponent {
 
   @Element() el: HTMLElement;
 
-  @Listen('body:updateBackground')
-  backgroundUpdatedHandler() { this.onBackgroundUpdate(); }
-
   private directions: string[] = ['top', 'left', 'right'];
   private topOffset = 0;
-  private context: any = {};
   private blurContainer: HTMLElement;
   private blurContent: HTMLElement;
   private background: Element;
+  private ticking: any = {};
+  private blurId: string;
+  private latestKnownScrollY: number;
 
   componentDidLoad() {
+    this.setBlurId();
     this.createNewElements();
     this.addBaseStyles();
     this.initListeners();
@@ -37,16 +42,12 @@ export class MyComponent {
   }
 
   onResize() {
-    this.requestResizeTick();
+    this.requestTick('resizeUpdate');
   }
 
   onScroll() {
-    this.context.latestKnownScrollY = window.scrollY;
-    this.requestScrollTick();
-  }
-
-  onBackgroundUpdate() {
-    this.requestBackgroundUpdateTick();
+    this.latestKnownScrollY = window.scrollY;
+    this.requestTick('scrollUpdate');
   }
 
   render() {
@@ -57,12 +58,11 @@ export class MyComponent {
 
   private createNewElements() {
     this.blurContainer = document.createElement('div');
+    this.blurContainer.setAttribute('id', `blur-container-${this.blurId}`);
     this.blurContent = document.createElement('div');
-
     this.blurContainer.appendChild(this.blurContent);
     document.querySelector('body').appendChild(this.blurContainer);
-
-    this.onBackgroundUpdate();
+    this.requestTick('backgroundUpdate');
   }
 
   private removeElements() {
@@ -99,6 +99,7 @@ export class MyComponent {
     this.onScroll();
   }
 
+  // @ts-ignore
   private resizeUpdate() {
     const elementStyle = window.getComputedStyle(this.el);
     const appStyle = window.getComputedStyle(this.background);
@@ -111,37 +112,34 @@ export class MyComponent {
     this.directions.forEach((item) => { this.blurContent.style[item] = `-${elementStyle[item]}`; });
     this.blurContent.style.width = appStyle.width;
     this.scrollUpdate();
-    this.context.resizeTicking = false;
+    this.ticking.resizeUpdate = false;
   }
 
-  private requestResizeTick() {
-    if (!this.context.resizeTicking) { requestAnimationFrame(this.resizeUpdate.bind(this)); }
-    this.context.resizeTicking = true;
-  }
-  
   private scrollUpdate() {
-    const scrollOffset = this.context.latestKnownScrollY + this.topOffset;
+    const scrollOffset = this.latestKnownScrollY + this.topOffset;
     this.blurContent.style.top = `-${scrollOffset}px`;
-    this.context.scrollTicking = false;
+    this.ticking.scrollUpdate = false;
   }
 
-  private requestScrollTick() {
-    if (!this.context.scrollTicking) { requestAnimationFrame(this.scrollUpdate.bind(this)); }
-    this.context.scrollTicking = true;
+  private requestTick(functionName: string) {
+    if (!this.ticking[functionName]) { requestAnimationFrame(this[functionName].bind(this)); }
+    this.ticking[functionName] = true;
   }
 
-  private requestBackgroundUpdateTick() {
-    if (!this.context.backgroundUpdateTicking) { requestAnimationFrame(this.backgroundUpdate.bind(this)); }
-    this.context.backgroundUpdateTicking = true;
-  }
-
+  // @ts-ignore
   private backgroundUpdate() {
+    if (!this.backgroundSelector) { return; }
     this.background = document.querySelector(this.backgroundSelector);
-    const blurId = `${Math.random()}`;
-    this.el.dataset.blurId = blurId;
     const backgroundClone = document.importNode(this.background, true);
-    backgroundClone.querySelector(`[data-blur-id="${blurId}"]`).remove();
+    const selfClone = backgroundClone.querySelector(`[data-blur-id="${this.blurId}"]`);
+    if (selfClone) { selfClone.remove(); }
     this.blurContent.innerHTML = '';
     this.blurContent.appendChild(backgroundClone);
+    this.ticking.backgroundUpdate = false;
+  }
+
+  private setBlurId() {
+    this.blurId = `${Math.random()}`;
+    this.el.dataset.blurId = this.blurId;
   }
 }
