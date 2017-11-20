@@ -89,6 +89,13 @@ describe('my-component', () => {
     expect(isBound(element._instance.onScroll)).toBe(false);
     expect(isBound(fixedElement._instance.onScroll)).toBe(true);
   });
+
+  it('should update the background when given a new selector', async () => {
+    background = createTestBackground('test-background-2', 'Other content');
+    expect(instance.blurContainer.innerHTML).toContain('Initial content');
+    element.backgroundSelector = '#test-background-2';
+    expect(instance.blurContainer.innerHTML).toContain('Other content');
+  });
 });
 
 function timeoutPromise(inputFunction = () => {}, time = 0) {
@@ -100,10 +107,11 @@ function timeoutPromise(inputFunction = () => {}, time = 0) {
   })
 }
 
-function createTestBackground(id) {
+function createTestBackground(id, content?) {
+  const text = content? content : 'Initial content';
   const background = document.createElement('div');
   background.setAttribute('id', id);
-  background.innerHTML = '<div id="initial-content">Initial content</div>';
+  background.innerHTML = `<div id="initial-content">${text}</div>`;
   document.querySelector('body').appendChild(background);
   return document.getElementById(id);
 }

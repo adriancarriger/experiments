@@ -1,4 +1,4 @@
-import { Component, Element, Method, Prop, PropWillChange } from '@stencil/core';
+import { Component, Element, Method, Prop, PropDidChange, PropWillChange } from '@stencil/core';
 
 @Component({
   tag: 'my-component',
@@ -11,6 +11,11 @@ export class MyComponent {
   @Method()
   updateBackground() {
     this.requestTick('backgroundUpdate');
+  }
+
+  @PropDidChange('backgroundSelector')
+  backgroundChangeHandler() {
+    this.backgroundUpdate()
   }
 
   @PropWillChange('blurAmount')
