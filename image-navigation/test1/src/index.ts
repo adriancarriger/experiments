@@ -2,14 +2,18 @@
 
 // Using => {"opencv": "^5.0.0"}
 
-const cv = require('opencv');
+import * as cv from 'opencv';
+import * as path from 'path';
 
-myreadImage('./images/original.jpg').then((image) => {
-  const output = image.matchTemplate('./images/template8-2.jpg', 3);
+const imagesBase = path.join(__dirname, 'images');
+
+(async () => {
+  const image: any = await myreadImage(`${imagesBase}/original.jpg`);
+  const output = image.matchTemplate(`${imagesBase}/template8-2.jpg`, 3);
   const matches = output.templateMatches(0.80, 1.0, 1, false);
 
   console.log(matches[0]);
-});
+})();
 
 async function myreadImage(path) {
   return new Promise((resolve, reject) => {
