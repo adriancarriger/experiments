@@ -13,6 +13,7 @@
   "dependencies": {
     "dotenv": "^4.0.0",
     "opencv": "^5.0.0",
+    "puppeteer": "^0.13.0",
     "ts-node": "^4.0.2",
     "typescript": "^2.6.2"
   },
