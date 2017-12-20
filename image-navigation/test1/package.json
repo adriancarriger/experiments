@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "./src/test2.js",
-    "temp": "ts-node ./src/index.ts",
+    "once": "ts-node ./src/app/index.ts",
     "start": "nodemon --config config/nodemon.json"
   },
   "author": "",

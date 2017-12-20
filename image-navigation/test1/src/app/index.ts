@@ -5,7 +5,7 @@
 import * as cv from 'opencv';
 import * as path from 'path';
 
-const imagesBase = path.join(__dirname, 'images');
+const imagesBase = path.join(__dirname, '../images');
 
 (async () => {
   const image: any = await myreadImage(`${imagesBase}/original.jpg`);
