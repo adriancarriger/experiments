@@ -1,14 +1,12 @@
 import * as cv from 'opencv';
 import * as path from 'path';
 
-const imagesBase = path.join(__dirname, '../temp');
+const imagesBase = path.join(__dirname, '../../assets');
 
 export class ImageSearchService {
-  public async find(src: string) {
-    console.log(`finding ${imagesBase}`);
-
-    const image: any = await this.myreadImage(`${imagesBase}/original.jpg`);
-    const output = image.matchTemplate(`${imagesBase}/template7.png`, 3);
+  public async find(fileName: string) {
+    const image: any = await this.myreadImage(`${imagesBase}/current.png`);
+    const output = image.matchTemplate(`${imagesBase}/${fileName}`, 3);
     const matches = output.templateMatches(0.80, 1.0, 3, false);
 
     return matches[0];

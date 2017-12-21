@@ -1,22 +1,27 @@
 import * as puppeteer from 'puppeteer';
 import * as path from 'path';
 
-import { ImageSearchService } from '../image-search/image-search.service';
+import { VisualNav } from '../visual-nav/visual-nav';
 
-// const imageBase = 'src/app/tempp';
-const imagesBase = path.join(__dirname, '../temp');
+const imagesBase = path.join(__dirname, '../../assets');
 
 export class GoogleService {
   private page: puppeteer.Page;
-  private imageSearch: ImageSearchService;
+  private visualNav: VisualNav;
 
   public async navigateHome() {
-    // await this.page.goto('https://google.com');
-    // await this.page.screenshot({path: `${imageBase}/original.jpg`});
+    await this.page.goto('https://google.com');
 
-    const location = await this.imageSearch.find(`${imagesBase}/template2.jpg`);
+    this.visualNav.click('search-box.png', 50, 20);
+    await this.page.keyboard.type('DocuTAP');
+    await this.page.keyboard.press('Enter');
+    await this.timeout(3);
 
-    console.log(location);
+    this.visualNav.click('images-button.png', 30, 20);
+    await this.timeout(3);
+
+    // Status
+    await this.page.screenshot({path: `${imagesBase}/status.png`});
   }
 
   public async setupBrowser() {
@@ -27,6 +32,12 @@ export class GoogleService {
     this.page = await browser.newPage();
     this.page.setViewport({width: 1000, height: 1200});
 
-    this.imageSearch = new ImageSearchService();
+    this.visualNav = new VisualNav();
+    this.visualNav.initPage(this.page);
+
+  }
+
+  private timeout(seconds) {
+    return new Promise(resolve => setTimeout(() => resolve(), seconds * 1000));
   }
 }
