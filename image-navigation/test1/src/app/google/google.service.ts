@@ -3,6 +3,8 @@ import * as path from 'path';
 
 import { VisualNav } from '../visual-nav/visual-nav';
 
+import { delay } from '../utilities/utilities';
+
 const imagesBase = path.join(__dirname, '../../assets');
 
 export class GoogleService {
@@ -15,10 +17,10 @@ export class GoogleService {
     this.visualNav.click('search-box.png', 50, 20);
     await this.page.keyboard.type('DocuTAP');
     await this.page.keyboard.press('Enter');
-    await this.timeout(3);
+    await delay(3);
 
     this.visualNav.click('images-button.png', 30, 20);
-    await this.timeout(3);
+    await delay(3);
 
     // Status
     await this.page.screenshot({path: `${imagesBase}/status.png`});
@@ -35,9 +37,5 @@ export class GoogleService {
     this.visualNav = new VisualNav();
     this.visualNav.initPage(this.page);
 
-  }
-
-  private timeout(seconds) {
-    return new Promise(resolve => setTimeout(() => resolve(), seconds * 1000));
   }
 }
