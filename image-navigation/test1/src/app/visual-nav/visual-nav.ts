@@ -1,7 +1,6 @@
 import * as puppeteer from 'puppeteer';
 import * as path from 'path';
 
-import { delay } from '../utilities/utilities';
 import { ImageSearchService } from '../image-search/image-search.service';
 
 const imagesBase = path.join(__dirname, '../../assets');
@@ -24,6 +23,5 @@ export class VisualNav {
   private async updateCurrent() {
     await this.page.screenshot({path: `${imagesBase}/current.png`});
     await this.page.screenshot({path: `${imagesBase}/status.png`});
-    await delay(1);
   }
 }

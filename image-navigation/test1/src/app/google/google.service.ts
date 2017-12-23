@@ -14,7 +14,7 @@ export class GoogleService {
   public async navigateHome() {
     await this.page.goto('https://google.com');
 
-    this.visualNav.click('search-box.png', 50, 20);
+    await this.visualNav.click('search-box.png', 50, 20);
     await this.page.keyboard.type('DocuTAP');
     await this.page.keyboard.press('Enter');
     await delay(3);
