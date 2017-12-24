@@ -3,7 +3,7 @@ import * as path from 'path';
 
 import { VisualNav } from '../visual-nav/visual-nav';
 
-import { delay } from '../utilities/utilities';
+import { delay } from '../utilities';
 
 const imagesBase = path.join(__dirname, '../../assets');
 
