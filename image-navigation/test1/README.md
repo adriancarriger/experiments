@@ -1,3 +1,3 @@
 # Visual Nav
 
-An Experiment navgating the web via images
+An experiment navgating the web via images
