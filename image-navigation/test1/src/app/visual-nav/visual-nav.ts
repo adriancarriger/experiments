@@ -1,8 +1,8 @@
 import * as path from 'path';
 import * as puppeteer from 'puppeteer';
 
-import { remove } from '../utilities';
 import { ImageSearchService } from '../image-search/image-search.service';
+import { remove } from '../utilities';
 
 const imagesBase = path.join(__dirname, '../../assets');
 
