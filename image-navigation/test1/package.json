@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "./src/test2.js",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "once": "ts-node ./src/app/index.ts",
     "start": "nodemon --config config/nodemon.json"
   },
