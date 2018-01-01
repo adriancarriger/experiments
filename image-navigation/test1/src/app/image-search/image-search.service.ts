@@ -10,7 +10,7 @@ export class ImageSearchService {
     return output.templateMatches(0.80, 1.0, 3, false)[0];
   }
 
-  private async readImage(path) {
-    return new Promise(resolve => cv.readImage(path, (err, image) => resolve(image)));
+  private async readImage(directory: string) {
+    return new Promise(resolve => cv.readImage(directory, (err, image) => resolve(image)));
   }
 }
