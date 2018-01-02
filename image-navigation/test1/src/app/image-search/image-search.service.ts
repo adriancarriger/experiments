@@ -11,6 +11,6 @@ export class ImageSearchService {
   }
 
   private async readImage(directory: string) {
-    return new Promise(resolve => cv.readImage(directory, (err, image) => resolve(image)));
+    return new Promise((resolve) => cv.readImage(directory, (err, image) => resolve(image)));
   }
 }
