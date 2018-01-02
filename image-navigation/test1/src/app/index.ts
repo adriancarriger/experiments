@@ -4,7 +4,6 @@ const googleService = new GoogleService();
 
 (async () => {
   await googleService.setupBrowser();
-  console.log('running')
   await run();
 })();
 
