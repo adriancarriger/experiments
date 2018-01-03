@@ -36,6 +36,5 @@ export class GoogleService {
 
     this.visualNav = new VisualNav();
     this.visualNav.initPage(this.page);
-
   }
 }
