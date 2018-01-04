@@ -5,5 +5,5 @@ export async function delay(seconds: number) {
 }
 
 export async function remove(path: string) {
-  return new Promise((resolve) => fs.unlink(path, resolve))
+  return new Promise((resolve) => fs.unlink(path, resolve));
 }
