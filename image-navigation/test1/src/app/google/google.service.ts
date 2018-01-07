@@ -1,5 +1,5 @@
-import * as puppeteer from 'puppeteer';
 import * as path from 'path';
+import * as puppeteer from 'puppeteer';
 
 import { VisualNav } from '../visual-nav/visual-nav';
 
