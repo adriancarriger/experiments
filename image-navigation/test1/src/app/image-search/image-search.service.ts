@@ -7,7 +7,7 @@ export class ImageSearchService {
   public async find(template: string) {
     const image: any = await this.readImage(`${imagesBase}/current.png`);
     const output = image.matchTemplate(`${imagesBase}/${template}`, 3);
-    return output.templateMatches(0.80, 1.0, 3, false)[0];
+    return output.templateMatches(0.90, 1.0, 3, false)[0];
   }
 
   private async readImage(directory: string) {
