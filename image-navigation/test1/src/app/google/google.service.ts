@@ -1,9 +1,8 @@
 import * as path from 'path';
 import * as puppeteer from 'puppeteer';
 
-import { VisualNav } from '../visual-nav/visual-nav';
-
 import { delay } from '../utilities';
+import { VisualNav } from '../visual-nav/visual-nav';
 
 const imagesBase = path.join(__dirname, '../../assets');
 
