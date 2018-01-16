@@ -21,6 +21,6 @@
   "devDependencies": {
     "@types/puppeteer": "^0.13.9",
     "nodemon": "^1.14.11",
-    "tslint": "^5.8.0"
+    "tslint": "^5.9.1"
   }
 }
