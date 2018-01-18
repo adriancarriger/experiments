@@ -6,5 +6,3 @@ An experiment navgating the web via images
 
 visual-nav is licensed under the MIT Open Source license.
 For more information, see the [LICENSE](LICENSE) file in this repository.
-
-
