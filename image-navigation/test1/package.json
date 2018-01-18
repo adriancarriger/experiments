@@ -1,13 +1,14 @@
 {
   "name": "test1",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "./src/test2.js",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "once": "ts-node ./src/app/index.ts",
-    "start": "nodemon --config config/nodemon.json"
+    "start": "nodemon --config config/nodemon.json",
+    "github-release": "conventional-github-releaser -p angular -r 0"
   },
   "author": "",
   "license": "MIT",
@@ -20,6 +21,7 @@
   },
   "devDependencies": {
     "@types/puppeteer": "^0.13.9",
+    "conventional-github-releaser": "^2.0.0",
     "nodemon": "^1.14.11",
     "tslint": "^5.9.1"
   }
