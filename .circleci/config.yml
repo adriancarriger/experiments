@@ -34,6 +34,8 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       - run: yarn test
+      - run: git config --global user.email "hello@adriancarriger.com"
+      - run: git config --global user.name "Adrian Carriger"
       - run: git tag -a 1.1.4 -m "Version 1.1.4 release"
       - run: git push --follow-tags
       - run: npm run github-release
