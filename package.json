@@ -1,0 +1,23 @@
+{
+  "name": "experiments",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Passing without any tests\" && exit 0",
+    "github-release": "conventional-github-releaser -p angular"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adriancarriger/experiments.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adriancarriger/experiments/issues"
+  },
+  "homepage": "https://github.com/adriancarriger/experiments#readme",
+  "devDependencies": {
+    "conventional-github-releaser": "^2.0.0"
+  }
+}
