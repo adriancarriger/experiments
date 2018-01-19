@@ -35,7 +35,7 @@ jobs:
 
       - run: yarn test
       - run: ./scripts/setup-git.sh
-      - run: git push --set-upstream origin {{ $CIRCLE_BRANCH }}
+      - run: git push --set-upstream origin "${CIRCLE_BRANCH}"
       - run: git tag -a 1.1.6 -m "Version 1.1.6 release"
       - run: git push --follow-tags
       - run: npm run github-release
