@@ -39,8 +39,5 @@ jobs:
           name: Publish new version
           command: |
             if [[ $CIRCLE_BRANCH == "master" ]]; then
-              ./scripts/setup-git.sh
-              git tag -a "1.2.${CIRCLE_BUILD_NUM}" -m "Version 1.2.${CIRCLE_BUILD_NUM} release"
-              git push --follow-tags
-              yarn run github-release
+              yarn run semantic-release
             fi
