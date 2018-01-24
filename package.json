@@ -36,7 +36,9 @@
       "@semantic-release/github"
     ],
     "getLastRelease": "@semantic-release/git",
-    "publish": [],
+    "publish": [
+      "@semantic-release/github"
+    ],
     "analyzeCommits": {
       "releaseRules": [
         {"tag": "Docs", "message":"/README/", "release": "patch"},
