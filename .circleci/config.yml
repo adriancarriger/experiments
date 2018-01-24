@@ -34,10 +34,5 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       - run: yarn test
-
-      - run:
-          name: Publish new version
-          command: |
-            if [[ $CIRCLE_BRANCH == "master" ]]; then
-              yarn run semantic-release
-            fi
+      - run: yarn run lint.commits
+      - run: yarn run semantic-release

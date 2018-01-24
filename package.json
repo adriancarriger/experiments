@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run commitlint",
-    "semantic-release": "semantic-release -d",
+    "semantic-release": "semantic-release",
+    "lint.commits": "node ./scripts/lint-commits.js",
     "commitlint": "commitlint --from=HEAD~1"
   },
   "repository": {
@@ -21,6 +22,8 @@
   "devDependencies": {
     "@commitlint/cli": "^6.0.2",
     "@commitlint/config-conventional": "^6.0.2",
+    "@commitlint/core": "^6.0.2",
+    "@semantic-release/error": "^2.1.0",
     "@semantic-release/git": "^2.0.2",
     "@semantic-release/github": "^3.0.3",
     "semantic-release": "^12.2.4"
@@ -41,12 +44,19 @@
     ],
     "analyzeCommits": {
       "releaseRules": [
-        {"tag": "Docs", "message":"/README/", "release": "patch"},
-        {"type": "New", "release": "patch"}
+        {
+          "tag": "Docs",
+          "message": "/README/",
+          "release": "patch"
+        },
+        {
+          "type": "New",
+          "release": "patch"
+        }
       ]
     },
     "verifyRelease": [
-      "./scripts/semantic-release.js"
+      "./scripts/verify-commits-plugin.js"
     ]
   }
 }
