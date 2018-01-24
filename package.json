@@ -38,7 +38,6 @@
     "getLastRelease": "@semantic-release/git",
     "publish": [],
     "analyzeCommits": {
-      "preset": "eslint",
       "releaseRules": [
         {"tag": "Docs", "message":"/README/", "release": "patch"},
         {"type": "New", "release": "patch"}
