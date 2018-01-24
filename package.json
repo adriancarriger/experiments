@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run commitlint",
-    "semantic-release": "semantic-release -d",
+    "semantic-release": "semantic-release",
     "commitlint": "commitlint --from=HEAD~1"
   },
   "repository": {
