@@ -1,4 +1,3 @@
-const { exec } = require('child_process');
 const { format, load, lint } = require('@commitlint/core');
 const SemanticReleaseError = require('@semantic-release/error');
 
@@ -18,7 +17,8 @@ async function validateCommits(commits) {
 async function validateCommit(commitMeta, opts) {
   const report = await lint(`${commitMeta.message}`, opts.rules, opts.parserPreset ? {parserOpts: opts.parserPreset.parserOpts} : {});
   if (!report.valid) {
-    console.error(`😞   Errors found with commit ${commitMeta.commit.short}`);
+    const detail = commitMeta.commit.short ? ` ${commitMeta.commit.short}` : '';
+    console.error('😞   Errors found with commit' + detail);
     console.error(`💬   ${commitMeta.message}`);
     const formated = format({errors: report.errors});
     formated.forEach(item => console.log(item));

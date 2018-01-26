@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npm run commitlint",
+    "test": "npm run lint.commits",
     "semantic-release": "semantic-release",
-    "lint.commits": "node ./scripts/lint-commits.js",
-    "commitlint": "commitlint --from=HEAD~1"
+    "lint.commits": "node ./scripts/lint-commits.local.js",
+    "lint.commits.ci": "node ./scripts/lint-commits.ci.js"
   },
   "repository": {
     "type": "git",
@@ -56,7 +56,7 @@
       ]
     },
     "verifyRelease": [
-      "./scripts/verify-commits-plugin.js"
+      "./scripts/lint-commits.plugin.js"
     ]
   }
 }
