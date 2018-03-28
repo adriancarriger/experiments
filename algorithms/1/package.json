@@ -11,6 +11,24 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "jest": "^22.4.3"
+    "@types/jest": "^22.2.2",
+    "jest": "^22.4.3",
+    "ts-jest": "^22.4.2",
+    "typescript": "^2.8.1"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "collectCoverage": true
   }
 }

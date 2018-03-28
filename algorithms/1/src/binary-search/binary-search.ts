@@ -1,4 +1,4 @@
-function binarySearch(needle, haystack) {
+export function binarySearch(needle, haystack) {
   let index, guess, iterations = 0, min = 0, max = haystack.length - 1;
 
   while (index === undefined) {
@@ -14,8 +14,4 @@ function binarySearch(needle, haystack) {
   }
 
   return { index, iterations };
-}
-
-module.exports = {
-  binarySearch
 }
