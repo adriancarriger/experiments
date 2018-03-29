@@ -10,13 +10,16 @@ const haystack = [
   {needle: 97, expectedIndex: 24, expectedIterations: 5},
   {needle: 2, expectedIndex: 0, expectedIterations: 4},
   {needle: 31, expectedIndex: 10, expectedIterations: 4},
-  {needle: 5, expectedIndex: 2, expectedIterations: 3}
+  {needle: 5, expectedIndex: 2, expectedIterations: 3},
+  {needle: 4, expectedIndex: undefined, expectedIterations: 5},
+  {needle: 80, expectedIndex: undefined, expectedIterations: 5},
+  {needle: 0, expectedIndex: undefined, expectedIterations: 4}
 ]
   .forEach(({ needle, expectedIndex, expectedIterations }) => {
     it('should implement binary search',  () => {
       const { index, iterations } = binarySearch(needle, haystack);
 
-      expect(index).toBe(expectedIndex);
-      expect(iterations).toBe(expectedIterations);
+      expect(index).toEqual(expectedIndex);
+      expect(iterations).toEqual(expectedIterations);
     });
   });
