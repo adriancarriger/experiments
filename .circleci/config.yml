@@ -33,6 +33,4 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      - run: yarn test
-      - run: yarn run lint.commits.ci
-      - run: yarn run semantic-release
+      - run: yarn run test
