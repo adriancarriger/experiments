@@ -1,5 +1,5 @@
 {
-  "name": "1",
+  "name": "algorithms",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,13 +8,13 @@
     "test": "jest --no-cache",
     "test.watch": "jest --watch --no-cache"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Adrian Carriger <hello@adriancarriger.com> (http://adriancarriger.com)",
+  "license": "MIT",
   "devDependencies": {
-    "@types/jest": "^22.2.2",
+    "@types/jest": "^22.2.3",
     "jest": "^22.4.3",
-    "ts-jest": "^22.4.2",
-    "typescript": "^2.8.1"
+    "ts-jest": "^22.4.5",
+    "typescript": "^2.8.3"
   },
   "jest": {
     "transform": {
