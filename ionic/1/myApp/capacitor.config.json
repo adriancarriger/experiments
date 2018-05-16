@@ -1,0 +1,6 @@
+{
+  "appId": "com.adriancarriger.app",
+  "appName": "myApp",
+  "bundledWebRuntime": false,
+  "webDir": "www"
+}
