@@ -1,8 +1,9 @@
 {
   "name": "myApp",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "author": "Adrian Carriger <hello@adriancarriger.com> (http://adriancarriger.com)",
+  "homepage": "https://github.com/adriancarriger/experiments/tree/master/ionic/1/myApp",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
