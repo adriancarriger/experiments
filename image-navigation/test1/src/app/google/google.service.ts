@@ -22,7 +22,7 @@ export class GoogleService {
     await delay(3);
 
     // Status
-    await this.page.screenshot({path: `${imagesBase}/status.png`});
+    await this.page.screenshot({ path: `${imagesBase}/status.png` });
   }
 
   public async setupBrowser() {
@@ -31,7 +31,7 @@ export class GoogleService {
       ignoreHTTPSErrors: Number(process.env.NODE_TLS_REJECT_UNAUTHORIZED) === 0
     });
     this.page = await browser.newPage();
-    this.page.setViewport({width: 1000, height: 1200});
+    this.page.setViewport({ width: 1000, height: 1200 });
 
     this.visualNav = new VisualNav();
     this.visualNav.initPage(this.page);

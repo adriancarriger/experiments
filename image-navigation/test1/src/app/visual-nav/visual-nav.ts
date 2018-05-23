@@ -23,7 +23,7 @@ export class VisualNav {
   }
 
   private async getCurrent() {
-    await this.page.screenshot({path: `${imagesBase}/current.png`});
-    await this.page.screenshot({path: `${imagesBase}/status.png`});
+    await this.page.screenshot({ path: `${imagesBase}/current.png` });
+    await this.page.screenshot({ path: `${imagesBase}/status.png` });
   }
 }
