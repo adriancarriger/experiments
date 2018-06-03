@@ -1,0 +1,12 @@
+type User {
+  id: ID! @unique
+  name: String!
+  another: String
+  thing2: String
+  hello: String
+}
+
+type MyRandomTest {
+  id: ID! @unique
+  name: String!
+}
