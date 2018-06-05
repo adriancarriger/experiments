@@ -1,27 +1,27 @@
 <template>
   <div class="app">
-  <create/>
+    <create/>
     <feed/>
-    
   </div>
 </template>
 
 <script>
-import ListPage from './components/ListPage.vue'
-import CreatePost from './components/CreatePost.vue'
+import ListPage from './components/ListPage.vue';
+import CreatePost from './components/CreatePost.vue';
 
 export default {
   name: 'app',
   components: {
-    'feed': ListPage,
-    'create': CreatePost,
-  },
-}
+    feed: ListPage,
+    create: CreatePost
+  }
+};
 </script>
 
 <style>
-
-body, input, button {
+body,
+input,
+button {
   font-family: Helvetica, sans-serif;
   font-size: 16pt;
 }
@@ -50,6 +50,4 @@ input {
   border: solid 1px #bbb;
   border-radius: 2px;
 }
-
-
 </style>
