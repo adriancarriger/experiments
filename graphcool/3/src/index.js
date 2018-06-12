@@ -9,14 +9,14 @@ import 'tachyons'
 import './index.css'
 
 // __SUBSCRIPTIONS_API_ENDPOINT__ looks similar to: `wss://subscriptions.graph.cool/v1/<PROJECT_ID>`
-const wsClient = new SubscriptionClient('__SUBSCRIPTIONS_API_ENDPOINT_', {
+const wsClient = new SubscriptionClient('ws://localhost:60000/subscriptions/v1/cji9fke5f00020136xq4goh0r', {
   reconnect: true,
   timeout: 20000
 })
 
 // __SIMPLE_API_ENDPOINT__ looks similar to: `https://api.graph.cool/simple/v1/<PROJECT_ID>`
 const networkInterface = createNetworkInterface({
-  uri: '__SIMPLE_API_ENDPOINT__',
+  uri: 'http://localhost:60000/simple/v1/cji9fke5f00020136xq4goh0r',
 })
 
 const networkInterfaceWithSubscriptions = addGraphQLSubscriptions(
