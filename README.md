@@ -1,3 +1,3 @@
 # experiments
 
-A collection of various code experiments indetended to explore new technologies.
+A collection of various code experiments intended to explore new technologies.
