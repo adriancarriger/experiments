@@ -15,10 +15,3 @@ RUN apk update && apk add --no-cache \
 COPY . /app
 
 ENTRYPOINT ["/app/entrypoint.sh"]
-
-# USER root
-# RUN chown -R $USER:$USER /app
-
-# USER $USER
-
-# RUN yarn

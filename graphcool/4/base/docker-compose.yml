@@ -8,9 +8,11 @@ services:
       - ../app:/app
       - /var/run/docker.sock:/var/run/docker.sock
       - .graphcoolrc:/root/.graphcoolrc
-    command: sleep 9999999999
+    command: yarn run start
     networks:
       - local_graphcool
+    environment:
+      GRAPHCOOL_HOST: localfaas
 
 networks:
   local_graphcool:

@@ -2,12 +2,6 @@ graphcool-framework:
   clusters:
     local:
       host: 'http://graphcool:60000'
-      faasHost: 'http://graphcool:60050'
+      faasHost: 'http://localfaas:60050'
       clusterSecret: >-
-        eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MjkxNjgyODIsImNsaWVudElkIjoiY2ppMmJrMWFoMDAwMDAxMzYxZ3N3b2x5NyJ9.96ZB-M6YfJfhfBIaR6Y9rk8sdeGvjCVVIWtbQZeP9DU
-clusters:
-  local:
-    host: 'http://graphcool:60000'
-    faasHost: 'http://graphcool:60050'
-    clusterSecret: >-
-      eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MjkxNzA2OTUsImNsaWVudElkIjoiY2ppMmJrMWFoMDAwMDAxMzYxZ3N3b2x5NyJ9.XicVvbmIts_K0Iuj4-iwjv3Zj7_qNSQekg0Rj8UWyXE
+        eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MjkxOTA3NjMsImNsaWVudElkIjoiY2ppMmJrMWFoMDAwMDAxMzYxZ3N3b2x5NyJ9.UVNo6AkBvrnHjyudoginsFBqKS63XuQr_Hyf4zZ_tuY

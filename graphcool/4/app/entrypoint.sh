@@ -1,10 +1,8 @@
 #!/bin/sh
 set -e
 
-
-echo "starting entrypoint…"
+echo "Setting up local graphcool instance"
 
 graphcool local up
-# graphcool deploy --target local
 
 exec "$@"

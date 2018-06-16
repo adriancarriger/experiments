@@ -1,5 +1,12 @@
 {
   "name": "graphcool7",
   "version": "1.0.0",
-  "description": "My Graphcool Service"
+  "description": "My Graphcool Service",
+  "scripts": {
+    "start": "nodemon --config config/nodemon.json",
+    "build": "graphcool deploy --target local"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.5"
+  }
 }
