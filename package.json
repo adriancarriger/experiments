@@ -45,5 +45,8 @@
     "verifyRelease": [
       "./scripts/lint-commits.plugin.js"
     ]
+  },
+  "dependencies": {
+    "proxy-server": "^1.2.0"
   }
 }
