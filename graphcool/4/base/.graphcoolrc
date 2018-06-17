@@ -3,5 +3,3 @@ graphcool-framework:
     local:
       host: 'http://graphcool:60000'
       faasHost: 'http://localfaas:60050'
-      clusterSecret: >-
-        eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MjkxOTA3NjMsImNsaWVudElkIjoiY2ppMmJrMWFoMDAwMDAxMzYxZ3N3b2x5NyJ9.UVNo6AkBvrnHjyudoginsFBqKS63XuQr_Hyf4zZ_tuY
