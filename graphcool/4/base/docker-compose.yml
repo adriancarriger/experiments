@@ -1,14 +1,12 @@
 version: "3.5"
 services:
-  app:
-    build: ../app
-    ports:
-      - "8444:8444"
+  server:
+    build: ../server
     volumes:
-      - ../app:/app
+      - ../server:/server
       - /var/run/docker.sock:/var/run/docker.sock
-      - .graphcoolrc:/root/.graphcoolrc
-    command: yarn run start
+      - /app/node_modules
+    command: yarn start
     networks:
       - local_graphcool
     environment:
