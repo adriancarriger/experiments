@@ -3,14 +3,24 @@ services:
   data:
     build: ../data
     volumes:
-      - ../data:/data
-      - /var/run/docker.sock:/var/run/docker.sock
+      - ../data:/app
       - /app/node_modules
+      - /var/run/docker.sock:/var/run/docker.sock
     command: yarn start
     networks:
       - local_graphcool
     environment:
       GRAPHCOOL_HOST: localfaas
+  webhooks:
+      build: ../webhooks
+      volumes:
+        - ../webhooks:/app
+        - /app/node_modules
+      command: yarn start
+      networks:
+      - local_graphcool
+      ports:
+        - '5464:5464'
 
 networks:
   local_graphcool:
