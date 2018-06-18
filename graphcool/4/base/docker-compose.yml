@@ -1,9 +1,9 @@
 version: "3.5"
 services:
-  server:
-    build: ../server
+  data:
+    build: ../data
     volumes:
-      - ../server:/server
+      - ../data:/data
       - /var/run/docker.sock:/var/run/docker.sock
       - /app/node_modules
     command: yarn start
