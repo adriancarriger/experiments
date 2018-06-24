@@ -18,8 +18,8 @@ module.exports = async ({ project, projectDir }) => {
     templateName,
     project,
   )
-  replaceInFiles(['src/index.js'], '__PRISMA_ENDPOINT__', endpoint)
-  replaceInFiles(['database/prisma.yml'], '__PRISMA_ENDPOINT__', endpoint)
+  replaceInFiles(['src/index.js'], 'http://localhost:4466', endpoint)
+  replaceInFiles(['database/prisma.yml'], 'http://localhost:4466', endpoint)
 
   console.log('Running $ prisma deploy...')
 
@@ -30,7 +30,7 @@ module.exports = async ({ project, projectDir }) => {
 
   replaceInFiles(
     ['server/src/index.js'],
-    '__PRISMA_ENDPOINT__',
+    'http://localhost:4466',
     info.httpEndpoint,
   )
 

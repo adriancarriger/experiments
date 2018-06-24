@@ -1,5 +1,5 @@
 # The endpoint of your Prisma API (deployed to a Prisma Sandbox).
-endpoint: __PRISMA_ENDPOINT__
+endpoint: http://localhost:4466
 
 # The file containing the definition of your data model.
 datamodel: datamodel.graphql
