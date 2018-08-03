@@ -1,16 +1,21 @@
-<template>
-  <md-button v-bind="$attrs" v-on="$listeners">asdf</md-button>
-</template>
-
 <script>
+import Vue from 'vue'
+import TestB from './TestB'
+
+
+const base = {
+  name: 'MyButton',
+  extends: TestB,
+  extendsScopedStyle: true
+}
 
 export default {
-  name: 'MyButton'
+  ...base
 }
 </script>
 
 <style scoped>
-/deep/ .md-button-content {
+/deep/ .my-button-content {
   background: yellow;
 }
 </style>

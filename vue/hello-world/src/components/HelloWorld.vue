@@ -1,16 +1,16 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <my-button :md-ripple="false" class="md-raised md-accent"></my-button>
+    <my-button :md-ripple="false" class="md-raised md-accent">asdf</my-button>
   </div>
 </template>
 
 <script>
-import MyButton from './MyButton'
+import MyButton from './MyButton';
 
 export default {
   name: 'HelloWorld',
-  components: { MyButton },
+  components: { 'my-button': MyButton },
   props: {
     msg: String
   }
