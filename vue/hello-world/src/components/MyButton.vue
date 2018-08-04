@@ -15,7 +15,7 @@ export default {
 </script>
 
 <style scoped>
-/deep/ .my-button-content {
-  background: yellow;
+.my-button-content {
+  border: solid red 1px;
 }
 </style>

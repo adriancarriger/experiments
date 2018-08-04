@@ -5,22 +5,38 @@ export default Vue => {
   }
 }
 
-
 function updateExtends(Vue, originalExtends) {
   return function (component) {
-    if (arguments[0].extendsScopedStyle) {
-      const randomNumber = Math.round(Math.random() * 100000)
-      const randomName = `extended-${randomNumber}`
-      Vue.component(randomName, arguments[0].extends)
-      arguments[0] = {
-        ...arguments[0],
-        functional: true,
-        extends: undefined,
-        render: function (createElement, context) {
-          return createElement(randomName, context.data, context.children)
-        }
-      }
+    if (component.extendsScopedStyle) {
+      const childName = getComponentName(component.extends)
+      registerComponent(Vue, childName, component.extends)
+      component = wrapComponent(childName, component)
     }
-    return originalExtends.apply(this, arguments);
-  };
-};
+    return originalExtends.call(this, component);
+  }
+}
+
+function wrapComponent(name, component) {
+  delete component.extends
+  delete component.extendsScopedStyle
+
+  return {
+    ...component,
+    functional: true,
+    render: (createElement, context) => createElement(name, context.data, context.children)
+  }
+}
+
+function getComponentName(component) {
+  if (component.name) {
+    return component.name
+  }
+  const randomNumber = Math.round(Math.random() * 100000)
+  return `extended-${randomNumber}`
+}
+
+function registerComponent(Vue, name, component) {
+  if (!Object.keys(Vue.options.components).includes(name)) {
+    Vue.component(name, component)
+  }
+}
