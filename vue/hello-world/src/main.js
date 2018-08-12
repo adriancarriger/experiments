@@ -10,12 +10,12 @@ import {
 } from "vue-material/dist/components";
 import "vue-material/dist/vue-material.min.css";
 
-import ExtendStyles from './components/extend-styles'
-
-
+import auth from '@/auth'
+import ExtendStyles from '@/components/extend-styles'
 
 Vue.config.productionTip = false;
 
+Vue.use(auth)
 Vue.use(MdButton);
 Vue.use(MdContent);
 Vue.use(MdTabs);

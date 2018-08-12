@@ -10,6 +10,7 @@
     "test:e2e": "vue-cli-service test:e2e"
   },
   "dependencies": {
+    "auth0-js": "^9.7.3",
     "register-service-worker": "^1.0.0",
     "vue": "^2.5.16",
     "vue-material": "^1.0.0-beta-10.2",
