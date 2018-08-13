@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <md-button @click="logout">logout</md-button>
+    <md-button @click="apiRequest">API request</md-button>
     <img src="../assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
   </div>
@@ -18,6 +19,11 @@ export default {
   methods: {
     logout() {
       this.$auth.logout()
+    },
+    apiRequest() {
+      this.$http.get('secured/ping').then((response) => {
+        console.log(response.body)
+      })
     }
   }
 };

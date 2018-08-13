@@ -70,6 +70,8 @@ const auth = new Vue({
             this.accessToken = authResult.accessToken
             this.token = authResult.idToken
             this.user = authResult.idTokenPayload
+
+            this.updateAuthHeader()
             resolve()
 
           } else if (err) {
@@ -79,12 +81,18 @@ const auth = new Vue({
 
         })
       })
+    },
+    updateAuthHeader() {
+      if (localStorage.getItem('id_token')) {
+        Vue.http.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token')
+      }
     }
   }
 })
 
 export default {
   install: function (Vue) {
-    Vue.prototype.$auth = auth
+    Vue.prototype.$auth = auth;
+    auth.updateAuthHeader();
   }
 }

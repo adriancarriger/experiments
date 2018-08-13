@@ -6,7 +6,7 @@
 export default {
   name: 'component-b',
   created () {
-    console.log('my test test test', this.$root)
+    // console.log('my test test test', this.$root)
   }
 }
 </script>
