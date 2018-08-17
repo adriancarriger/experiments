@@ -21,7 +21,7 @@ Vue.use(auth)
 Vue.use(MdButton);
 Vue.use(MdContent);
 Vue.use(MdTabs);
-Vue.use(ExtendStyles)
+Vue.use(ExtendStyles);
 
 Object.assign(Vue.http.options, {
   root: 'http://localhost:3000'
