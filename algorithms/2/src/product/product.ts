@@ -1,20 +1,11 @@
 export function getHighestProduct(integers: number[], maxHighest = 3) {
   const { highest, lowest } = getExtreems(integers, maxHighest);
-
-  const positiveProduct = multiply(highest);
-  const mixedProducts = getMixedProducts(highest, lowest, maxHighest);
-
-  return Math.max(positiveProduct, ...mixedProducts);
-}
-
-function getMixedProducts(highest, lowest, maxHighest) {
-  const negatives = makeEven(countNegatives(lowest));
-  const result = [];
-  for (let i = 2; i <= negatives; i = i + 2) {
-    result.push(multiply(getMixed(highest, lowest, maxHighest, i)));
+  const products = [];
+  for (let i = 0; i <= makeEven(countNegatives(lowest)); i = i + 2) {
+    products.push(multiply(getMixed(highest, lowest, maxHighest, i)));
   }
 
-  return result;
+  return Math.max(...products);
 }
 
 function getMixed(highest, lowest, maxHighest, maxNegatives) {
@@ -30,14 +21,6 @@ function getMixed(highest, lowest, maxHighest, maxNegatives) {
   return result;
 }
 
-function makeEven(input: number) {
-  return input - (input % 2);
-}
-
-function countNegatives(lowest) {
-  return lowest.reduce((previous, current) => previous + (current < 0 ? 1 : 0), 0);
-}
-
 function getExtreems(integers, maxHighest) {
   const maxLowest = makeEven(maxHighest);
 
@@ -45,6 +28,7 @@ function getExtreems(integers, maxHighest) {
     (previous, current) => {
       updateMax(current, previous.highest, maxHighest, atLeast);
       updateMax(current, previous.lowest, maxLowest, atMost);
+
       return previous;
     },
     { highest: [], lowest: [] }
@@ -60,6 +44,14 @@ function updateMax(updateInteger, array, limit, updateFunction) {
       return;
     }
   }
+}
+
+function countNegatives(lowest) {
+  return lowest.reduce((previous, current) => previous + (current < 0 ? 1 : 0), 0);
+}
+
+function makeEven(input: number) {
+  return input - (input % 2);
 }
 
 function multiply(integers) {
