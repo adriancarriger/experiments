@@ -4,13 +4,11 @@ describe('...', () => {
   it('...', () => {
     const array = [...Array(10).keys()];
     shuffle(array);
-    console.log(array);
   });
 
   it('...', () => {
     const array = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
     shuffle(array);
-    console.log(array);
   });
 
   it('...', () => {
