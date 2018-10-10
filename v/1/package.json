@@ -1,0 +1,16 @@
+{
+  "name": "1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run dev",
+    "dev": "(cd src && ws)"
+  },
+  "author": "Adrian Carriger",
+  "license": "MIT",
+  "devDependencies": {
+    "local-web-server": "^2.6.0"
+  }
+}
