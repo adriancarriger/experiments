@@ -12,7 +12,10 @@ class UserCard extends HTMLElement {
 
   render() {
     const base = /*html*/ `
-      <div>my test</div>
+      <div>
+        my test
+        <slot></slot>
+      </div>
     `;
 
     return [base];
@@ -20,14 +23,16 @@ class UserCard extends HTMLElement {
 
   connectedCallback() {
     console.log('connectedCallback')
-    this.container = currentDocument.createElement('div');
+    this.template = document.createElement('template');
     this.baseRender();
-    document.body.appendChild(this.container);
+    this.attachShadow({
+      mode: 'open'
+    }).appendChild(this.template.content.cloneNode(true));
   }
 
   baseRender() {
     const content = this.render();
-    this.container.innerHTML = Array.isArray(content) ? content.join('\n') : content;
+    this.template.innerHTML = Array.isArray(content) ? content.join('\n') : content;
   }
 
   toggleCard() {
