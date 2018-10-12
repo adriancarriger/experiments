@@ -10,11 +10,17 @@
 <body>
   <div id="app">
     hello
-    <user-card>
+    <user-card id="asdf">
       <div>my slot content</div>
     </user-card>
   </div>
-  <script src="./user-card/UserCard.js"></script>
+  <script type="module" src="./user-card/UserCard.js"></script>
+  <script>
+    // setTimeout(() => {
+    //   console.log('about to destroy')
+    //   document.getElementById('asdf').remove();
+    // }, 1000)
+  </script>
 </body>
 
 </html>

@@ -1,8 +1,8 @@
-const currentDocument = document.currentScript.ownerDocument;
+import Madagascar from '../madagascar/index.js';
 
-class UserCard extends HTMLElement {
-  constructor() {
-    super();
+class UserCard extends Madagascar.Component {
+  constructor(props) {
+    super(props);
 
     this.addEventListener('click', event => {
       console.log(event);
@@ -11,32 +11,20 @@ class UserCard extends HTMLElement {
   }
 
   render() {
-    const base = /*html*/ `
+    return /*html*/ `
       <div>
         my test
         <slot></slot>
       </div>
     `;
-
-    return [base];
-  }
-
-  connectedCallback() {
-    console.log('connectedCallback')
-    this.template = document.createElement('template');
-    this.baseRender();
-    this.attachShadow({
-      mode: 'open'
-    }).appendChild(this.template.content.cloneNode(true));
-  }
-
-  baseRender() {
-    const content = this.render();
-    this.template.innerHTML = Array.isArray(content) ? content.join('\n') : content;
   }
 
   toggleCard() {
     console.log("Element was clicked!");
+  }
+
+  mounted() {
+    console.log('mounted')
   }
 }
 
