@@ -6,17 +6,17 @@ class Component extends HTMLElement {
 
   connectedCallback() {
     this.lifecycle('beforeMount');
-    this.template = document.createElement('template');
-    this.baseRender();
-    this.attachShadow({
+    this.root = this.attachShadow({
       mode: 'open'
-    }).appendChild(this.template.content.cloneNode(true));
+    });
+    this.baseRender();
+
     this.lifecycle('mounted');
   }
 
   baseRender() {
     const content = this.render();
-    this.template.innerHTML = Array.isArray(content) ? content.join('\n') : content;
+    this.root.innerHTML = Array.isArray(content) ? content.join('\n') : content;
   }
 
   lifecycle(name) {

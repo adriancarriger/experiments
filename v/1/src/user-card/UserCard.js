@@ -3,23 +3,24 @@ import Madagascar from '../madagascar/index.js';
 class UserCard extends Madagascar.Component {
   constructor(props) {
     super(props);
-
-    this.addEventListener('click', () => {
-      this.toggleCard();
-    });
+    this.startCounter()
   }
 
   render() {
     return /* html */ `
       <div>
-        my test
+        Counter => ${this.myTest}
         <slot></slot>
       </div>
     `;
   }
 
-  toggleCard() {
-    console.log("Element was clicked!");
+  startCounter() {
+    this.myTest = 0;
+    setInterval(() => {
+      this.myTest++;
+      this.baseRender();
+    }, 1000);
   }
 }
 
