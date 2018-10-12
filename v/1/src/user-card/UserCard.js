@@ -4,14 +4,13 @@ class UserCard extends Madagascar.Component {
   constructor(props) {
     super(props);
 
-    this.addEventListener('click', event => {
-      console.log(event);
+    this.addEventListener('click', () => {
       this.toggleCard();
     });
   }
 
   render() {
-    return /*html*/ `
+    return /* html */ `
       <div>
         my test
         <slot></slot>
@@ -21,10 +20,6 @@ class UserCard extends Madagascar.Component {
 
   toggleCard() {
     console.log("Element was clicked!");
-  }
-
-  mounted() {
-    console.log('mounted')
   }
 }
 
