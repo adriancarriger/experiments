@@ -1,7 +1,7 @@
-import Madagascar from '../madagascar/index.js';
-import './user-card/UserCard.js'
+import Madagascar from '../framework/Madagascar.js';
+import './components/UserCard.js'
 
-class MadagascarApp extends Madagascar.Component {
+export default class MadagascarApp extends Madagascar.Component {
   constructor(props) {
     super(props);
   }
@@ -16,6 +16,3 @@ class MadagascarApp extends Madagascar.Component {
     `;
   }
 }
-
-customElements.define('madagascar-app', MadagascarApp);
-document.getElementById('app').innerHTML = /* html */ `<madagascar-app></madagascar-app>`;

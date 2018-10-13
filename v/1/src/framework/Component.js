@@ -1,7 +1,9 @@
-class Component extends HTMLElement {
+import Madagascar from './Madagascar.js';
 
+export default class Component extends HTMLElement {
   constructor(props) {
     super(props);
+    this.$store = Madagascar.global.store;
   }
 
   connectedCallback() {
@@ -10,7 +12,6 @@ class Component extends HTMLElement {
       mode: 'open'
     });
     this.baseRender();
-
     this.lifecycle('mounted');
   }
 
@@ -25,7 +26,3 @@ class Component extends HTMLElement {
     }
   }
 }
-
-export default {
-  Component
-};
