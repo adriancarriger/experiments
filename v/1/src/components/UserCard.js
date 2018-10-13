@@ -16,12 +16,7 @@ export default class UserCard extends Madagascar.Component {
   }
 
   mounted() {
-    this.root.querySelector('.add')
-      .addEventListener('click', () => this.$store.commit('count'));
-  }
-
-  activateLasers() {
-    this.$store.commit('count');
+    this.root.querySelector('.add').addEventListener('click', () => this.$store.commit('count'));
   }
 
   disconnectedCallback() {

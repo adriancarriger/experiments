@@ -1,4 +1,5 @@
 import Madagascar from '../framework/Madagascar.js';
+
 import './components/UserCard.js'
 
 export default class MadagascarApp extends Madagascar.Component {
