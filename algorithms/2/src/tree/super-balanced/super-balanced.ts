@@ -20,13 +20,13 @@ export function isSuperbalanced(tree: BinaryTreeNode) {
           return false;
         }
       }
-    } else {
-      if (treeNode.left) {
-        nodes.push({ treeNode: treeNode.left, depth: depth + 1 });
-      }
-      if (treeNode.right) {
-        nodes.push({ treeNode: treeNode.right, depth: depth + 1 });
-      }
+    }
+
+    if (treeNode.left) {
+      nodes.push({ treeNode: treeNode.left, depth: depth + 1 });
+    }
+    if (treeNode.right) {
+      nodes.push({ treeNode: treeNode.right, depth: depth + 1 });
     }
   }
 
