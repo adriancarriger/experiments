@@ -8,10 +8,10 @@ export function isSuperbalanced(tree: BinaryTreeNode) {
     const { depth, node } = nodes.pop();
 
     if (!node.left && !node.right && !leafDepths.includes(depth)) {
-      if (depth - Math.min(...leafDepths) > 1) {
+      leafDepths.push(depth);
+      if (Math.max(...leafDepths) - Math.min(...leafDepths) > 1) {
         return false;
       }
-      leafDepths.push(depth);
     }
 
     if (node.left) {
