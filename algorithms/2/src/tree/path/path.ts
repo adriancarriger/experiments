@@ -9,11 +9,7 @@ export function getPath(network: Network, startNode: string, endNode: string): s
       break;
     }
 
-    if (!network[current]) {
-      continue;
-    }
-
-    network[current].forEach(neighbor => {
+    (network[current] || []).forEach(neighbor => {
       if (!breadcrumbs[neighbor]) {
         breadcrumbs[neighbor] = current;
         nodes.push(neighbor);
