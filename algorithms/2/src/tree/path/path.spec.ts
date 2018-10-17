@@ -1,6 +1,6 @@
-import { getPath } from './path';
+import { getPath, Network } from './path';
 
-const network = {
+const network: Network = {
   Min: ['William', 'Jayden', 'Omar'],
   William: ['Min', 'Noam'],
   Jayden: ['Min', 'Amelia', 'Ren', 'Noam'],

@@ -1,35 +1,36 @@
-export function getPath(graph, startNode, endNode) {
-  const nodesToVisit = [startNode];
-  const neighborsSeen = {};
+export function getPath(network: Network, startNode: string, endNode: string): string[] {
+  const nodes = [startNode];
+  const breadcrumbs = {};
 
-  while (nodesToVisit.length) {
-    const currentNode = nodesToVisit.shift();
+  while (nodes.length) {
+    const current = nodes.shift();
 
-    if (currentNode === endNode) {
+    if (current === endNode) {
       break;
     }
 
-    if (graph[currentNode] === undefined) {
+    if (!network[current]) {
       continue;
     }
 
-    graph[currentNode].forEach(neighbor => {
-      if (!neighborsSeen.hasOwnProperty(neighbor)) {
-        neighborsSeen[neighbor] = currentNode;
-        nodesToVisit.push(neighbor);
+    network[current].forEach(neighbor => {
+      if (!breadcrumbs[neighbor]) {
+        breadcrumbs[neighbor] = current;
+        nodes.push(neighbor);
       }
     });
   }
 
-  return tracePath(neighborsSeen, startNode, endNode);
-}
-
-function tracePath(neighborsSeen, startNode, current) {
-  const path = [current];
-  while (current !== startNode) {
-    current = neighborsSeen[current];
-    path.push(current);
+  let breadcrumb = endNode;
+  const path = [endNode];
+  while (breadcrumb !== startNode) {
+    breadcrumb = breadcrumbs[breadcrumb];
+    path.push(breadcrumb);
   }
 
   return path.reverse();
+}
+
+export interface Network {
+  [key: string]: string[];
 }
