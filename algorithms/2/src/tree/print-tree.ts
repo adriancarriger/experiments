@@ -10,7 +10,7 @@ export function printTree(tree: BinaryTreeNode, maxDepth = 4) {
     const spaces = Math.round((Math.pow(2, maxDepth) * 6) / (theseNodes.length + 1));
     const spacer = [...Array(spaces).keys()].map(() => ' ').join('');
 
-    const asdf = theseNodes.reduce((previous, node) => {
+    const treeInStringFormat = theseNodes.reduce((previous, node) => {
       if (node) {
         if (node.left) {
           nodes.push(node.left);
@@ -22,7 +22,7 @@ export function printTree(tree: BinaryTreeNode, maxDepth = 4) {
       }
       return previous;
     }, spacer);
-    console.log(`\nDepth: ${depth}    ${asdf}`);
+    console.log(`\nDepth: ${depth}    ${treeInStringFormat}`);
     depth++;
   }
 }
