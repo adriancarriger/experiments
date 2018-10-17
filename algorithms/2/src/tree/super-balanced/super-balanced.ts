@@ -1,32 +1,25 @@
 import { BinaryTreeNode } from '../binanry-tree';
 
 export function isSuperbalanced(tree: BinaryTreeNode) {
-  const terminalNodeDepths = [];
-  const nodes = [];
-
-  nodes.push({ treeNode: tree, depth: 0 });
+  const nodes = [{ depth: 0, node: tree }];
+  const leafDepths: number[] = [];
 
   while (nodes.length) {
-    const { treeNode, depth } = nodes.pop();
+    const { depth, node } = nodes.pop();
 
-    if (!treeNode.left && !treeNode.right) {
-      if (!terminalNodeDepths.includes(depth)) {
-        terminalNodeDepths.push(depth);
-
-        const highestDepth = terminalNodeDepths[terminalNodeDepths.length - 1];
-        const depthsDifference = highestDepth - terminalNodeDepths[0];
-
-        if (depthsDifference > 1) {
-          return false;
-        }
+    if (!node.left && !node.right && !leafDepths.includes(depth)) {
+      if (depth - Math.min(...leafDepths) > 1) {
+        return false;
       }
+      leafDepths.push(depth);
     }
 
-    if (treeNode.left) {
-      nodes.push({ treeNode: treeNode.left, depth: depth + 1 });
+    if (node.left) {
+      nodes.push({ depth: depth + 1, node: node.left });
     }
-    if (treeNode.right) {
-      nodes.push({ treeNode: treeNode.right, depth: depth + 1 });
+
+    if (node.right) {
+      nodes.push({ depth: depth + 1, node: node.right });
     }
   }
 
