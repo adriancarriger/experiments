@@ -11,8 +11,11 @@ export function xToY(randX, x, y) {
 }
 
 function increaseRandom(randX, x, y) {
+  const cells = x * x;
+  if (cells < y) {
+    throw 'Not designed to make more than 2 calls to `randX`';
+  }
   while (true) {
-    const cells = x * x;
     const cell = (randX() - 1) * x + (randX() - 1) + 1;
 
     if (cell > cells - (cells % y)) {

@@ -17,8 +17,9 @@ export function allRandoms(callback, x, y) {
 }
 
 export function isRandom(resultObject) {
-  return Object.keys(resultObject)
-    .filter(key => key !== 'Roll again!')
-    .map(key => resultObject[key])
-    .every((item, index, array) => item === array[0]);
+  const array = Object.keys(resultObject).filter(key => key !== 'Roll again!');
+  return (
+    array.length &&
+    array.map(key => resultObject[key]).every((item, index, array) => item === array[0])
+  );
 }
