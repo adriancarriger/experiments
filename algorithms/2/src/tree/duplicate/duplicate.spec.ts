@@ -2,6 +2,12 @@ import { findDuplicate } from './duplicate';
 
 describe('...', () => {
   it('...', () => {
+    const duplicate = 2;
+    const result = findDuplicate(getInput(10, duplicate));
+    expect(result).toBe(duplicate);
+  });
+
+  it('...', () => {
     const duplicate = 5;
     const result = findDuplicate(getInput(10, duplicate));
     expect(result).toBe(duplicate);

@@ -1,34 +1,35 @@
-export function findDuplicate(input: number[]): number {
+export function findDuplicate(input: number[]) {
   const n = input.length;
 
   // Get in a loop
-  let current = input[n - 1];
-  for (let i = 0; i < n; i++) {
-    current = input[current - 1];
+  let pointer = input[n - 1];
+  for (let i = 1; i < input.length; i++) {
+    pointer = input[pointer - 1];
   }
 
   // Count steps in loop
-  const itemInLoop = current;
-  current = input[current - 1];
-  let stepsInLoop = 1;
+  const endingPosition = pointer;
+  pointer = input[pointer - 1];
+  let steps = 1;
 
-  while (current !== itemInLoop) {
-    current = input[current - 1];
-    stepsInLoop++;
+  while (pointer !== endingPosition) {
+    pointer = input[pointer - 1];
+    steps++;
   }
 
   // Start a leader
-  let pointerAhead = input[n - 1];
-  for (let i = 1; i <= stepsInLoop; i++) {
-    pointerAhead = input[pointerAhead - 1];
+  let leader = input[n - 1];
+  for (let i = 1; i < steps; i++) {
+    leader = input[leader - 1];
   }
 
-  // Start a follower with leader
-  current = input[n - 1];
-  while (pointerAhead !== current) {
-    pointerAhead = input[pointerAhead - 1];
-    current = input[current - 1];
+  // Add a follower
+  let follower = n;
+
+  while (follower !== leader) {
+    leader = input[leader - 1];
+    follower = input[follower - 1];
   }
 
-  return current;
+  return leader;
 }

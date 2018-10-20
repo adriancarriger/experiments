@@ -2,12 +2,12 @@ export function maxDuffelBagValue(cakeTypes: CakeType[], capacity: number): numb
   const maxValues = new Array(capacity + 1).fill(0);
 
   for (let i = 0; i <= capacity; i++) {
-    for (let t = 0; t < cakeTypes.length; t++) {
-      if (cakeTypes[t].weight === 0 && cakeTypes[t].value > 0) {
+    for (let j = 0; j < cakeTypes.length; j++) {
+      if (cakeTypes[j].weight === 0 && cakeTypes[j].value > 0) {
         return Infinity;
       }
-      if (cakeTypes[t].weight <= i) {
-        const newValue = cakeTypes[t].value + maxValues[i - cakeTypes[t].weight];
+      if (cakeTypes[j].weight <= i) {
+        const newValue = cakeTypes[j].value + maxValues[i - cakeTypes[j].weight];
         maxValues[i] = Math.max(newValue, maxValues[i]);
       }
     }

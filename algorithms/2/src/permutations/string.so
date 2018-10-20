@@ -1,0 +1,18 @@
+**Simple Recursive function**
+
+<!-- begin snippet: js hide: false console: true babel: true -->
+
+<!-- language: lang-js -->
+
+    function permutations(input, output = '', array = []) {
+      if (!input) { array.push(output); }
+
+      input.split('').forEach((letter, index) => {
+        permutations(input.slice(0, index) + input.slice(index + 1), output + letter, array);
+      });
+
+      return array;
+    }
+
+    console.log(permutations('xyz'));
+<!-- end snippet -->
