@@ -1,0 +1,4 @@
+<div>
+  <div v-if="morning">Hello</div>
+  <div v-else>Goodbye</div>
+</div>

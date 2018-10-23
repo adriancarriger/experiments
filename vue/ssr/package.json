@@ -1,0 +1,14 @@
+{
+  "name": "ssr",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node src/my-test.js"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "vue": "^2.5.17",
+    "vue-server-renderer": "^2.5.17"
+  }
+}
