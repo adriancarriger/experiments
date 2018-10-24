@@ -1,4 +1,11 @@
 <div>
   <div v-if="morning">Hello</div>
   <div v-else>Goodbye</div>
+  loading: `{{ loading }}`
+  <child-component>
+    test test test
+    <template slot="stuff">
+      <div>hi</div>
+    </template>
+  </child-component>
 </div>

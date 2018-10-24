@@ -1,0 +1,6 @@
+<div>
+  <just-a-test>Child tempalte</just-a-test>
+  <div>{{ test }}</div>
+  <slot></slot>
+  <slot name="stuff"></slot>
+</div>
