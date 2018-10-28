@@ -1,4 +1,4 @@
-import mergeSortedArrays from './merge-sorted';
+import mergeSortedArrays from './merge-sorted-2';
 
 describe('Merges arrays', () => {
   it('merges an empty array', () => {

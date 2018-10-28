@@ -1,14 +1,12 @@
-export function mergeSortedArrays(...sortedArrays) {
+export default (...sortedArrays) => {
   return [].concat(...sortedArrays).reduce(store => {
     const arrayIndex = smallestArrayIndex(sortedArrays, store.indexies);
-    store.sortedArray.push(
-      sortedArrays[arrayIndex][store.indexies[arrayIndex]]
-    );
+    store.sortedArray.push(sortedArrays[arrayIndex][store.indexies[arrayIndex]]);
     store.indexies[arrayIndex] += 1;
 
     return store;
   }, initialStore(sortedArrays)).sortedArray;
-}
+};
 
 function smallestArrayIndex(sortedArrays, indexies) {
   return sortedArrays.reduce(
