@@ -1,4 +1,4 @@
-import { countWords } from './counts';
+import countWords from './counts';
 
 describe('...', () => {
   let wordMap;

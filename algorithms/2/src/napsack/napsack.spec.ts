@@ -1,4 +1,4 @@
-import { maxDuffelBagValue } from './napsack';
+import maxDuffelBagValue from './napsack';
 
 describe('...', () => {
   const cakeTypes = [{ weight: 7, value: 160 }, { weight: 3, value: 90 }, { weight: 2, value: 15 }];

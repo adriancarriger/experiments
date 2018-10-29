@@ -1,4 +1,4 @@
-export function maxDuffelBagValue(cakeTypes: CakeType[], capacity: number): number {
+export default (cakeTypes: CakeType[], capacity: number) => {
   const maxValues = new Array(capacity + 1).fill(0);
 
   for (let i = 0; i <= capacity; i++) {
@@ -7,17 +7,16 @@ export function maxDuffelBagValue(cakeTypes: CakeType[], capacity: number): numb
         return Infinity;
       }
       if (cakeTypes[j].weight <= i) {
-        const newValue = cakeTypes[j].value + maxValues[i - cakeTypes[j].weight];
-        maxValues[i] = Math.max(newValue, maxValues[i]);
+        const value = cakeTypes[j].value + maxValues[i - cakeTypes[j].weight];
+        maxValues[i] = Math.max(value, maxValues[i]);
       }
     }
   }
 
   return maxValues[capacity];
-}
+};
 
-interface CakeType {
+export interface CakeType {
   weight: number;
   value: number;
-  ratio?: number;
 }

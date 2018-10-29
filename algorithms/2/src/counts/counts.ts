@@ -1,15 +1,6 @@
-export function countWords(input: string) {
-  return normalizeInput(input)
+export default (input: string): Map<string, number> =>
+  input
+    .replace(/[,'.():]/g, '')
+    .toLowerCase()
     .split(' ')
-    .reduce((previous, current) => {
-      previous.set(current, (previous.get(current) || 0) + 1);
-      return previous;
-    }, new Map());
-}
-
-function normalizeInput(input) {
-  return input
-    .split(/['.:;?!~,`"&|()<>{}\[\]\r\n/\\]+/)
-    .join('')
-    .toLowerCase();
-}
+    .reduce((wordMap, word) => wordMap.set(word, 1 + (wordMap.get(word) || 0)), new Map());
