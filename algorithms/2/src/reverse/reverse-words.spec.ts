@@ -1,4 +1,4 @@
-import { reverseWords } from './reverse-words';
+import reverseWords from './reverse-words';
 
 describe('Reverse words', () => {
   let input;

@@ -1,4 +1,4 @@
-import { mergeRanges } from './meetings';
+import mergeRanges from './meetings';
 
 describe('...', () => {
   it('...', () => {

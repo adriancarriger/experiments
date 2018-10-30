@@ -1,17 +1,17 @@
-export function reverseWords(message: string[]) {
-  reverseCharacters(message, 0, message.length - 1);
+export default (input: string[]) => {
+  reverseInPlace(input);
   let start = 0;
 
-  for (let i = 0; i <= message.length; i++) {
-    if (i === message.length || message[i] === ' ') {
-      reverseCharacters(message, start, i - 1);
+  for (let i = 0; i <= input.length; i++) {
+    if (input[i] === ' ' || i === input.length) {
+      reverseInPlace(input, start, i - 1);
       start = ++i;
     }
   }
-}
+};
 
-function reverseCharacters(array, start: number, end: number) {
-  for (; start < end; start++, end--) {
-    [array[start], array[end]] = [array[end], array[start]];
+function reverseInPlace(input: string[], first = 0, last = input.length - 1) {
+  for (; first < last; first++, last--) {
+    [input[first], input[last]] = [input[last], input[first]];
   }
 }

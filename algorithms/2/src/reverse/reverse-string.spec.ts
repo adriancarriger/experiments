@@ -1,4 +1,4 @@
-import { reverse } from './reverse-string';
+import reverse from './reverse-string';
 
 describe('Reverse strings', () => {
   let input;

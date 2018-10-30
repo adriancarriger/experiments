@@ -1,22 +1,24 @@
-export function mergeRanges(input: Meeting[]) {
-  const meetings = [...input].sort((a, b) => a.startTime - b.startTime);
-  const mergedRanges = [];
+export default (meetings: Meeting[]) => {
+  meetings.sort((a, b) => a.startTime - b.startTime);
+  let meeting: Meeting = meetings[0];
 
-  let meeting = meetings.shift();
-  for (let i = 0; i < meetings.length; i++) {
+  const mergedMeetings = [];
+
+  for (let i = 1; i < meetings.length; i++) {
     if (meetings[i].startTime > meeting.endTime) {
-      mergedRanges.push(meeting);
+      mergedMeetings.push(meeting);
       meeting = meetings[i];
     } else if (meetings[i].endTime > meeting.endTime) {
       meeting.endTime = meetings[i].endTime;
     }
   }
-  mergedRanges.push(meeting);
 
-  return mergedRanges;
-}
+  mergedMeetings.push(meeting);
 
-export interface Meeting {
+  return mergedMeetings;
+};
+
+interface Meeting {
   startTime: number;
   endTime: number;
 }
