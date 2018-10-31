@@ -1,21 +1,51 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-class App extends Component {
+import './App.css';
+import TodoList from './components/TodoList';
+import TodoItems from './components/TodoItems';
+
+export default class App extends Component {
+  handleInput = e => {
+    const currentItem = { text: e.target.value, key: Date.now() };
+    this.setState({ currentItem });
+  };
+
+  addItem = e => {
+    e.preventDefault();
+    if (this.state.currentItem.text !== '') {
+      this.setState({
+        items: [...this.state.items, this.state.currentItem],
+        currentItem: { text: '', key: '' }
+      });
+    }
+  };
+
+  deleteTodo = key => {
+    this.setState({ items: this.state.items.filter(item => item.key !== key) });
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: [],
+      currentItem: {
+        text: '',
+        key: ''
+      }
+    };
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <TodoList
+          addItem={this.addItem}
+          handleInput={this.handleInput}
+          currentItem={this.state.currentItem}
+        />
+
+        <TodoItems todos={this.state.items} deleteTodo={this.deleteTodo} />
       </div>
     );
   }
 }
-
-export default App;
