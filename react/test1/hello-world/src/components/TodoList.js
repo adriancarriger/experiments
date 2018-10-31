@@ -1,27 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class extends Component {
-  inputElement = React.createRef();
+export default ({ addItem }) => {
+  let input = {};
 
-  componentDidUpdate() {
-    this.inputElement.current.focus();
-  }
-
-  render() {
-    return (
-      <div className="todoListMain">
-        <div className="header">
-          <form onSubmit={this.props.addItem}>
-            <input
-              placeholder="Task"
-              ref={this.inputElement}
-              onChange={this.props.handleInput}
-              value={this.props.currentItem.text}
-            />
-            <button type="submit">Add task</button>
-          </form>
-        </div>
+  return (
+    <div className="todoListMain">
+      <div className="header">
+        <form
+          onSubmit={event => {
+            event.preventDefault();
+            addItem(input.value);
+            input.value = '';
+          }}
+        >
+          <input placeholder="Task" ref={node => (input = node)} />
+          <button type="submit">Add task</button>
+        </form>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};

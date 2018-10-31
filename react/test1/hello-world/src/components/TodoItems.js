@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 export default class extends Component {
   createTasks = item => (
-    <li key={item.key} onClick={e => this.props.deleteTodo(item.key)}>
+    <li key={item.id} onClick={() => this.props.deleteTodo(item.id)}>
       {item.text}
     </li>
   );

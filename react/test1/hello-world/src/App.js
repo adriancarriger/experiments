@@ -5,45 +5,25 @@ import TodoList from './components/TodoList';
 import TodoItems from './components/TodoItems';
 
 export default class App extends Component {
-  handleInput = e => {
-    const currentItem = { text: e.target.value, key: Date.now() };
-    this.setState({ currentItem });
-  };
-
-  addItem = e => {
-    e.preventDefault();
-    if (this.state.currentItem.text !== '') {
-      this.setState({
-        items: [...this.state.items, this.state.currentItem],
-        currentItem: { text: '', key: '' }
-      });
+  addItem = input => {
+    if (input !== '') {
+      this.setState({ items: [...this.state.items, { text: input, id: Date.now() }] });
     }
   };
 
-  deleteTodo = key => {
-    this.setState({ items: this.state.items.filter(item => item.key !== key) });
+  deleteTodo = id => {
+    this.setState({ items: this.state.items.filter(item => item.id !== id) });
   };
 
   constructor(props) {
     super(props);
-    this.state = {
-      items: [],
-      currentItem: {
-        text: '',
-        key: ''
-      }
-    };
+    this.state = { items: [] };
   }
 
   render() {
     return (
       <div className="App">
-        <TodoList
-          addItem={this.addItem}
-          handleInput={this.handleInput}
-          currentItem={this.state.currentItem}
-        />
-
+        <TodoList addItem={this.addItem} />
         <TodoItems todos={this.state.items} deleteTodo={this.deleteTodo} />
       </div>
     );
