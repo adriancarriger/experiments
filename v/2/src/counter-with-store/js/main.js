@@ -5,7 +5,6 @@ class Component extends HTMLElement {
     super();
 
     this.$store = store;
-    this.listeners = new Set();
   }
 
   listenForAll(eventType) {
@@ -17,31 +16,39 @@ class Component extends HTMLElement {
       }
     };
     this.addEventListener(eventType, callback);
-    this.listeners.add({ name: eventType, callback });
 
     return callback;
-  }
-
-  disconnectedCallback() {
-    this.listeners.forEach(({ name, callback }) => {
-      this.removeEventListener(name, callback);
-    });
   }
 }
 
 class MyCounter extends Component {
   connectedCallback() {
     this.listenForAll('click');
+    document.addEventListener('keydown', this.onKeypress.bind(this));
   }
 
   incrementCounter() {
     this.$store.commit('increment');
   }
+
+  decrementCounter() {
+    this.$store.commit('decrement');
+  }
+
+  onKeypress({ key }) {
+    if (['ArrowRight', 'ArrowUp'].includes(key)) {
+      this.incrementCounter();
+    }
+
+    if (['ArrowLeft', 'ArrowDown'].includes(key)) {
+      this.decrementCounter();
+    }
+  }
 }
 
 class CounterValue extends Component {
   connectedCallback() {
-    this.$store.on('increment', () => this.render());
+    this.$store.on(['increment', 'decrement'], () => this.render());
     this.render();
   }
 
