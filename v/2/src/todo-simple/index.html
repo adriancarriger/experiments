@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Counter with store</title>
+  <title>Simple Todo</title>
 
   <script type="module">
     import './js/main.js';
@@ -15,19 +15,25 @@
   <style>
     @import './css/main.css';
   </style>
-
 </head>
 
 <body>
 
   <div class="container">
-    <h1>Counter</h1>
 
-    <my-counter>
-      <button name="decrementCounter">-1</button>
-      <counter-value></counter-value>
-      <button name="incrementCounter">+1</button>
-    </my-counter>
+    <h1>Todo list</h1>
+
+    <todo-app>
+      <form name="onSubmit">
+        <input autofocus todo-input placeholder="What needs to be done?" />
+      </form>
+      <ul todo-list></ul>
+
+      <div>
+        <span todo-count></span>
+      </div>
+    </todo-app>
+
   </div>
 
 </body>

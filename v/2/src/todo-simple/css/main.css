@@ -1,0 +1,95 @@
+* {
+  box-sizing: border-box;
+}
+
+:focus {
+  outline: 0;
+}
+
+html {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font: 400 24px/1.3 -apple-system, BlinkMacSystemFont, Helvetica, sans-serif;
+  letter-spacing: 1px;
+  margin: 0;
+  background: white;
+  min-height: 100%;
+  color: black;
+}
+
+h1 {
+  font-size: 3em;
+}
+
+button,
+input {
+  background-color: transparent;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  outline: 0;
+}
+
+button {
+  padding: 0 0.8em;
+  height: 2em;
+  margin-top: auto;
+  border-radius: 0.1em;
+  cursor: pointer;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+  max-width: 40rem;
+}
+
+[todo-app] form {
+  width: 100%;
+}
+
+[todo-input] {
+  background: white;
+  padding: 0.5em;
+  margin: 1em 0;
+  width: 100%;
+  border: 1px solid black;
+}
+
+[todo-list] {
+  list-style: none;
+  padding: 0;
+}
+
+.complete + span {
+  text-decoration: line-through;
+}
+
+[todo-list] li {
+  list-style: none;
+  position: relative;
+  border-bottom: 1px solid black;
+  padding: 0.5em;
+  padding-top: 1em;
+  user-select: none;
+}
+
+[todo-list] li button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+[todo-list] li:not(:hover) button {
+  display: none;
+}
+
+[todo-count] {
+  font-weight: 200;
+  font-size: 0.8em;
+}
