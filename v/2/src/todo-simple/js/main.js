@@ -26,7 +26,7 @@ class TodoApp extends StatefulComponent {
   connectedCallback() {
     this.state = { todos: new Map(), todoId: 0 };
     this.getAppElements();
-    this.renderCount(0);
+    this.updateCount(0);
   }
 
   /**
@@ -43,9 +43,10 @@ class TodoApp extends StatefulComponent {
     newTodo.innerHTML = html`
       <label>
         <input type='checkbox' name="toggleTodo" todoId="${id}">
+        <div class="faux-checkbox"></div>
         <span>${value}</span>
-        <button name="removeTodo" todoId="${id}">x</button>
       </label>
+      <button name="removeTodo" todoId="${id}">x</button>
     `;
     this.list.appendChild(newTodo);
     this.updateCount();
@@ -53,14 +54,13 @@ class TodoApp extends StatefulComponent {
 
   renderUpdateTodo(element, complete) {
     const action = complete ? 'add' : 'remove';
-    element.classList[action]('complete');
+    element.parentElement.classList[action]('complete');
 
     this.updateCount();
   }
 
-  renderCount(newCount) {
-    const items = newCount === 1 ? 'item' : 'items';
-    this.todoCount.innerText = `${newCount} ${items}`;
+  renderCount(countText) {
+    this.todoCount.innerText = countText;
   }
 
   renderInputValue(newValue) {
@@ -107,12 +107,15 @@ class TodoApp extends StatefulComponent {
   removeTodo(event) {
     const todoId = event.target.getAttribute('todoId');
     this.state.todos.delete(todoId);
-    this.renderRemoveTodo(event.target.parentElement.parentElement);
+    this.renderRemoveTodo(event.target.parentElement);
   }
 
-  updateCount() {
-    const count = [...this.state.todos.values()].reduce((p, c) => p + (c.complete ? 0 : 1), 0);
-    this.renderCount(count);
+  updateCount(count) {
+    if (!count) {
+      count = [...this.state.todos.values()].reduce((p, c) => p + (c.complete ? 0 : 1), 0);
+    }
+    const items = count === 1 ? 'item' : 'items';
+    this.renderCount(`${count} ${items}`);
   }
 }
 

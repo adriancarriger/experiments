@@ -64,7 +64,7 @@ button {
   padding: 0;
 }
 
-.complete + span {
+.complete span {
   text-decoration: line-through;
 }
 
@@ -73,8 +73,45 @@ button {
   position: relative;
   border-bottom: 1px solid black;
   padding: 0.5em;
-  padding-top: 1em;
+  padding-top: 1.2em;
   user-select: none;
+}
+
+[todo-list] input[type='checkbox'] {
+  opacity: 0;
+  font-size: 3em;
+}
+
+[todo-list] .faux-checkbox {
+  position: absolute;
+  left: 0.5em;
+  width: 1.5em;
+  height: 1.5em;
+  border: solid 1px black;
+  margin: auto;
+  bottom: 0.4em;
+}
+
+[todo-list] .faux-checkbox:after {
+  border: 3px solid #276ef1;
+  border-top: none;
+  border-right: none;
+  content: '';
+  height: 0.5rem;
+  width: 1rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  opacity: 0;
+  bottom: 0.2em;
+  margin: auto;
+  transform: rotate(-45deg);
+}
+
+[todo-list] input[type='checkbox']:checked + .faux-checkbox:after,
+input[type='checkbox']:active + .faux-checkbox:after {
+  opacity: 1;
 }
 
 [todo-list] li button {
