@@ -45,8 +45,8 @@ class TodoApp extends StatefulComponent {
         <input type='checkbox' name="toggleTodo" todoId="${id}">
         <div class="faux-checkbox"></div>
         <span>${value}</span>
+        <button name="removeTodo" todoId="${id}">x</button>
       </label>
-      <button name="removeTodo" todoId="${id}">x</button>
     `;
     this.list.appendChild(newTodo);
     this.updateCount();
