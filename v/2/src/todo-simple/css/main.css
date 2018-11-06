@@ -75,6 +75,12 @@ button {
   padding: 0.5em;
   padding-top: 1.2em;
   user-select: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+[todo-list] label {
+  white-space: nowrap;
 }
 
 [todo-list] input[type='checkbox'] {
