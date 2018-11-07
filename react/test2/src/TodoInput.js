@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { addTodo } from './actions';
+import { addTodo } from './store/actions';
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -12,8 +12,7 @@ const mapDispatchToProps = dispatch => {
 class TodoInput extends Component {
   handleSubmit = event => {
     event.preventDefault();
-    console.log('on submit', this.state.todoText);
-    this.props.addTodo({ text: this.state.todoText });
+    this.props.addTodo(this.state.todoText);
     this.setState({ todoText: '' });
   };
 
@@ -35,6 +34,7 @@ class TodoInput extends Component {
             value={this.state.todoText}
             onChange={this.handleInput}
             placeholder="What needs to be done?"
+            className="todo-input"
           />
         </form>
       </div>
