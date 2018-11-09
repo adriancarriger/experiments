@@ -1,8 +1,16 @@
-import { combinations } from './coins';
+import combinations from './coins';
 
 describe('...', () => {
   it('...', () => {
     expect(combinations(4, [3, 2, 1])).toBe(4);
+  });
+
+  it('...', () => {
+    expect(combinations(140000, [104, 140000, 99])).toBe(1);
+  });
+
+  it('...', () => {
+    expect(combinations(140000, [99, 140000, 104, 1])).toBe(953214);
   });
 
   it('...', () => {

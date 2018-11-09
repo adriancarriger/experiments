@@ -1,5 +1,5 @@
-export function combinations(amount, coins) {
-  coins.sort();
+export default (amount, coins) => {
+  coins.sort((a, b) => a - b);
   const ways = [1];
 
   coins.forEach(coin => {
@@ -9,4 +9,4 @@ export function combinations(amount, coins) {
   });
 
   return ways[amount];
-}
+};

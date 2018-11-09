@@ -1,4 +1,4 @@
-import { getFib } from './fib';
+import getFib from './fib';
 
 describe('...', () => {
   it('...', () => {
