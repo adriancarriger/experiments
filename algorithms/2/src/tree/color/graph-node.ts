@@ -1,4 +1,4 @@
-export class GraphNode {
+export default class GraphNode {
   public neighbors: Set<GraphNode> = new Set();
   public color: string;
 

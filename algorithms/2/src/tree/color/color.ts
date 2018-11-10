@@ -1,53 +1,39 @@
-import { GraphNode } from './graph-node';
+import GraphNode from './graph-node';
 
-export function applyLegalColoring(graph: GraphNode[]) {
+export default (graph: GraphNode[]) => {
   const colors = new Colors();
-  graph[0].color = colors.nextColor();
 
-  graph.forEach(current => {
-    colors.colorsNeeded(current.neighbors.size + 1);
-
-    current.neighbors.forEach(neighbor => {
-      if (!neighbor.color) {
-        for (let i = 0; i < colors.colorCount; i++) {
-          const nextColor = colors.nextColor();
-          if (current.color !== nextColor) {
-            neighbor.color = nextColor;
-            break;
-          }
-        }
-      }
-    });
+  graph.forEach(node => {
+    const illegalColors = new Set(node.color);
+    [...node.neighbors].forEach(neighbor => illegalColors.add(neighbor.color));
+    node.color = colors.next(illegalColors);
   });
-}
+};
 
 class Colors {
   public colorCount = 0;
   private colors: string[] = [];
   private colorPointer = 0;
 
-  constructor() {
-    this.colorsNeeded(1);
-  }
+  public next(illegalColors?) {
+    for (let i = 0; i < this.colors.length; i++) {
+      this.colorPointer++;
+      if (this.colorPointer > this.colors.length) {
+        this.colorPointer = 0;
+      }
+      if (![...illegalColors, undefined].includes(this.colors[this.colorPointer])) {
+        return this.colors[this.colorPointer];
+      }
+    }
 
-  public nextColor() {
-    this.colorPointer = this.colorPointer === this.colors.length - 1 ? 0 : this.colorPointer + 1;
+    this.addColor();
+
     return this.colors[this.colorPointer];
-  }
-
-  public colorsNeeded(total: number) {
-    if (total <= this.colorCount) {
-      return;
-    }
-
-    const colorsToAdd = total - this.colorCount;
-    for (let i = 0; i < colorsToAdd; i++) {
-      this.addColor();
-    }
   }
 
   private addColor() {
     this.colorCount++;
     this.colors.push(`C-${this.colorCount}`);
+    this.colorPointer = this.colors.length - 1;
   }
 }

@@ -1,5 +1,5 @@
-import { applyLegalColoring } from './color';
-import { GraphNode } from './graph-node';
+import applyLegalColoring from './color';
+import GraphNode from './graph-node';
 
 describe('...', () => {
   it('...', () => {
