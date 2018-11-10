@@ -1,4 +1,4 @@
-'use-strict';
+'use strict';
 
 function Shape(x, y) {
   this.x = x;
@@ -11,7 +11,7 @@ Shape.prototype.move = function(x, y) {
 };
 
 function Circle(x, y, r) {
-  Shape.apply(this, [x, y]);
+  Shape.call(this, x, y);
   this.r = r;
 }
 
@@ -22,4 +22,4 @@ Circle.prototype.area = function() {
   return this.r * 2 * Math.PI;
 };
 
-module.exports = { Shape: Shape, Circle: Circle };
+module.exports = { Circle: Circle, Shape: Shape };
