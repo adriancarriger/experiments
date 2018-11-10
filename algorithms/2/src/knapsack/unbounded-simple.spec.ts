@@ -1,7 +1,3 @@
-/**
- * Also known as the 0/1 knapsack problem
- * @see https://en.wikipedia.org/wiki/Knapsack_problem#0/1_knapsack_problem
- */
 import maxKnapsackValue from './unbounded-simple';
 
 describe('...', () => {
