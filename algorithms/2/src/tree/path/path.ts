@@ -1,31 +1,31 @@
-export function getPath(network: Network, startNode: string, endNode: string): string[] {
-  const nodes = [startNode];
+export default (network: Network, startNode, endNode) => {
+  let nodes: string[] = [startNode];
   const breadcrumbs = {};
 
   while (nodes.length) {
-    const current = nodes.shift();
+    const node = nodes.shift();
 
-    if (current === endNode) {
-      break;
-    }
+    (network[node] || []).forEach(neighbor => {
+      if (!(neighbor in breadcrumbs)) {
+        breadcrumbs[neighbor] = node;
 
-    (network[current] || []).forEach(neighbor => {
-      if (!breadcrumbs[neighbor]) {
-        breadcrumbs[neighbor] = current;
+        if (neighbor === endNode) {
+          nodes = [];
+          return;
+        }
+
         nodes.push(neighbor);
       }
     });
   }
 
-  let breadcrumb = endNode;
-  const path = [endNode];
-  while (breadcrumb !== startNode) {
-    breadcrumb = breadcrumbs[breadcrumb];
-    path.push(breadcrumb);
+  const path: string[] = [endNode];
+  while (path[0] !== startNode) {
+    path.unshift(breadcrumbs[path[0]]);
   }
 
-  return path.reverse();
-}
+  return path;
+};
 
 export interface Network {
   [key: string]: string[];

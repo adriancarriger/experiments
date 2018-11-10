@@ -1,4 +1,4 @@
-import { getPath, Network } from './path';
+import getPath, { Network } from './path';
 
 const network: Network = {
   Min: ['William', 'Jayden', 'Omar'],
