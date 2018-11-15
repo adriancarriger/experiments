@@ -8,8 +8,11 @@ class StatefulComponent extends HTMLElement {
   }
 
   initListeners() {
-    ['submit', 'change', 'click'].forEach(type => {
-      this.addEventListener(type, event => this.routeEvents(event));
+    this.listeners = ['submit', 'change', 'click'].map(type => {
+      const callback = event => this.routeEvents(event);
+      this.addEventListener(type, callback);
+
+      return { type, remove: () => this.removeEventListener(type, callback) };
     });
   }
 
@@ -42,10 +45,9 @@ class TodoApp extends StatefulComponent {
     newTodo.id = id;
     newTodo.innerHTML = html`
       <label>
-        <input type='checkbox' name="toggleTodo" todoId="${id}">
+        <input type="checkbox" name="toggleTodo" todoId="${id}" />
         <div class="faux-checkbox"></div>
-        <span>${value}</span>
-        <button name="removeTodo" todoId="${id}">x</button>
+        <span>${value}</span> <button name="removeTodo" todoId="${id}">x</button>
       </label>
     `;
     this.list.appendChild(newTodo);
