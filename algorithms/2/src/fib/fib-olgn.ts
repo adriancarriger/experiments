@@ -1,37 +1,27 @@
 // O(lg(n))
-export function getFib(n) {
-  const a = [[1, 1], [1, 0]];
-  const aToTheN = powerMatrix(a, n);
-  const start = [[1], [0]];
-  const end = multiplyMatrix(aToTheN, start);
+export default n => (n < 2 ? n : raise([1, 1, 0], n - 1)[0]);
 
-  return end[1][0];
+const memo = {};
+
+function multiply(...matrices) {
+  return matrices.reduce(([a, b, c], [d, e, f]) => [a * d + b * e, a * e + b * f, b * e + c * f]);
 }
 
-function multiplyMatrix(Matrix1, Matrix2) {
-  // prettier-ignore
-  const [
-    [a1, b1],
-    [c1, d1]
-  ]: number[][] = Matrix1;
-  // prettier-ignore
-  const [
-    [a2, b2],
-    [c2, d2]
-  ]: number[][] = Matrix2;
-
-  return [[a1 * a2 + b1 * c2, a1 * b2 + b1 * d2], [c1 * a2 + d1 * c2, c1 * b2 + d1 * d2]];
-}
-
-function powerMatrix(a, n) {
-  if (n == 1) {
-    return a;
-  }
-  const half = powerMatrix(a, (n - (n % 2)) / 2);
-  let ret = multiplyMatrix(half, half);
-  if (n % 2) {
-    ret = multiplyMatrix(ret, a);
+function raise(matrix, n) {
+  if (n === 1) {
+    return matrix;
   }
 
-  return ret;
+  if (memo[n] !== undefined) {
+    return memo[n];
+  }
+
+  const halves = raise(matrix, Math.floor(n / 2));
+  const items = [halves, halves];
+
+  if (n % 2 !== 0) {
+    items.push(matrix);
+  }
+
+  return (memo[n] = multiply(...items));
 }
