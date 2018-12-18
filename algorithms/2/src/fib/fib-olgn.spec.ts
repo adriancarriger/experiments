@@ -2,11 +2,11 @@ import getFib from './fib-olgn';
 
 describe('...', () => {
   it('...', () => {
-    expect(getFib(1)).toBe(1);
+    expect(getFib(0)).toBe(0);
   });
 
   it('...', () => {
-    expect(getFib(0)).toBe(0);
+    expect(getFib(1)).toBe(1);
   });
 
   it('...', () => {
@@ -15,6 +15,18 @@ describe('...', () => {
 
   it('...', () => {
     expect(getFib(3)).toBe(2);
+  });
+
+  it('...', () => {
+    expect(getFib(4)).toBe(3);
+  });
+
+  it('...', () => {
+    expect(getFib(5)).toBe(5);
+  });
+
+  it('...', () => {
+    expect(getFib(6)).toBe(8);
   });
 
   it('...', () => {
