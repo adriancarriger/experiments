@@ -1,27 +1,25 @@
 // O(lg(n))
-export default n => (n < 2 ? n : raise([1, 1, 0], n - 1)[0]);
+export default n => raise([1, 1, 0], n - 1)[0];
 
 const memo = {};
 
-function multiply(...matrices) {
-  return matrices.reduce(([a, b, c], [d, e, f]) => [a * d + b * e, a * e + b * f, b * e + c * f]);
+function multiply([a, b, c]: number[], [d, e, f]: number[]) {
+  return [a * d + b * e, a * e + b * f, b * e + c * f];
 }
 
-function raise(matrix, n) {
+function raise(matrix: number[], n: number) {
   if (n === 1) {
     return matrix;
-  }
-
-  if (memo[n] !== undefined) {
+  } else if (memo[n] !== undefined) {
     return memo[n];
   }
 
   const halves = raise(matrix, Math.floor(n / 2));
-  const items = [halves, halves];
+  let result = multiply(halves, halves);
 
   if (n % 2 !== 0) {
-    items.push(matrix);
+    result = multiply(result, matrix);
   }
 
-  return (memo[n] = multiply(...items));
+  return (memo[n] = result);
 }
