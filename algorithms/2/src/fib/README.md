@@ -1,5 +1,9 @@
 # Matrix multiplication
 
+## Viewing this file
+
+I'm using a [Chrome plugin](https://chrome.google.com/webstore/detail/mathjax-plugin-for-github/ioemnmodlmafdkllaclgeombjnmnbima) to view [Mathjax](https://www.mathjax.org/) markup
+
 ## Base
 
 $$
