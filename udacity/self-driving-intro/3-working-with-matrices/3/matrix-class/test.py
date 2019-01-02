@@ -59,6 +59,18 @@ def test():
         [1, 0]
     ])
 
+    m4 = m.Matrix([
+        [1, 0, 5],
+        [2, 1, 6],
+        [3, 4, 0]
+    ])
+
+    m4_inv = m.Matrix([
+        [-24.0, 20.0, -5],
+        [18.0, -15.0, 4],
+        [5.0, -4.0, 1.0]
+    ])
+
     assert equal(-I2, I2_neg), "Error in your __neg__ function"
     assert equal(I2 + I2_neg, zero), "Error in your __add__ function"
     assert equal(m1 * m2, m1_x_m2), "Error in your __mul__ function"
@@ -75,8 +87,8 @@ def test():
         left_ones.T(), top_ones), "Error in your T function (transpose)"
     assert equal(top_ones - left_ones.T(), m.zeroes(2, 2)
                  ), "Error in your __sub__ function"
-    assert (4*m.identity(5))[0][0] == 4, "Error in your __rmul__ function"
-    assert (4*m.identity(5)).trace() == 20, "Error in your trace function"
+    assert (4 * m.identity(5))[0][0] == 4, "Error in your __rmul__ function"
+    assert (4 * m.identity(5)).trace() == 20, "Error in your trace function"
 
     assert type(-I2) == type(I2_neg), "Error: Your __neg__ function does not return a Matrix does not return a Matrix"
     assert type(
@@ -95,6 +107,12 @@ def test():
         top_ones), "Error: Your T function (transpose) does not return a Matrix"
     assert type(top_ones - left_ones.T()) == type(m.zeroes(2, 2)
                                                   ), "Error: Your __sub__ function does not return a Matrix"
+
+    # Custom tests
+    assert m1_x_m2.determinant() == -18, "Error in your determinant function"
+    assert equal(
+        m4.inverse(), m4_inv), """Error in your inverse function for the 3 x 3 case"""
+
     print("Congratulations! All tests pass. Your Matrix class is working as expected.")
 
 
