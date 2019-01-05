@@ -1,9 +1,7 @@
 #include <iostream>
 using namespace std;
 
-int main()
-{
-
+int main() {
   float x = 25;
   float y = 61.4;
   float z = 199.2;

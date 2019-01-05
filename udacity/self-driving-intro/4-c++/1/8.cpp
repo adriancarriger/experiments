@@ -1,8 +1,6 @@
 #include <iostream>
 
-int main()
-{
-
+int main() {
   // TODO: define two floating point numbers. Assign 12.07 to the
   // first floating point number. Assign 65.102 to the
   // second floating point number.
