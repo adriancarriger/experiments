@@ -14,6 +14,7 @@
 #include <cmath>
 #include <fstream>
 #include <iostream>
+#include <numeric>
 #include <string>
 #include <vector>
 // #include "debugging_helpers.cpp"
@@ -21,21 +22,30 @@
 using namespace std;
 
 /**
-        TODO - implement this function
+  Normalizes a grid of numbers.
 
-    Normalizes a grid of numbers.
+  @param grid - a two dimensional grid (vector of vectors of floats)
+                  where each entry represents the unnormalized probability
+                  associated with that grid cell.
 
-    @param grid - a two dimensional grid (vector of vectors of floats)
-                   where each entry represents the unnormalized probability
-                   associated with that grid cell.
-
-    @return - a new normalized two dimensional grid where the sum of
-           all probabilities is equal to one.
+  @return - a new normalized two dimensional grid where the sum of
+          all probabilities is equal to one.
 */
 vector<vector<float> > normalize(vector<vector<float> > grid) {
-  vector<vector<float> > newGrid;
+  vector<vector<float> > newGrid(grid.size());
 
-  // todo - your code here
+  float total = 0;
+  for (int row = 0; row < grid.size(); row++) {
+    for (int column = 0; column < grid[row].size(); column++) {
+      total += grid[row][column];
+    }
+  }
+
+  for (int row = 0; row < grid.size(); row++) {
+    for (int column = 0; column < grid[row].size(); column++) {
+      newGrid[row].push_back(grid[row][column] / total);
+    }
+  }
 
   return newGrid;
 }
@@ -57,8 +67,8 @@ vector<vector<float> > normalize(vector<vector<float> > grid) {
 
     would look like this:
 
-        0.01  0.02	0.01
-        0.02  0.88	0.02
+        0.01  0.02 0.01
+        0.02  0.88 0.02
         0.01  0.02  0.01
 
     @param grid - a two dimensional grid (vector of vectors of floats)
@@ -84,7 +94,7 @@ vector<vector<float> > blur(vector<vector<float> > grid, float blurring) {
 /** -----------------------------------------------
 #
 #
-#	You do not need to modify any code below here.
+# You do not need to modify any code below here.
 #
 #
 # ------------------------------------------------- */
@@ -146,7 +156,7 @@ vector<char> read_line(string s) {
   string delimiter = " ";
   char cell;
 
-  while ((pos = s.find(delimiter)) != std::string::npos) {
+  while ((pos = s.find(delimiter)) != string::npos) {
     token = s.substr(0, pos);
     s.erase(0, pos + delimiter.length());
 
@@ -173,7 +183,7 @@ vector<vector<char> > read_map(string file_name) {
 
     string line;
 
-    while (std::getline(infile, line)) {
+    while (getline(infile, line)) {
       row = read_line(line);
       map.push_back(row);
     }
@@ -213,7 +223,7 @@ vector<vector<float> > zeros(int height, int width) {
 }
 
 // int main() {
-// 	vector < vector < char > > map = read_map("maps/m1.txt");
-// 	show_grid(map);
-// 	return 0;
+//  vector < vector < char > > map = read_map("maps/m1.txt");
+//  show_grid(map);
+//  return 0;
 // }
