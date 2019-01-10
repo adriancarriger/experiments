@@ -31,8 +31,8 @@ using namespace std;
   @return - a new normalized two dimensional grid where the sum of
           all probabilities is equal to one.
 */
-vector<vector<float> > normalize(vector<vector<float> > grid) {
-  vector<vector<float> > newGrid(grid.size());
+vector<vector<float>> normalize(vector<vector<float>> grid) {
+  vector<vector<float>> newGrid(grid.size());
 
   float total = 0;
   for (int row = 0; row < grid.size(); row++) {
@@ -83,8 +83,8 @@ vector<vector<float> > normalize(vector<vector<float> > grid) {
     @return - a new normalized two dimensional grid where probability
            has been blurred.
 */
-vector<vector<float> > blur(vector<vector<float> > grid, float blurring) {
-  vector<vector<float> > newGrid;
+vector<vector<float>> blur(vector<vector<float>> grid, float blurring) {
+  vector<vector<float>> newGrid;
 
   // your code here
 
@@ -111,7 +111,7 @@ vector<vector<float> > blur(vector<vector<float> > grid, float blurring) {
     @return - A boolean (True or False) indicating whether
     these grids are (True) or are not (False) equal.
 */
-bool close_enough(vector<vector<float> > g1, vector<vector<float> > g2) {
+bool close_enough(vector<vector<float>> g1, vector<vector<float>> g2) {
   int i, j;
   float v1, v2;
   if (g1.size() != g2.size()) {
@@ -174,9 +174,9 @@ vector<char> read_line(string s) {
 
     @return - A grid of chars representing a map.
 */
-vector<vector<char> > read_map(string file_name) {
+vector<vector<char>> read_map(string file_name) {
   ifstream infile(file_name);
-  vector<vector<char> > map;
+  vector<vector<char>> map;
   if (infile.is_open()) {
     char color;
     vector<char> row;
@@ -207,9 +207,9 @@ vector<vector<char> > read_map(string file_name) {
 
     @return a grid of zeros (floats)
 */
-vector<vector<float> > zeros(int height, int width) {
+vector<vector<float>> zeros(int height, int width) {
   int i, j;
-  vector<vector<float> > newGrid;
+  vector<vector<float>> newGrid;
   vector<float> newRow;
 
   for (i = 0; i < height; i++) {
