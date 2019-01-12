@@ -105,6 +105,10 @@ vector<vector<float>> blur(vector<vector<float>> grid, float blurring) {
           int mult = window[dx + 1][dy + 1];
           int new_i = (row + dy) % height;
           int new_j = (column + dx) % width;
+          cout << "\n\nnew_i => " << new_i << "\nnew_j => " << new_j;
+          int temp = mult * grid_val;
+          // newGrid[new_i][new_j] = 0;
+          // newGrid[new_i][new_j] += mult * grid_val;
         }
       }
     }

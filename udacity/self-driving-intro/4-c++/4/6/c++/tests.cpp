@@ -7,7 +7,7 @@ using namespace std;
 int main() {
   cout << endl;
   test_helpers();
-  test_localizer();
+  // test_localizer();
   cout << endl;
   return 0;
 }
@@ -72,6 +72,11 @@ bool test_blur() {
 
   bool right;
   right = close_enough(correct, out);
+
+  cout << "\nYour code returned the following:\n\n";
+  show_grid(out);
+  cout << "Valid output:\n\n";
+  show_grid(correct);
 
   if (right) {
     cout << "! - blur function worked correctly!\n";
@@ -271,5 +276,5 @@ bool test_localizer() {
 }
 
 // bool test_simulation() {
-// 	// todo
+//  // todo
 // }

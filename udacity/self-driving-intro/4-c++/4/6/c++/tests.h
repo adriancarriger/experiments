@@ -22,6 +22,6 @@ bool test_sense();
 // Test for implementation of correct localizer functions
 bool test_localizer();
 
-// bool test_simulation();	// todo
+// bool test_simulation(); // todo
 
 #endif /* TESTS_H */
