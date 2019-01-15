@@ -51,8 +51,11 @@ vector<vector<float>> normalize(vector<vector<float>> grid) {
 }
 
 /**
-        TODO - implement this function.
+ * Performs modulo
+ */
+int modulo(int a, int b) { return (b + (a % b)) % b; }
 
+/**
     Blurs (and normalizes) a grid of probabilities by spreading
     probability from each cell over a 3x3 "window" of cells. This
     function assumes a cyclic world where probability "spills
@@ -102,13 +105,10 @@ vector<vector<float>> blur(vector<vector<float>> grid, float blurring) {
       int grid_val = grid[row][column];
       for (int dx = -1; dx < 2; dx++) {
         for (int dy = -1; dy < 2; dy++) {
-          int mult = window[dx + 1][dy + 1];
-          int new_i = (row + dy) % height;
-          int new_j = (column + dx) % width;
-          cout << "\n\nnew_i => " << new_i << "\nnew_j => " << new_j;
-          int temp = mult * grid_val;
-          // newGrid[new_i][new_j] = 0;
-          // newGrid[new_i][new_j] += mult * grid_val;
+          float mult = window[dx + 1][dy + 1];
+          int new_i = modulo(row + dy, height);
+          int new_j = modulo((column + dx), width);
+          newGrid[new_i][new_j] += mult * grid_val;
         }
       }
     }
