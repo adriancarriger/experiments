@@ -6,8 +6,8 @@ using namespace std;
 
 int main() {
   cout << endl;
-  test_helpers();
-  // test_localizer();
+  // test_helpers();
+  test_localizer();
   cout << endl;
   return 0;
 }
@@ -256,17 +256,17 @@ bool test_localizer() {
 
   cout << endl;
 
-  question_correct = test_move();
-  if (!question_correct) {
-    correct = false;
-  }
+  // question_correct = test_move();
+  // if (!question_correct) {
+  //   correct = false;
+  // }
 
-  cout << endl;
+  // cout << endl;
 
-  question_correct = test_sense();
-  if (!question_correct) {
-    correct = false;
-  }
+  // question_correct = test_sense();
+  // if (!question_correct) {
+  //   correct = false;
+  // }
   return correct;
 }
 
