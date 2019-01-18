@@ -144,9 +144,14 @@ vector<vector<float>> move(int dy, int dx, vector<vector<float>> beliefs, float 
 */
 vector<vector<float>> sense(char color, vector<vector<char>> grid, vector<vector<float>> beliefs,
                             float p_hit, float p_miss) {
-  vector<vector<float>> newGrid;
+  vector<vector<float>> new_beliefs;
+  float total_probability = 0;
+  for (int i = 0; i < grid.size(); i++) {
+    // new_beliefs.push_back()
+    for (int j = 0; j < grid[0].size(); j++) {
+      //
+    }
+  }
 
-  // your code here
-
-  return normalize(newGrid);
+  return normalize(new_beliefs);
 }
