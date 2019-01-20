@@ -6,9 +6,10 @@ using namespace std;
 
 int main() {
   cout << endl;
-  // test_helpers();
+  test_helpers();
   test_localizer();
   cout << endl;
+
   return 0;
 }
 
@@ -42,6 +43,7 @@ bool test_normalize() {
     cout << "\nWhen it should have returned the following:\n";
     show_grid(normalized);
   }
+
   return correct;
 }
 
@@ -103,6 +105,7 @@ bool test_helpers() {
   if (!question_correct) {
     correct = false;
   }
+
   return correct;
 }
 
@@ -120,6 +123,7 @@ bool test_initialize() {
   if (h < 1) {
     cout << "failed to load map. Make sure there is a maps/ directory in the same directory as "
             "this file!\n";
+
     return false;
   }
   w = map[0].size();
@@ -181,6 +185,7 @@ bool test_move() {
     cout << "\nWhen it should have returned the following:\n";
     show_grid(correct);
   }
+
   return right;
 }
 
@@ -221,6 +226,7 @@ bool test_sense() {
     right = false;
     cout << "X - sense function not working correctly.\n";
     cout << "Your function returned a grid with incorrect dimensions.\n";
+
     return right;
   }
 
@@ -233,6 +239,7 @@ bool test_sense() {
 
   if (close_enough(r_prob, r_exp) && close_enough(g_prob, g_exp)) {
     cout << "! - sense function worked correctly\n";
+
     return false;
   } else {
     cout << "X - sense function did not work correctly.\n";
@@ -242,6 +249,7 @@ bool test_sense() {
     show_grid(out);
     cout << "\nbut this is incorrect.\n";
   }
+
   return right;
 }
 
@@ -249,24 +257,25 @@ bool test_localizer() {
   bool correct = true;
   bool question_correct;
 
-  // question_correct = test_initialize();
-  // if (!question_correct) {
-  //   correct = false;
-  // }
+  question_correct = test_initialize();
+  if (!question_correct) {
+    correct = false;
+  }
 
-  // cout << endl;
+  cout << endl;
 
-  // question_correct = test_move();
-  // if (!question_correct) {
-  //   correct = false;
-  // }
+  question_correct = test_move();
+  if (!question_correct) {
+    correct = false;
+  }
 
-  // cout << endl;
+  cout << endl;
 
   question_correct = test_sense();
   if (!question_correct) {
     correct = false;
   }
+
   return correct;
 }
 

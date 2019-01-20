@@ -106,8 +106,6 @@ vector<vector<float>> move(int dy, int dx, vector<vector<float>> beliefs, float 
 }
 
 /**
- TODO - implement this function
-
     Implements robot sensing by updating beliefs based on the
     color of a sensor measurement
 
@@ -144,12 +142,24 @@ vector<vector<float>> move(int dy, int dx, vector<vector<float>> beliefs, float 
 */
 vector<vector<float>> sense(char color, vector<vector<char>> grid, vector<vector<float>> beliefs,
                             float p_hit, float p_miss) {
-  vector<vector<float>> new_beliefs;
+  vector<vector<float>> new_beliefs(grid.size());
   float total_probability = 0;
-  for (int i = 0; i < grid.size(); i++) {
-    // new_beliefs.push_back()
-    for (int j = 0; j < grid[0].size(); j++) {
-      //
+
+  for (unsigned long i = 0; i < grid.size(); i++) {
+    for (unsigned long j = 0; j < grid[0].size(); j++) {
+      if (color == grid[i][j]) {
+        new_beliefs[i].push_back(beliefs[i][j] * p_hit);
+      } else {
+        new_beliefs[i].push_back(beliefs[i][j] * p_miss);
+      }
+
+      total_probability += new_beliefs[i][j];
+    }
+  }
+
+  for (unsigned long i = 0; i < grid.size(); i++) {
+    for (unsigned long j = 0; j < grid[0].size(); j++) {
+      new_beliefs[i][j] = new_beliefs[i][j] / total_probability;
     }
   }
 
