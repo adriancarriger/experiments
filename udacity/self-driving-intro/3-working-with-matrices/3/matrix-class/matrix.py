@@ -1,7 +1,6 @@
 import math
 from math import sqrt
 import numbers
-import numpy as np
 from functools import reduce
 
 
@@ -50,7 +49,11 @@ class Matrix(object):
         if not self.is_square():
             raise(ValueError, "Cannot calculate determinant of non-square matrix.")
 
-        return np.linalg.det(self.numpy_grid()).item()
+        if self.w == 1:
+            return self.g[0][0]
+
+        if self.w == 2:
+            return (self.g[0][0] * self.g[1][1]) - (self.g[0][1] * self.g[1][0])
 
     def trace(self):
         """
@@ -65,10 +68,23 @@ class Matrix(object):
         """
         Calculates the inverse of a Matrix.
         """
+        inverse_grid = []
+
         if not self.is_square():
             raise(ValueError, "Non-square Matrix does not have an inverse.")
 
-        inverse_grid = np.linalg.inv(self.numpy_grid()).tolist()
+        if self.w > 2:
+            raise ValueError('The matrix cannot be greater than 2')
+
+        if self.w == 1:
+            inverse_grid.append([1 / self.g[0][0]])
+
+        if self.w == 2:
+            multiplier = 1 / self.determinant()
+            inverse_grid = [
+                [multiplier * self.g[1][1], multiplier * -self.g[0][1]],
+                [multiplier * -self.g[1][0], multiplier * self.g[0][0]],
+            ]
 
         return Matrix(inverse_grid)
 
@@ -86,9 +102,6 @@ class Matrix(object):
 
     def is_square(self):
         return self.h == self.w
-
-    def numpy_grid(self):
-        return np.array(self.g, dtype=np.float32)
 
     #
     # Begin Operator Overloading

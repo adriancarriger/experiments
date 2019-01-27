@@ -108,11 +108,6 @@ def test():
     assert type(top_ones - left_ones.T()) == type(m.zeroes(2, 2)
                                                   ), "Error: Your __sub__ function does not return a Matrix"
 
-    # Custom tests
-    assert m1_x_m2.determinant() == -18, "Error in your determinant function"
-    assert equal(
-        m4.inverse(), m4_inv), """Error in your inverse function for the 3 x 3 case"""
-
     print("Congratulations! All tests pass. Your Matrix class is working as expected.")
 
 
