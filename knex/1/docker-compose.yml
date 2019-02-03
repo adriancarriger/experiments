@@ -1,0 +1,16 @@
+version: '3.7'
+services:
+  app:
+    build: ./
+    command: yarn start
+    volumes:
+      - ./:/app
+      - /app/node_modules
+  db:
+    image: postgres:alpine
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres:/var/lib/postgresql/data
+volumes:
+  postgres:
