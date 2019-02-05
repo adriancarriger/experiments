@@ -1,16 +1,18 @@
 version: '3.7'
 services:
-  app:
-    build: ./
+  server:
+    build: ./server
     command: yarn start
     volumes:
-      - ./:/app
+      - ./server:/app
       - /app/node_modules
   db:
     image: postgres:alpine
     ports:
       - '5432:5432'
     volumes:
-      - postgres:/var/lib/postgresql/data
-volumes:
-  postgres:
+      - ./postgres/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=docker
