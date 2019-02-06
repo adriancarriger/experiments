@@ -1,0 +1,8 @@
+version: '3.7'
+services:
+  server:
+    build: ./server
+    ports:
+      - '8020:80'
+    volumes:
+      - ./server/src:/var/www/html/
