@@ -11,5 +11,6 @@ export default (nums, k) => {
 
   return Object.keys(frequency)
     .sort((a, b) => frequency[b] - frequency[a])
-    .slice(0, k);
+    .slice(0, k)
+    .map(Number);
 };
