@@ -10,7 +10,7 @@
     core-js "^2.5.7"
     regenerator-runtime "^0.12.0"
 
-"@types/bluebird@^3.5.25":
+"@types/bluebird@*", "@types/bluebird@^3.5.25":
   version "3.5.25"
   resolved "https://registry.yarnpkg.com/@types/bluebird/-/bluebird-3.5.25.tgz#59188b871208092e37767e4b3d80c3b3eaae43bd"
   integrity sha512-yfhIBix+AIFTmYGtkC0Bi+XGjSkOINykqKvO/Wqdz/DuXlAKK7HmhLAXdPIGsV4xzKcL3ev/zYc4yLNo+OvGaw==
@@ -46,6 +46,14 @@
     "@types/body-parser" "*"
     "@types/express-serve-static-core" "*"
     "@types/serve-static" "*"
+
+"@types/knex@^0.15.2":
+  version "0.15.2"
+  resolved "https://registry.yarnpkg.com/@types/knex/-/knex-0.15.2.tgz#0472ace1c371b751cbdb0a26cef32b779a394c99"
+  integrity sha512-mw8OT8v+FK0SsgDdmio2XSkEM/yLD7ybFtiqW7I65EDTlr2aZtG+p9FhryErpNJDJ2FEXgQhe3JVBG0Gh7YbvQ==
+  dependencies:
+    "@types/bluebird" "*"
+    "@types/node" "*"
 
 "@types/mime@*":
   version "2.0.1"

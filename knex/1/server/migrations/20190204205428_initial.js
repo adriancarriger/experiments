@@ -1,8 +1,9 @@
+exports.up = (knex, Promise) =>
+  Promise.all([
+    knex.schema.createTable('person', person => {
+      person.text('first');
+      person.text('last');
+    })
+  ]);
 
-exports.up = function(knex, Promise) {
-  
-};
-
-exports.down = function(knex, Promise) {
-  
-};
+exports.down = (knex, Promise) => Promise.all([knex.schema.dropTableIfExists('person')]);
