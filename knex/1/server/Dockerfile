@@ -10,6 +10,4 @@ RUN yarn
 
 COPY . .
 
-ENTRYPOINT ["./entrypoint.sh"]
-
 CMD [ "yarn", "start" ]
