@@ -1,6 +1,13 @@
-#!/bin/bash
+#!/bin/sh
 set -e
 
-echo "test 223423"
+until PGPASSWORD='docker' psql -h "db" -U "docker" -c '\q'; do
+  >&2 echo "Postgres is unavailable - sleeping"
+  sleep 1
+done
+
+>&2 echo "Postgres is up - running migrations"
+knex migrate:latest
+knex seed:run
 
 exec "$@"

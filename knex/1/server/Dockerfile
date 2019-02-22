@@ -2,9 +2,13 @@ FROM node:alpine
 WORKDIR /app
 
 RUN apk --no-cache add \
-  curl
+  curl \
+  postgresql-client \
+  && yarn global add \
+  knex
 
 COPY package.json .
+COPY yarn.lock .
 
 RUN yarn
 

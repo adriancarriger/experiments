@@ -2,6 +2,10 @@ import * as bodyParser from 'body-parser';
 import * as express from 'express';
 import * as dotenv from 'dotenv';
 
+import { ApolloServer } from 'apollo-server-express';
+import typeDefs from './graphql/schema';
+import resolvers from './graphql/resolvers';
+
 /**
  * Middleware
  */
@@ -21,10 +25,16 @@ export async function createServer() {
 
   connectDb();
 
-  return express()
+  const app = express()
     .disable('x-powered-by')
     .use(assignId)
     .use(bodyParser.json())
     .use(routeLogger as any)
     .use(routeTest());
+
+  const apollo = new ApolloServer({ typeDefs, resolvers });
+
+  apollo.applyMiddleware({ app });
+
+  return app;
 }
