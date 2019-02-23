@@ -14,7 +14,7 @@ export default {
     getBooks: () => books
   },
   Book: {
-    people(parent, args, context, info) {
+    customers(parent, args, context, info) {
       return [{ first: 'bob' }, { first: 'asdf' }];
     }
   }

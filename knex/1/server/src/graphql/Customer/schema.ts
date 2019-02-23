@@ -1,12 +1,12 @@
 import { gql } from 'apollo-server';
 
 export default gql`
-  type Person {
-    first: String
-    last: String
+  type Customer {
+    first_name: String
+    last_name: String
   }
 
   extend type Query {
-    getPeople: [Person]
+    getCustomers: [Customer]
   }
 `;

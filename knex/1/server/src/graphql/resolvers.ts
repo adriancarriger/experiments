@@ -1,6 +1,6 @@
 import { merge } from 'lodash';
 
 import bookResolvers from './Book/resolvers';
-import personResolvers from './Person/resolvers';
+import customerResolvers from './Customer/resolvers';
 
-export default merge(bookResolvers, personResolvers);
+export default merge(bookResolvers, customerResolvers);

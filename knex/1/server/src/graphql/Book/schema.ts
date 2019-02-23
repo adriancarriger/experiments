@@ -4,7 +4,7 @@ export default gql`
   type Book {
     title: String
     author: String
-    people: [Person]
+    customers: [Customer]
   }
 
   extend type Query {
