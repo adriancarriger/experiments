@@ -3,7 +3,7 @@ exports.up = async knex => {
     customer.increments();
     customer.text('first_name');
     customer.text('last_name');
-    customer.timestamps();
+    customer.timestamps(false, true);
   });
   await Promise.all([
     knex.schema.createTable('rental', rental => {
@@ -15,12 +15,12 @@ exports.up = async knex => {
         .foreign('customer_id')
         .references('id')
         .inTable('customer');
-      rental.timestamps();
+      rental.timestamps(false, true);
     }),
     knex.schema.createTable('category', category => {
       category.increments();
       category.text('name');
-      category.timestamps();
+      category.timestamps(false, true);
     }),
     knex.schema.createTable('movie', movie => {
       movie.increments();
@@ -28,15 +28,17 @@ exports.up = async knex => {
       movie.text('director');
       movie.date('year_released');
       movie.integer('cateogory_id');
-      movie.timestamps();
+      movie.timestamps(false, true);
     })
   ]);
 };
 
-exports.down = async knex =>
+exports.down = async knex => {
   await Promise.all([
-    knex.schema.dropTableIfExists('customer'),
     knex.schema.dropTableIfExists('rental'),
     knex.schema.dropTableIfExists('category'),
     knex.schema.dropTableIfExists('movie')
   ]);
+
+  await knex.schema.dropTableIfExists('customer');
+};

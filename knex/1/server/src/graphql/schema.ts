@@ -1,10 +1,10 @@
 import { gql } from 'apollo-server';
 
-import book from './Book/schema';
 import customer from './Customer/schema';
 
 const base = gql`
   type Query
+  type Mutation
 `;
 
-export default [base, book, customer];
+export default [base, customer];
