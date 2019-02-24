@@ -9,7 +9,7 @@ export function connectDb() {
     return knex;
   }
 
-  knex = Knex(config.development);
+  knex = Knex(config[process.env.NODE_ENV]);
 
   return knex;
 }

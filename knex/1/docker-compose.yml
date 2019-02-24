@@ -1,6 +1,7 @@
 version: '3.7'
 services:
   server:
+    container_name: 'Server'
     build: ./server
     command: yarn start
     depends_on:
@@ -12,6 +13,7 @@ services:
       - /app/node_modules
     entrypoint: ./entrypoint.sh
   db:
+    container_name: 'Postgres'
     image: postgres:alpine
     ports:
       - '5432:5432'

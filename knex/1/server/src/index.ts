@@ -15,7 +15,7 @@ import { connectDb } from './middleware/db';
 /**
  * Routes
  */
-import { routeTest } from './test';
+import { routeExample } from './example';
 
 /**
  * App
@@ -30,7 +30,7 @@ export async function createServer() {
     .use(assignId)
     .use(bodyParser.json())
     .use(routeLogger as any)
-    .use(routeTest());
+    .use(routeExample());
 
   const apollo = new ApolloServer({ typeDefs, resolvers });
 

@@ -1,6 +1,8 @@
 FROM node:alpine
 WORKDIR /app
 
+ENV DOCKER=true
+
 RUN apk --no-cache add \
   curl \
   postgresql-client \

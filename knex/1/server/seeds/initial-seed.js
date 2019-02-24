@@ -1,4 +1,5 @@
 exports.seed = async knex => {
+  await knex('rental').del();
   await knex('customer').del();
   const [id] = await knex('customer').insert(
     [
