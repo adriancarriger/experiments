@@ -7,6 +7,7 @@ export default gql`
     return_date: String
     customer_id: String
     movie_id: String
+    customer: Customer
   }
 
   extend type Query {
