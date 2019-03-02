@@ -1,8 +1,9 @@
+export interface Position {
+  x: number;
+  y: number;
+}
 export interface NetworkNode {
-  pos: {
-    x: number;
-    y: number;
-  };
+  pos: Position;
   neighbors: number[];
 }
 
