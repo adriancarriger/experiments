@@ -8,8 +8,7 @@ export default gql`
   }
 
   extend type Query {
-    getCustomers(first_name: String, last_name: String): [Customer]
-    getCustomer(id: ID!): Customer
+    getCustomers(id: ID, first_name: String, last_name: String): [Customer]
   }
 
   extend type Mutation {
