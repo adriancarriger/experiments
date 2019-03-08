@@ -1,38 +1,41 @@
 import * as csvtojson from 'csvtojson';
-import { differenceInDays, format, parse } from 'date-fns';
-import * as fs from 'fs';
-import { Parser as Json2csvParser } from 'json2csv';
-import { promisify } from 'util';
-
-const writeFileAsync = promisify(fs.writeFile);
+import { differenceInDays, parse } from 'date-fns';
 
 export class MatchingService {
   private amazonOrders;
   private amazonItems;
 
-  public async saveUpdated() {
-    await this.loadamazonOrders();
-    const pocketData = await csvtojson().fromFile('./data/pocket.csv');
+  public async getUpdates(pocketData) {
+    console.log('saveUpdated - Started');
+    await this.loadAmazonOrders();
 
-    const updated = pocketData.map(this.updateRow.bind(this));
-    await this.saveAsCsv(updated);
-    console.log('Update complete 🙂');
+    const updates = pocketData.reduce(this.updateRow.bind(this), []);
+
+    console.log(`${updates.length} transactions updated`);
+    console.log('saveUpdated - Done');
+    return updates;
   }
 
-  private updateRow(row) {
+  private updateRow(updates, row) {
+    const urlBase = 'https://www.amazon.com/gp/your-account/order-details?ie=UTF8&orderID';
     const match = this.findBestMatch(row);
-    if (match) {
+    if (match && !row.note) {
       const id = match['Order ID'];
-      const description = this.amazonItems[id].Title;
-      row.Note = description;
+      const description = this.amazonItems[id].Title + `\n\n${urlBase}=${id}`;
+      row.note = description;
+
+      updates.push(row);
     }
 
-    return row;
+    return updates;
   }
 
   private findBestMatch(row) {
-    const price = '$' + Math.abs(Number(row.Amount)).toFixed(2);
-    const possibleMatches = this.getPossibleMatches(price, parse(row.Date));
+    if (row.original_payee.toLowerCase().match(/Amazon|amzn/) === null) {
+      return;
+    }
+    const price = '$' + Math.abs(Number(row.amount)).toFixed(2);
+    const possibleMatches = this.getPossibleMatches(price, parse(row.date));
     if (possibleMatches.length === 0) {
       return;
     } else if (possibleMatches.length === 1) {
@@ -43,10 +46,12 @@ export class MatchingService {
   }
 
   private getPossibleMatches(price, input) {
-    return (this.amazonOrders[price] || []).filter(({ date }) => differenceInDays(date, input) < 4);
+    return (this.amazonOrders[price] || []).filter(
+      ({ date }) => Math.abs(differenceInDays(date, input)) < 4
+    );
   }
 
-  private async loadamazonOrders() {
+  private async loadAmazonOrders() {
     const rawOrders = await csvtojson().fromFile('./data/amazon-orders.csv');
     const rawItems = await csvtojson().fromFile('./data/amazon-items.csv');
 
@@ -65,11 +70,5 @@ export class MatchingService {
 
       return previous;
     }, {});
-  }
-
-  private async saveAsCsv(input) {
-    const json2csvParser = new Json2csvParser();
-    const csv = json2csvParser.parse(input);
-    await writeFileAsync('./data/output.csv', csv);
   }
 }
