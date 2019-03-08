@@ -1,5 +1,5 @@
 import * as csvtojson from 'csvtojson';
-import { differenceInDays, parse } from 'date-fns';
+import { differenceInDays, format, parse } from 'date-fns';
 
 export class MatchingService {
   private amazonOrders;
@@ -23,6 +23,16 @@ export class MatchingService {
       const id = match['Order ID'];
       const description = this.amazonItems[id].Title + `\n\n${urlBase}=${id}`;
       row.note = description;
+      row.tags = ['Amazon', 'Import'];
+      row.merchant = this.amazonItems[id].Seller;
+      const orderDate = this.amazonItems[id]['Order Date'].split('/');
+      row.orderDate = format(
+        parse(`20${orderDate[2]}-${orderDate[0]}-${orderDate[1]}`), // I know… 😐
+        'MMM D, YYYY'
+      );
+      if (this.amazonItems[id].Category) {
+        row.tags.push(this.amazonItems[id].Category);
+      }
 
       updates.push(row);
     }

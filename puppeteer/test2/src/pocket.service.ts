@@ -90,8 +90,10 @@ export class PocketService {
         summary: '1',
         update: '1',
         id: update.id,
-        'transaction[payee]': 'Amazon',
-        'transaction[note_attributes][body]': update.note
+        'transaction[date]': update.orderDate,
+        'transaction[payee]': update.merchant,
+        'transaction[note_attributes][body]': update.note,
+        'transaction[tag_list]': update.tags.join(',')
       }
     });
 
