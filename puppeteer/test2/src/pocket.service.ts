@@ -1,5 +1,6 @@
 import * as puppeteer from 'puppeteer';
 import * as request from 'request';
+import { format, parse } from 'date-fns';
 
 export class PocketService {
   private page: puppeteer.Page;
@@ -78,7 +79,7 @@ export class PocketService {
     await this.wait(delay);
 
     console.log(`making update - ID: ${update.id}, date: ${update.date}, amount: ${update.amount}`);
-    const response = await this.pocketRequest({
+    const requestData = {
       url: 'https://my.pocketsmith.com/transactions/query.json',
       formData: {
         _no_redirect: '1',
@@ -90,12 +91,20 @@ export class PocketService {
         summary: '1',
         update: '1',
         id: update.id,
-        'transaction[date]': update.orderDate,
-        'transaction[payee]': update.merchant,
-        'transaction[note_attributes][body]': update.note,
-        'transaction[tag_list]': update.tags.join(',')
+        'transaction[tag_list]': update.tags.join(','),
+        'transaction[payee]': update.payee,
+        'transaction[date]': format(parse(update.date), 'MMM D, YYYY')
       }
-    });
+    };
+    if (update.note) {
+      requestData['transaction[note_attributes][body]'] = update.note;
+    }
+
+    if (update.category_title) {
+      requestData['transaction[selected_category_title]'] = update.category_title;
+    }
+
+    const response = await this.pocketRequest(requestData);
 
     console.log(`Update ID: ${update.id} completed with code ${response.statusCode}`);
   }
