@@ -2,7 +2,7 @@ import * as puppeteer from 'puppeteer';
 import * as request from 'request';
 import { format, parse } from 'date-fns';
 
-export class PocketService {
+export default class PocketService {
   private page: puppeteer.Page;
 
   public async login() {
@@ -24,16 +24,18 @@ export class PocketService {
       waitUntil: 'networkidle0'
     });
 
+    const today = format(parse(new Date()), 'MMM D, YYYY');
+
     const response = await this.pocketRequest({
       url: 'https://my.pocketsmith.com/transactions/query.json',
       formData: {
         _no_redirect: '1',
-        'saved_search[by_account_ids][]': 'display_group_374234',
         'saved_search[by_feed_categories_flag]': '0',
-        'saved_search[by_date_range]': 'Dec 10, 2018 - Mar 7, 2019',
+        'saved_search[by_untagged_flag]': '1',
+        'saved_search[by_date_range]': `Dec 10, 2018 - ${today}`,
         'saved_search[filter_attributes][do_change_transfer_flag]': '0',
         'saved_search[filter_attributes][do_change_transfer]': 'transfer',
-        per_page: '1000',
+        per_page: '3000',
         page: '1',
         'sort[col]': 'date',
         'sort[dir]': 'desc',
@@ -78,7 +80,6 @@ export class PocketService {
   private async makeUpdate(update, delay = 0) {
     await this.wait(delay);
 
-    console.log(`making update - ID: ${update.id}, date: ${update.date}, amount: ${update.amount}`);
     const formData = {
       _no_redirect: '1',
       per_page: '1',
@@ -102,11 +103,12 @@ export class PocketService {
       formData['transaction[selected_category_title]'] = update.category_title;
     }
 
+    console.log(`making update - ID: ${update.id}, date: ${update.date}, amount: ${update.amount}`);
+
     const response = await this.pocketRequest({
       url: 'https://my.pocketsmith.com/transactions/query.json',
       formData
     });
-
     console.log(`Update ID: ${update.id} completed with code ${response.statusCode}`);
   }
 

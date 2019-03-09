@@ -1,7 +1,7 @@
 import { SimplePlugin } from '../simple.plugin';
 
-export class NamePlugin extends SimplePlugin {
-  public name = 'Name';
+export class LabelPlugin extends SimplePlugin {
+  public name = 'Label';
 
   constructor() {
     super();
@@ -9,6 +9,6 @@ export class NamePlugin extends SimplePlugin {
   }
 
   public updateRow(row, newValue) {
-    row.payee = newValue;
+    row.tags.push(newValue);
   }
 }

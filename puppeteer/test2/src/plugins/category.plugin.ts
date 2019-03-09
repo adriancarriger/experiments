@@ -1,19 +1,14 @@
-import rules from '../rules/category.rules';
+import { SimplePlugin } from '../simple.plugin';
 
-export class CategoryPlugin {
+export class CategoryPlugin extends SimplePlugin {
   public name = 'Category';
 
-  public needsUpdate(row) {
-    let foundMatch = false;
-    rules.forEach(rule => {
-      if (rule.merchants.includes(row.payee)) {
-        row.category_title = rule.newCategory;
-        foundMatch = true;
+  constructor() {
+    super();
+    this.prepareRules();
+  }
 
-        return;
-      }
-    });
-
-    return foundMatch;
+  public updateRow(row, newValue) {
+    row.category_title = newValue;
   }
 }

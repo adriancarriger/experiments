@@ -1,6 +1,8 @@
 import * as csvtojson from 'csvtojson';
 import { differenceInDays, format, parse } from 'date-fns';
 
+import { addTag } from '../mutation-functions';
+
 export class AmazonPlugin {
   public name = 'Amazon';
   private amazonOrders;
@@ -13,7 +15,7 @@ export class AmazonPlugin {
       const id = match['Order ID'];
       const description = this.amazonItems[id].Title + `\n\n${urlBase}=${id}`;
       row.note = description;
-      row.tags.push('Amazon');
+      addTag(row, 'Amazon');
       row.payee = this.amazonItems[id].Seller;
       const orderDate = this.amazonItems[id]['Order Date'].split('/');
       row.date = format(
@@ -21,7 +23,7 @@ export class AmazonPlugin {
         'YYYY-MM-DD'
       );
       if (this.amazonItems[id].Category) {
-        row.tags.push(this.amazonItems[id].Category);
+        addTag(row, this.amazonItems[id].Category);
       }
 
       return true;

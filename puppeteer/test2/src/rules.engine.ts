@@ -1,11 +1,16 @@
-export class RulesService {
+import { addTag } from './mutation-functions';
+
+export default class RulesEngine {
   constructor(private plugins = []) {}
 
   public async apply(rows) {
     const updates = [];
     rows.forEach(row => {
       let needsUpdate = false;
-      row.tags = [];
+      if (!row.tags) {
+        row.tags = [];
+      }
+
       this.plugins.forEach(plugin => {
         if (plugin.needsUpdate(row)) {
           needsUpdate = true;
@@ -13,7 +18,7 @@ export class RulesService {
       });
 
       if (needsUpdate) {
-        row.tags.push('Bot');
+        addTag(row, 'λBot');
         updates.push(row);
       }
     });
