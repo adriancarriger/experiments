@@ -56,7 +56,9 @@ export abstract class SimplePlugin {
     for (let matchOptionIndex = 0; matchOptionIndex < matchOptions.length; matchOptionIndex++) {
       const matchOption = matchOptions[matchOptionIndex];
 
-      return value.includes(matchOption);
+      if (value.includes(matchOption)) {
+        return true;
+      }
     }
   }
 
