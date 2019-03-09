@@ -79,32 +79,33 @@ export class PocketService {
     await this.wait(delay);
 
     console.log(`making update - ID: ${update.id}, date: ${update.date}, amount: ${update.amount}`);
-    const requestData = {
-      url: 'https://my.pocketsmith.com/transactions/query.json',
-      formData: {
-        _no_redirect: '1',
-        per_page: '1',
-        page: '1',
-        'sort[col]': 'date',
-        'sort[dir]': 'desc',
-        include_totals: '1',
-        summary: '1',
-        update: '1',
-        id: update.id,
-        'transaction[tag_list]': update.tags.join(','),
-        'transaction[payee]': update.payee,
-        'transaction[date]': format(parse(update.date), 'MMM D, YYYY')
-      }
+    const formData = {
+      _no_redirect: '1',
+      per_page: '1',
+      page: '1',
+      'sort[col]': 'date',
+      'sort[dir]': 'desc',
+      include_totals: '1',
+      summary: '1',
+      update: '1',
+      id: update.id,
+      'transaction[tag_list]': update.tags.join(','),
+      'transaction[payee]': update.payee,
+      'transaction[date]': format(parse(update.date), 'MMM D, YYYY')
     };
+
     if (update.note) {
-      requestData['transaction[note_attributes][body]'] = update.note;
+      formData['transaction[note_attributes][body]'] = update.note;
     }
 
     if (update.category_title) {
-      requestData['transaction[selected_category_title]'] = update.category_title;
+      formData['transaction[selected_category_title]'] = update.category_title;
     }
 
-    const response = await this.pocketRequest(requestData);
+    const response = await this.pocketRequest({
+      url: 'https://my.pocketsmith.com/transactions/query.json',
+      formData
+    });
 
     console.log(`Update ID: ${update.id} completed with code ${response.statusCode}`);
   }
