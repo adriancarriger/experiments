@@ -6,6 +6,7 @@ export default class RulesEngine {
   public async apply(rows) {
     const updates = [];
     rows.forEach(row => {
+      const rowCopy = JSON.stringify(row);
       let needsUpdate = false;
       if (!row.tags) {
         row.tags = [];
@@ -17,7 +18,7 @@ export default class RulesEngine {
         }
       });
 
-      if (needsUpdate) {
+      if (needsUpdate && rowCopy !== JSON.stringify(row)) {
         addTag(row, 'λBot');
         updates.push(row);
       }
