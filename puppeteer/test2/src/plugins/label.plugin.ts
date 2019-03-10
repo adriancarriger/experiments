@@ -1,4 +1,5 @@
 import { SimplePlugin } from '../simple.plugin';
+import { addTag } from '../mutation-functions';
 
 export class LabelPlugin extends SimplePlugin {
   public name = 'Label';
@@ -9,6 +10,6 @@ export class LabelPlugin extends SimplePlugin {
   }
 
   public updateRow(row, newValue) {
-    row.tags.push(newValue);
+    addTag(row, newValue);
   }
 }
