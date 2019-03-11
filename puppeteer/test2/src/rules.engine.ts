@@ -8,6 +8,8 @@ export default class RulesEngine {
     rows.forEach(row => {
       const rowCopy = JSON.stringify(row);
       let needsUpdate = false;
+      row.sharedPluginData = {};
+
       if (!row.tags) {
         row.tags = [];
       }
@@ -17,6 +19,8 @@ export default class RulesEngine {
           needsUpdate = true;
         }
       });
+
+      delete row.sharedPluginData;
 
       if (needsUpdate && rowCopy !== JSON.stringify(row)) {
         addTag(row, 'λBot');

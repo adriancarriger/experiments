@@ -23,6 +23,7 @@ export class AmazonPlugin {
         'YYYY-MM-DD'
       );
       if (this.amazonItems[id].Category) {
+        row.sharedPluginData.amazonCateogry = this.amazonItems[id].Category;
         addTag(row, this.amazonItems[id].Category);
       }
 
