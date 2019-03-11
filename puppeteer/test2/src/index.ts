@@ -14,6 +14,7 @@ import getPlugins from './plugins';
   const updates = await rules.apply(transactions);
 
   await pocket.sendUpdates(updates);
+  await pocket.closeBrowser();
 
   console.log('Update complete 🙂');
 })().catch(console.error);

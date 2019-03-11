@@ -4,6 +4,7 @@ import { format, parse } from 'date-fns';
 
 export default class PocketService {
   private page: puppeteer.Page;
+  private browser: puppeteer.Browser;
 
   public async login() {
     if (!process.env.POCKET_USERNAME || !process.env.POCKET_TOKEN) {
@@ -48,12 +49,13 @@ export default class PocketService {
     return JSON.parse(response.body).results;
   }
 
+  public async closeBrowser() {
+    this.browser.close();
+  }
+
   public async setupBrowser() {
-    const browser: puppeteer.Browser = await puppeteer.launch({
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-      ignoreHTTPSErrors: Number(process.env.NODE_TLS_REJECT_UNAUTHORIZED) === 0
-    });
-    this.page = await browser.newPage();
+    this.browser = await puppeteer.launch();
+    this.page = await this.browser.newPage();
     this.page.setViewport({ width: 1000, height: 1200 });
   }
 
