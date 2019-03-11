@@ -9,7 +9,7 @@ export class LabelPlugin extends SimplePlugin {
     this.prepareRules();
   }
 
-  public updateRow(row, newValue) {
-    addTag(row, newValue);
+  public updateRow(row, newValues) {
+    newValues.forEach(newValue => addTag(row, newValue));
   }
 }
