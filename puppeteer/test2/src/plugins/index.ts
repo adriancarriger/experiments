@@ -13,5 +13,5 @@ export default async () => {
 
   await amazon.loadAmazonOrders();
 
-  return [name, amazon, cateogory, label, note];
+  return [amazon, name, cateogory, label, note];
 };

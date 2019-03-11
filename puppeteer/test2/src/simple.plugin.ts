@@ -1,6 +1,6 @@
 export abstract class SimplePlugin {
   public name;
-  public types = ['original_payee', 'payee', 'amount', 'custom'];
+  public types = ['original_payee', 'payee', 'note', 'amount', 'custom'];
   private rules = [];
   private customMatchFunctionsMap = {
     amount: this.amountMatch,
@@ -52,6 +52,11 @@ export abstract class SimplePlugin {
 
   private stringMatch(row, matchType, matchOptions: string[]) {
     const rowValue: string = row[matchType];
+
+    if (!rowValue) {
+      return false;
+    }
+
     const value = rowValue.toLowerCase();
     for (let matchOptionIndex = 0; matchOptionIndex < matchOptions.length; matchOptionIndex++) {
       const matchOption = matchOptions[matchOptionIndex];
