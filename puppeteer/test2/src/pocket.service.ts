@@ -90,18 +90,19 @@ export default class PocketService {
       include_totals: '1',
       summary: '1',
       update: '1',
-      id: update.id,
-      'transaction[tag_list]': update.tags.join(','),
-      'transaction[payee]': update.payee,
-      'transaction[date]': format(parse(update.date), 'MMM D, YYYY')
+      id: update.id
     };
 
-    if (update.note) {
-      formData['transaction[note_attributes][body]'] = update.note;
-    }
-
-    if (update.category_title) {
-      formData['transaction[selected_category_title]'] = update.category_title;
+    if (update.splitItems) {
+      let updateId = 1252339549301;
+      update.splitItems.forEach((updateItem, index) => {
+        updateId++;
+        const prefix = index === 0 ? '' : `s[${updateId}]`;
+        this.addUpdateData(formData, updateItem, prefix, this.getAmount(updateItem));
+      });
+    } else {
+      const amount = update.tags.includes('Adjustment') ? this.getAmount(update) : undefined;
+      this.addUpdateData(formData, update, '', amount);
     }
 
     console.log(`making update - ID: ${update.id}, date: ${update.date}, amount: ${update.amount}`);
@@ -111,6 +112,24 @@ export default class PocketService {
       formData
     });
     console.log(`Update ID: ${update.id} completed with code ${response.statusCode}`);
+  }
+
+  private addUpdateData(formData, update, prefix = '', amount?) {
+    formData[`transaction${prefix}[tag_list]`] = update.tags.join(',');
+    formData[`transaction${prefix}[payee]`] = update.payee;
+    formData[`transaction${prefix}[date]`] = format(parse(update.date), 'MMM D, YYYY');
+
+    if (update.note) {
+      formData[`transaction${prefix}[note_attributes][body]`] = update.note;
+    }
+
+    if (update.category_title) {
+      formData[`transaction${prefix}[selected_category_title]`] = update.category_title;
+    }
+
+    if (amount) {
+      formData[`transaction${prefix}[amount]`] = amount;
+    }
   }
 
   private async pocketRequest(data): Promise<request.Response> {
@@ -158,5 +177,9 @@ export default class PocketService {
     return new Promise(resolve => {
       setTimeout(resolve, time);
     });
+  }
+
+  private getAmount(updateItem) {
+    return `${Math.abs(updateItem.amount).toFixed(2)}`;
   }
 }

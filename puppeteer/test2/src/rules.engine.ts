@@ -15,9 +15,11 @@ export default class RulesEngine {
       }
 
       this.plugins.forEach(plugin => {
-        if (plugin.needsUpdate(row)) {
-          needsUpdate = true;
-        }
+        (row.splitItems || [row]).forEach(splitItem => {
+          if (plugin.needsUpdate(splitItem)) {
+            needsUpdate = true;
+          }
+        });
       });
 
       delete row.sharedPluginData;

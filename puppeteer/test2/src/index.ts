@@ -2,8 +2,9 @@ import PocketService from './pocket.service';
 import RulesEngine from './rules.engine';
 import getPlugins from './plugins';
 
+const pocket = new PocketService();
+
 (async () => {
-  const pocket = new PocketService();
   const rules = new RulesEngine(await getPlugins());
 
   console.log('Starting update 🤖');
@@ -17,4 +18,8 @@ import getPlugins from './plugins';
   await pocket.closeBrowser();
 
   console.log('Update complete 🙂');
-})().catch(console.error);
+})().catch(error => {
+  console.error(error);
+
+  return pocket.closeBrowser();
+});
