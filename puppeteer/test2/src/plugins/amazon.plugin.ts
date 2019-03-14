@@ -8,10 +8,14 @@ export class AmazonPlugin {
   private amazonOrders;
   private amazonItems;
   private orderTotals = {};
+  private giftCardOrders = {};
+  private amazonRefunds;
+  private refundPrices = {};
 
   public async loadAmazonOrders() {
     const rawOrders = await csvtojson().fromFile('./data/amazon-orders.csv');
     const rawItems = await csvtojson().fromFile('./data/amazon-items.csv');
+    const rawRefunds = await csvtojson().fromFile('./data/amazon-refunds.csv');
 
     this.amazonItems = rawItems.reduce((previous, current) => {
       const id = current['Order ID'];
@@ -30,6 +34,11 @@ export class AmazonPlugin {
       const id = rawOrder['Order ID'];
       previous[id] = previous[id] || [];
       previous[id].push(rawOrder);
+
+      const hasGiftCard = rawOrder['Payment Instrument Type'].includes('Gift Certificate/Card');
+      if (hasGiftCard && !(id in this.giftCardOrders)) {
+        this.giftCardOrders[id] = parse(rawOrder['Order Date']);
+      }
 
       return previous;
     }, {});
@@ -51,9 +60,36 @@ export class AmazonPlugin {
 
       return previous;
     }, {});
+
+    this.amazonRefunds = rawRefunds.reduce((previous, current) => {
+      const id = current['Order ID'];
+      const amount =
+        (this.cents(this.extractAmount(current['Refund Amount'])) +
+          this.cents(this.extractAmount(current['Refund Tax Amount']))) /
+        100;
+
+      current.date = parse(current['Refund Date']);
+      previous[id] = current;
+      this.refundPrices[amount] = this.refundPrices[amount] || [];
+      this.refundPrices[amount].push(id);
+
+      return previous;
+    }, {});
   }
 
   public needsUpdate(row) {
+    if (row.note || row.original_payee.toLowerCase().match(/Amazon|amzn/) === null) {
+      return;
+    }
+
+    if (Number(row.amount) > 0 && this.refundPrices[row.amount]) {
+      const id = this.refundPrices[row.amount];
+      this.createRefundUpdate(row, id);
+
+      return true;
+    }
+
+    row.sharedPluginData.parsedDate = parse(row.date);
     const orderId = this.findBestMatch(row);
 
     if (orderId) {
@@ -63,31 +99,60 @@ export class AmazonPlugin {
         row.splitItems = [];
         this.amazonItems[orderId].forEach(orderItem => {
           const rowItem = JSON.parse(JSON.stringify(rowCopy));
-          this.createUpdateItem(rowItem, orderItem, orderId);
+          this.createPurchaseUpdate(rowItem, orderItem, orderId);
           row.splitItems.push(rowItem);
         });
       } else {
-        this.createUpdateItem(row, this.amazonItems[orderId][0], orderId);
+        this.createPurchaseUpdate(row, this.amazonItems[orderId][0], orderId);
       }
 
       return true;
     }
+
+    if (row.original_payee.includes('PURCHASE AUTHORIZED')) {
+      const possibleGiftCards = this.findPossibleGiftCards(row);
+
+      if (possibleGiftCards.length) {
+        const links = possibleGiftCards.map(id => `• ${this.orderLink(id)}`).join('\n');
+
+        row.note = `This purchase may involve an Amazon gift card.\n\nPossible orders:\n${links}`;
+        addTag(row, 'PossibleGiftCard');
+
+        return true;
+      }
+    }
   }
 
-  private createUpdateItem(row, item, orderId) {
+  private findPossibleGiftCards(row) {
+    return Object.keys(this.giftCardOrders).reduce((giftCards, orderId) => {
+      if (this.nearbyDate(row.sharedPluginData.parsedDate, this.giftCardOrders[orderId])) {
+        giftCards.push(orderId);
+      }
+
+      return giftCards;
+    }, []);
+  }
+
+  private createRefundUpdate(row, refundId) {
+    const refund = this.amazonRefunds[refundId];
+
+    this.createUpdateItem(row, refund, refundId, row.amount);
+    addTag(row, 'Refund');
+  }
+
+  private createPurchaseUpdate(row, item, orderId) {
     const itemAmount = -this.extractAmount(item['Item Total']);
 
-    const urlBase = 'https://www.amazon.com/gp/your-account/order-details?ie=UTF8&orderID';
+    this.createUpdateItem(row, item, orderId, itemAmount);
+  }
+
+  private createUpdateItem(row, item, orderId, itemAmount) {
     const originalPrice = item.originalPrice ? `\n\nOriginal price: ${item.originalPrice}` : '';
-    const description = item.Title + originalPrice + `\n\n${urlBase}=${orderId}`;
+    const description = item.Title + originalPrice + `\n\n${this.orderLink(orderId)}`;
     row.note = description;
     addTag(row, 'Amazon');
     row.payee = item.Seller;
-    const orderDate = item['Order Date'].split('/');
-    row.date = format(
-      parse(`20${orderDate[2]}-${orderDate[0]}-${orderDate[1]}`), // I know… 😐
-      'YYYY-MM-DD'
-    );
+    row.date = this.formatAmazonDate(item['Order Date']);
 
     if (item.Category) {
       row.sharedPluginData.amazonCateogry = item.Category;
@@ -109,13 +174,9 @@ export class AmazonPlugin {
 
   // Returns an order id
   private findBestMatch(row) {
-    if (row.original_payee.toLowerCase().match(/Amazon|amzn/) === null) {
-      return;
-    }
-    const inputDate = parse(row.date);
     const priceKey = Math.abs(Number(row.amount)).toFixed(2);
 
-    const possibleMatches = this.getPossibleMatches(priceKey, inputDate);
+    const possibleMatches = this.getPossibleMatches(priceKey, row.sharedPluginData.parsedDate);
 
     if (possibleMatches.length === 0) {
       return;
@@ -124,16 +185,16 @@ export class AmazonPlugin {
     }
 
     return possibleMatches.sort((a, b) => {
-      const optionA = Math.abs(differenceInDays(a[0].date, inputDate));
-      const optionB = Math.abs(differenceInDays(b[0].date, inputDate));
+      const optionA = Math.abs(differenceInDays(a[0].date, row.sharedPluginData.parsedDate));
+      const optionB = Math.abs(differenceInDays(b[0].date, row.sharedPluginData.parsedDate));
 
       return optionA - optionB;
     })[0]; // // dedup in v2 🙂
   }
 
   private getPossibleMatches(priceKey, input) {
-    return (this.amazonOrders[priceKey] || []).filter(
-      orderId => Math.abs(differenceInDays(this.amazonItems[orderId][0].date, input)) < 10
+    return (this.amazonOrders[priceKey] || []).filter(orderId =>
+      this.nearbyDate(this.amazonItems[orderId][0].date, input)
     );
   }
 
@@ -166,5 +227,23 @@ export class AmazonPlugin {
 
   private cents(input) {
     return Math.round(input * 100);
+  }
+
+  private nearbyDate(date1, date2) {
+    return Math.abs(differenceInDays(date1, date2)) < 10;
+  }
+
+  private orderLink(orderId) {
+    const urlBase = 'https://www.amazon.com/gp/your-account/order-details?ie=UTF8&orderID';
+
+    return `${urlBase}=${orderId}`;
+  }
+
+  private formatAmazonDate(dateInput: string) {
+    const dateItem = dateInput.split('/');
+    return format(
+      parse(`20${dateItem[2]}-${dateItem[0]}-${dateItem[1]}`), // I know… 😐
+      'YYYY-MM-DD'
+    );
   }
 }
