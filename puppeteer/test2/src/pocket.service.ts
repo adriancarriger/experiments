@@ -32,7 +32,7 @@ export default class PocketService {
       formData: {
         _no_redirect: '1',
         'saved_search[by_feed_categories_flag]': '0',
-        'saved_search[by_date_range]': `Dec 10, 2018 - ${today}`,
+        'saved_search[by_date_range]': `Oct 1, 2018 - ${today}`,
         'saved_search[filter_attributes][do_change_transfer_flag]': '0',
         'saved_search[filter_attributes][do_change_transfer]': 'transfer',
         per_page: '3000',

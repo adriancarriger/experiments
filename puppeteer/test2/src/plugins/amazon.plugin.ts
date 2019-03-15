@@ -83,7 +83,10 @@ export class AmazonPlugin {
     }
 
     if (Number(row.amount) > 0 && this.refundPrices[row.amount]) {
-      const id = this.refundPrices[row.amount];
+      const id = this.refundPrices[row.amount].sort((a, b) =>
+        this.compareDate(a[0].date, b[0].date, row)
+      )[0];
+
       this.createRefundUpdate(row, id);
 
       return true;
@@ -184,12 +187,7 @@ export class AmazonPlugin {
       return possibleMatches[0];
     }
 
-    return possibleMatches.sort((a, b) => {
-      const optionA = Math.abs(differenceInDays(a[0].date, row.sharedPluginData.parsedDate));
-      const optionB = Math.abs(differenceInDays(b[0].date, row.sharedPluginData.parsedDate));
-
-      return optionA - optionB;
-    })[0]; // // dedup in v2 🙂
+    return possibleMatches.sort((a, b) => this.compareDate(a[0].date, b[0].date, row))[0]; // // dedup in v2 🙂
   }
 
   private getPossibleMatches(priceKey, input) {
@@ -245,5 +243,12 @@ export class AmazonPlugin {
       parse(`20${dateItem[2]}-${dateItem[0]}-${dateItem[1]}`), // I know… 😐
       'YYYY-MM-DD'
     );
+  }
+
+  private compareDate(a, b, row) {
+    const optionA = Math.abs(differenceInDays(a, row.sharedPluginData.parsedDate));
+    const optionB = Math.abs(differenceInDays(b, row.sharedPluginData.parsedDate));
+
+    return optionA - optionB;
   }
 }
