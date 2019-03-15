@@ -25,7 +25,7 @@ export default class RulesEngine {
       delete row.sharedPluginData;
 
       if (needsUpdate && rowCopy !== JSON.stringify(row)) {
-        addTag(row, 'λBot');
+        addTag(row, 'ΔBot');
         updates.push(row);
       }
     });
