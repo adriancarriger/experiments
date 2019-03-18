@@ -1,7 +1,6 @@
 {
-  "name": "test2",
+  "name": "amazon-pocket",
   "version": "1.0.0",
-  "main": "index.js",
   "scripts": {
     "test": "./src/test2.js",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
