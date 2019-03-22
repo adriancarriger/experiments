@@ -12,7 +12,9 @@
     },
     "categories": {
       "auth": {
-        "cognitoa2f4bc03": {}
+        "cognitoa2f4bc03": {
+          "amazonAppId": "amzn1.application.99098bb455d24d5ab84f6a421222d2de"
+        }
       }
     }
   }
