@@ -54,6 +54,6 @@
     "Fn::GetAtt": ["UnauthRole", "Arn"]
   },
   "useDefault": "manual",
-  "authProviders": ["www.amazon.com"],
-  "selectedParties": "{\"www.amazon.com\":\"amzn1.application.99098bb455d24d5ab84f6a421222d2de\"}"
+  "authProviders": ["graph.facebook.com"],
+  "selectedParties": "{\"graph.facebook.com\":\"1617066261730179\"}"
 }

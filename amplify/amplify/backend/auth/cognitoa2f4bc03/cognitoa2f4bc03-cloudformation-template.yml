@@ -129,10 +129,13 @@ Parameters:
   authProviders:
     Type: CommaDelimitedList
 
+  selectedParties:
+    Type: String
+
   amazonAppId:
     Type: String
 
-  selectedParties:
+  facebookAppId:
     Type: String
 
 Conditions:
@@ -368,7 +371,7 @@ Resources:
             - { region: !Ref 'AWS::Region', client: !Ref UserPool }
 
       SupportedLoginProviders:
-        www.amazon.com: 'amzn1.application.99098bb455d24d5ab84f6a421222d2de'
+        graph.facebook.com: '1617066261730179'
 
       AllowUnauthenticatedIdentities: !Ref allowUnauthenticatedIdentities
 
@@ -405,3 +408,6 @@ Outputs:
     Description: The user pool app client id
   AppClientSecret:
     Value: !GetAtt UserPoolClientInputs.appSecret
+
+  FacebookWebClient:
+    Value: 1617066261730179
