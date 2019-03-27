@@ -1,0 +1,21 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "a2e71ds-20190326200718-authRole",
+            "UnauthRoleArn": "arn:aws:iam::872515952951:role/a2e71ds-20190326200718-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::872515952951:role/a2e71ds-20190326200718-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "a2e71ds-20190326200718-deployment",
+            "UnauthRoleName": "a2e71ds-20190326200718-unauthRole",
+            "StackName": "a2e71ds-20190326200718",
+            "StackId": "arn:aws:cloudformation:us-east-1:872515952951:stack/a2e71ds-20190326200718/ab1cdf50-502c-11e9-b382-0e6c5fec19cc"
+        },
+        "categories": {
+            "auth": {
+                "cognito96135c9c": {
+                    "facebookAppId": "1617066261730179"
+                }
+            }
+        }
+    }
+}
