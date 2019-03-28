@@ -1,0 +1,8 @@
+version: '3.7'
+
+services:
+  db:
+    build: ./db
+    environment:
+      MYSQL_USER: traeger
+      MYSQL_ROOT_PASSWORD: example
