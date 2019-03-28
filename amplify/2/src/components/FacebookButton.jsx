@@ -1,88 +1,80 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Auth } from 'aws-amplify';
 
-export default class FacebookButton extends Component {
+import config from '../config';
+
+export default class FacebookButton extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      isLoading: true,
-      interval: undefined
-    };
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.state.interval);
+    this.signIn = this.signIn.bind(this);
   }
 
   componentDidMount() {
-    this.waitForFB();
-  }
-
-  statusChangeCallback = response => {
-    if (response.status === 'connected') {
-      this.handleResponse(response.authResponse);
-    } else {
-      this.handleError(response);
-    }
-  };
-
-  checkLoginState = () => {
-    this.fb.getLoginStatus(this.statusChangeCallback);
-  };
-
-  handleClick = () => {
-    this.fb.login(this.checkLoginState, { scope: 'public_profile, email' });
-  };
-
-  handleError(error) {
-    alert(error);
-  }
-
-  async handleResponse(data) {
-    this.setState({ isLoading: true });
-
-    const { accessToken: token, expiresIn } = data;
-    const expires_at = expiresIn * 1000 + new Date().getTime();
-    const user = await this.getUser();
-
-    try {
-      const response = await Auth.federatedSignIn('facebook', { token, expires_at }, user);
-      this.setState({ isLoading: false });
-      this.props.onLogin(response);
-    } catch (e) {
-      this.setState({ isLoading: false });
-      this.handleError(e);
+    if (!window.FB) {
+      this.createScript();
     }
   }
 
-  async getUser() {
-    return new Promise(resolve => {
-      this.fb.api('/me', { fields: 'name, email' }, async response => {
-        const user = { email: response.email, name: response.name };
-
-        resolve(user);
-      });
+  signIn() {
+    window.FB.getLoginStatus(response => {
+      if (response.status === 'connected') {
+        this.getAWSCredentials(response.authResponse);
+      } else {
+        window.FB.login(
+          response => {
+            if (!response || !response.authResponse) {
+              return;
+            }
+            this.getAWSCredentials(response.authResponse);
+          },
+          { scope: 'public_profile, email' }
+        );
+      }
     });
   }
 
-  waitForFB() {
-    const interval = setInterval(() => {
-      if ('FB' in window) {
-        this.fb = window['FB'];
-        this.setState({ isLoading: false });
-        clearInterval(this.state.interval);
-      }
-    }, 300);
+  getAWSCredentials(response) {
+    const { accessToken, expiresIn } = response;
+    const date = new Date();
+    const expires_at = expiresIn * 1000 + date.getTime();
+    if (!accessToken) {
+      return;
+    }
 
-    this.setState({ interval });
+    window.FB.api('/me', { fields: 'name, email' }, response => {
+      const user = {
+        name: response.name,
+        email: response.email
+      };
+
+      Auth.federatedSignIn('facebook', { token: accessToken, expires_at }, user).then(() =>
+        this.props.onLogin()
+      );
+    });
+  }
+
+  createScript() {
+    window.fbAsyncInit = this.fbAsyncInit;
+    const script = document.createElement('script');
+    script.src = 'https://connect.facebook.net/en_US/sdk.js';
+    script.async = true;
+    document.body.appendChild(script);
+  }
+
+  fbAsyncInit() {
+    window.FB.init({
+      appId: config.social.FB,
+      cookie: true,
+      xfbml: true,
+      version: 'v2.11'
+    });
   }
 
   render() {
     return (
-      <button className="FacebookButton" onClick={this.handleClick} disabled={this.state.isLoading}>
-        Login with Facebook
-      </button>
+      <div>
+        <button onClick={this.signIn}>Sign in with Facebook</button>
+      </div>
     );
   }
 }
