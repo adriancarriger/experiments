@@ -1,31 +1,22 @@
 import React, { Component } from 'react';
 import { Auth } from 'aws-amplify';
 
-function waitForInit() {
-  return new Promise(resolve => {
-    const hasFbLoaded = () => {
-      if ('FB' in window) {
-        resolve(window['FB']);
-      } else {
-        setTimeout(hasFbLoaded, 300);
-      }
-    };
-    hasFbLoaded();
-  });
-}
-
 export default class FacebookButton extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isLoading: true
+      isLoading: true,
+      interval: undefined
     };
   }
 
-  async componentDidMount() {
-    this.fb = await waitForInit();
-    this.setState({ isLoading: false });
+  componentWillUnmount() {
+    clearInterval(this.state.interval);
+  }
+
+  componentDidMount() {
+    this.waitForFB();
   }
 
   statusChangeCallback = response => {
@@ -73,6 +64,18 @@ export default class FacebookButton extends Component {
         resolve(user);
       });
     });
+  }
+
+  waitForFB() {
+    const interval = setInterval(() => {
+      if ('FB' in window) {
+        this.fb = window['FB'];
+        this.setState({ isLoading: false });
+        clearInterval(this.state.interval);
+      }
+    }, 300);
+
+    this.setState({ interval });
   }
 
   render() {
