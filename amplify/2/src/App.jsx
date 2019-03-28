@@ -4,6 +4,7 @@ import { Auth } from 'aws-amplify';
 import logo from './logo.svg';
 import Routes from './Routes';
 import './App.css';
+import authClient from './auth';
 
 class App extends Component {
   constructor(props) {
@@ -41,7 +42,8 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          {JSON.stringify(this.state)}
+          <div>State: {JSON.stringify(this.state)}</div>
+          <div>Auth: {JSON.stringify(authClient.isAuthenticated())}</div>
           <img src={logo} className="App-logo" alt="logo" />
 
           <Routes childProps={childProps} />

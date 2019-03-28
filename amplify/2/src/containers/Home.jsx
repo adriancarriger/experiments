@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import './Home.css';
-import LogoutButton from '../components/LogoutButton';
+import LogoutButton from '../auth/LogoutButton';
 
 export default class Home extends Component {
   constructor(props) {

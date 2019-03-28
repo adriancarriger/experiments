@@ -1,6 +1,8 @@
 import React from 'react';
 import { Auth } from 'aws-amplify';
 
+import authClient from './';
+
 export default class Logout extends React.Component {
   constructor(props) {
     super(props);
@@ -10,6 +12,7 @@ export default class Logout extends React.Component {
   logout() {
     Auth.signOut().then(console.log);
     this.props.onLogout();
+    authClient.userHasAuthenticated = false;
   }
 
   render() {
