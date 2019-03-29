@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import FacebookButton from '../components/FacebookButton';
+import FacebookButton from '../auth/FacebookButton';
 import './Login.css';
 
 export default class Login extends Component {

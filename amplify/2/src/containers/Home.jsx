@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import './Home.css';
+import LogoutButton from '../auth/LogoutButton';
 
 export default class Home extends Component {
   constructor(props) {
@@ -12,10 +13,14 @@ export default class Home extends Component {
     };
   }
 
+  handleLogout = () => {
+    this.props.userHasAuthenticated(false);
+  };
+
   render() {
     return (
       <div className="Home">
-        Home container
+        Home container {this.props.isAuthenticated && <LogoutButton onLogout={this.handleLogout} />}
         <div>
           {!this.props.isAuthenticated ? (
             <Link to="/login" className="btn btn-info btn-lg">
