@@ -2,7 +2,6 @@ import React from 'react';
 import { Auth } from 'aws-amplify';
 
 import config from '../config';
-import authClient from './';
 
 export default class FacebookButton extends React.Component {
   constructor(props) {
@@ -50,7 +49,6 @@ export default class FacebookButton extends React.Component {
 
       Auth.federatedSignIn('facebook', { token: accessToken, expires_at }, user).then(() => {
         this.props.onLogin();
-        authClient.userHasAuthenticated = true;
       });
     });
   }
