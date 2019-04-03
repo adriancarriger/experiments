@@ -3,11 +3,13 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import 'typeface-roboto';
 import Amplify from 'aws-amplify';
+import { Provider } from 'react-redux';
 
 import './index.css';
 import config from './config';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
+import store from './store';
 
 Amplify.configure({
   Auth: {
@@ -20,9 +22,11 @@ Amplify.configure({
 });
 
 ReactDOM.render(
-  <Router>
-    <App />
-  </Router>,
+  <Provider store={store}>
+    <Router>
+      <App />
+    </Router>
+  </Provider>,
   document.getElementById('root')
 );
 registerServiceWorker();

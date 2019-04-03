@@ -20,6 +20,7 @@ export default class Home extends Component {
   render() {
     return (
       <div className="Home">
+        <div>is authenticated: {this.props.isAuthenticated.toString()}</div>
         Home container {this.props.isAuthenticated && <LogoutButton onLogout={this.handleLogout} />}
         <div>
           {!this.props.isAuthenticated ? (

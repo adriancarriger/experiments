@@ -1,14 +1,15 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-export default ({ component: C, props: cProps, ...rest }) => {
+const UnauthComponent = ({ component: C, ...rest }) => {
   const redirect = querystring('redirect');
   return (
     <Route
       {...rest}
       render={props =>
-        !cProps.isAuthenticated ? (
-          <C {...props} {...cProps} />
+        !rest.isAuthenticated ? (
+          <C {...props} />
         ) : (
           <Redirect to={redirect === '' || redirect === null ? '/' : redirect} />
         )
@@ -16,6 +17,16 @@ export default ({ component: C, props: cProps, ...rest }) => {
     />
   );
 };
+
+const mapStateToProps = state => {
+  const { isAuthenticated } = state.auth;
+
+  return { isAuthenticated };
+};
+
+const UnauthenticatedRoute = connect(mapStateToProps)(UnauthComponent);
+
+export default UnauthenticatedRoute;
 
 function querystring(name, url = window.location.href) {
   name = name.replace(/[[]]/g, '\\$&');

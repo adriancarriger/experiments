@@ -48,7 +48,7 @@ export default class FacebookButton extends React.Component {
       };
 
       Auth.federatedSignIn('facebook', { token: accessToken, expires_at }, user).then(() => {
-        this.props.onLogin();
+        this.props.setAuth(true);
       });
     });
   }
