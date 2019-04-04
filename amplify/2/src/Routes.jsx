@@ -2,12 +2,12 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import Home from './Home';
-import AppliedRoute from './auth/AppliedRoute';
 import NotFound from './containers/NotFound';
 import Login from './containers/Login';
 import Example from './containers/Example';
-import AuthenticatedRoute from './auth/AuthenticatedRoute';
-import UnauthenticatedRoute from './auth/UnauthenticatedRoute';
+import AppliedRoute from './auth/routes/AppliedRoute';
+import AuthenticatedRoute from './auth/routes/AuthenticatedRoute';
+import UnauthenticatedRoute from './auth/routes/UnauthenticatedRoute';
 
 export default () => (
   <Switch>
