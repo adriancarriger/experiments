@@ -1,35 +1,25 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<head>
+    <title>Counter with store</title>
 
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      @import './css/main.css';
+    </style>
+  </head>
 
-  <title>Counter with store</title>
+  <body>
+    <div class="container">
+      <h1>Counter</h1>
 
-  <script type="module">
-    import './js/main.js';
-  </script>
-
-  <style>
-    @import './css/main.css';
-  </style>
-
-</head>
-
-<body>
-
-  <div class="container">
-    <h1>Counter</h1>
-
-    <my-counter>
-      <button name="decrementCounter">-1</button>
-      <counter-value></counter-value>
-      <button name="incrementCounter">+1</button>
-    </my-counter>
-  </div>
-
-</body>
-
+      <my-counter>
+        <button name="decrementCounter">-1</button>
+        <counter-value></counter-value>
+        <button name="incrementCounter">+1</button>
+      </my-counter>
+    </div>
+  </body>
 </html>

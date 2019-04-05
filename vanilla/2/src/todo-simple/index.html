@@ -1,41 +1,42 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<head>
+    <title>Simple Todo</title>
 
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script type="module">
+      import './js/main.js';
+    </script>
 
-  <title>Simple Todo</title>
+    <style>
+      @import './css/main.css';
+    </style>
+  </head>
 
-  <script type="module">
-    import './js/main.js';
-  </script>
+  <body>
+    <div class="container">
+      <h1>Todo list</h1>
 
-  <style>
-    @import './css/main.css';
-  </style>
-</head>
+      <todo-app>
+        <form name="onSubmit">
+          <input autofocus todo-input placeholder="What needs to be done?" />
+        </form>
+        <ul todo-list></ul>
 
-<body>
+        <div>
+          <span todo-count></span>
+        </div>
+      </todo-app>
+    </div>
 
-  <div class="container">
+    <script>
+      function asdf() {
+        console.log('asdf');
+      }
 
-    <h1>Todo list</h1>
-
-    <todo-app>
-      <form name="onSubmit">
-        <input autofocus todo-input placeholder="What needs to be done?" />
-      </form>
-      <ul todo-list></ul>
-
-      <div>
-        <span todo-count></span>
-      </div>
-    </todo-app>
-
-  </div>
-
-</body>
-
+      asdf();
+    </script>
+  </body>
 </html>

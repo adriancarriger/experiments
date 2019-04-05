@@ -8,9 +8,26 @@
   </head>
   <body>
     <h1>Upload example</h1>
-    <form method="POST" action="/upload">
+    <form>
       <input type="file" name="fileUpload" />
       <input type="submit" />
     </form>
+
+    <script>
+      document.querySelector('form').onsubmit = async e => {
+        e.preventDefault();
+        const file = document.querySelector('input[type="file"]').files[0];
+        const formData = new FormData();
+        formData.append('username', 'abc123');
+        formData.append('avatar', file);
+
+        const response = await fetch('/upload', {
+          method: 'post',
+          body: formData
+        }).then(a => a.json());
+
+        console.log('response', response);
+      };
+    </script>
   </body>
 </html>
