@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Upload example</title>
+  </head>
+  <body>
+    <h1>Upload example</h1>
+    <form>
+      <input type="file" name="fileUpload" />
+      <input type="submit" />
+    </form>
+
+    <script src="unpkg.com/tus-js-client"></script>
+    <script>
+      document.querySelector('form').onsubmit = async e => {
+        e.preventDefault();
+        const file = document.querySelector('input[type="file"]').files[0];
+        // Get the selected file from the input element
+        const file = e.target.files[0];
+
+        // Create a new tus upload
+        const upload = new tus.Upload(file, {
+          endpoint: 'http://localhost:1080/files/',
+          retryDelays: [0, 3000, 5000, 10000, 20000],
+          metadata: {
+            filename: file.name,
+            filetype: file.type
+          },
+          onError: error => {
+            console.log('Failed because: ' + error);
+          },
+          onProgress: (bytesUploaded, bytesTotal) => {
+            const percentage = ((bytesUploaded / bytesTotal) * 100).toFixed(2);
+            console.log(bytesUploaded, bytesTotal, percentage + '%');
+          },
+          onSuccess: () => {
+            console.log('Download %s from %s', upload.file.name, upload.url);
+          }
+        });
+
+        // Start the upload
+        upload.start();
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+version: '3.7'
+services:
+  file-server:
+    image: tusd
+    ports:
+      - '8080:8080'
+  # app:
+  #   build: ./app
+  #   command: yarn start
+  #   depends_on:
+  #     - file-server
+  #   ports:
+  #     - '8080:8080'
+  #   volumes:
+  #     - ./server:/app
+  #     - /app/node_modules
