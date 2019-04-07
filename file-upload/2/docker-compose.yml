@@ -3,7 +3,7 @@ services:
   file-server:
     image: tusd
     ports:
-      - '8080:8080'
+      - '1080:1080'
   # app:
   #   build: ./app
   #   command: yarn start
