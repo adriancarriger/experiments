@@ -1,24 +1,20 @@
 import { connect } from 'react-redux';
 import FacebookComponent from './FacebookButtonComponent';
-import { authOperations } from './duck';
+import { authOperations } from '../duck';
 
 const mapStateToProps = state => {
   return { isAuthenticated: state.auth };
 };
 
 const mapDispatchToProps = dispatch => {
-  const setAuth = isAuthenticated => {
-    dispatch(authOperations.setAuth(isAuthenticated));
-  };
-
   return {
-    setAuth
+    setAuth(isAuthenticated) {
+      dispatch(authOperations.setAuth(isAuthenticated));
+    }
   };
 };
 
-const FacebookButton = connect(
+export const FacebookButton = connect(
   mapStateToProps,
   mapDispatchToProps
 )(FacebookComponent);
-
-export default FacebookButton;

@@ -2,17 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import './Home.css';
-import LogoutButton from '../auth/LogoutButton';
+import { LogoutButton } from '../auth';
 
 export default class Home extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isLoading: true
-    };
-  }
-
   handleLogout = () => {
     this.props.userHasAuthenticated(false);
   };

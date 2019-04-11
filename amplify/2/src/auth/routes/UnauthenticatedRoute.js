@@ -3,7 +3,7 @@ import { Route, Redirect } from 'react-router-dom';
 
 import createAuthRoute from './create-auth-route';
 
-const UnauthComponent = ({ component: C, ...rest }) => {
+const UnauthenticatedComponent = ({ component: C, ...rest }) => {
   useEffect(() => {
     rest.checkAuth();
   });
@@ -23,7 +23,7 @@ const UnauthComponent = ({ component: C, ...rest }) => {
   );
 };
 
-export default createAuthRoute(UnauthComponent);
+export default createAuthRoute(UnauthenticatedComponent);
 
 function querystring(name, url = window.location.href) {
   name = name.replace(/[[]]/g, '\\$&');

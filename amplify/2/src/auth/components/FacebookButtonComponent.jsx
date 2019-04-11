@@ -1,7 +1,7 @@
 import React from 'react';
 import { Auth } from 'aws-amplify';
 
-import config from '../config';
+import config from '../../config';
 
 export default class FacebookButton extends React.Component {
   constructor(props) {

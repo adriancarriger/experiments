@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import LogoutButtonComponent from './LogoutButtonComponent';
-import operations from './duck/operations';
+import operations from '../duck/operations';
 
 const mapStateToProps = state => {
   return { isAuthenticated: state.auth };
@@ -15,9 +15,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-const FacebookButton = connect(
+export const LogoutButton = connect(
   mapStateToProps,
   mapDispatchToProps
 )(LogoutButtonComponent);
-
-export default FacebookButton;
