@@ -3,9 +3,7 @@ import FacebookComponent from './FacebookButtonComponent';
 import { authOperations } from './duck';
 
 const mapStateToProps = state => {
-  const { isAuthenticated } = state.auth;
-
-  return { isAuthenticated };
+  return { isAuthenticated: state.auth };
 };
 
 const mapDispatchToProps = dispatch => {

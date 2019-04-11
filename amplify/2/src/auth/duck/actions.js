@@ -1,7 +1,8 @@
 import { createActions } from 'reduxsauce';
 
 const { Types, Creators } = createActions({
-  setAuth: ['value']
+  setAuth: ['value'],
+  setAuthenticating: ['value']
 });
 
 export { Types, Creators };

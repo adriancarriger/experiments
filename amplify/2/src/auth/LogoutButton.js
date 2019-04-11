@@ -1,20 +1,17 @@
 import { connect } from 'react-redux';
+
 import LogoutButtonComponent from './LogoutButtonComponent';
-import { authOperations } from './duck';
+import operations from './duck/operations';
 
 const mapStateToProps = state => {
-  const { isAuthenticated } = state.auth;
-
-  return { isAuthenticated };
+  return { isAuthenticated: state.auth };
 };
 
 const mapDispatchToProps = dispatch => {
-  const onLogout = () => {
-    dispatch(authOperations.setAuth(false));
-  };
-
   return {
-    onLogout
+    onLogout() {
+      dispatch(operations.logout());
+    }
   };
 };
 

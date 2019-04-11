@@ -1,16 +1,22 @@
 import { Types as types } from './actions';
 
 const INITIAL_STATE = {
-  isAuthenticated: false
+  isAuthenticated: false,
+  authenticating: false
 };
 
 const authReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case types.SET_AUTH: {
-      const { value } = action;
       return {
         ...state,
-        isAuthenticated: value
+        isAuthenticated: action.value
+      };
+    }
+    case types.SET_AUTHENTICATING: {
+      return {
+        ...state,
+        authenticating: action.value
       };
     }
 
