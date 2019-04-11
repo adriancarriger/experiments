@@ -2,7 +2,7 @@ import { Types as types } from './actions';
 
 const INITIAL_STATE = {
   isAuthenticated: false,
-  authenticating: false
+  checkingAuth: false
 };
 
 const authReducer = (state = INITIAL_STATE, action) => {
@@ -13,10 +13,10 @@ const authReducer = (state = INITIAL_STATE, action) => {
         isAuthenticated: action.value
       };
     }
-    case types.SET_AUTHENTICATING: {
+    case types.SET_CHECKING_AUTH: {
       return {
         ...state,
-        authenticating: action.value
+        checkingAuth: action.value
       };
     }
 

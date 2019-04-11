@@ -3,17 +3,17 @@ import { Auth } from 'aws-amplify';
 import { Creators } from './actions';
 
 const setAuth = Creators.setAuth;
-const setAuthenticating = Creators.setAuthenticating;
+const setCheckingAuth = Creators.setCheckingAuth;
 
 const checkAuth = () => {
   return async (dispatch, getState) => {
     const { auth } = getState();
 
-    if (auth.authenticating) {
+    if (auth.isAuthenticated || auth.checkingAuth) {
       return;
     }
 
-    dispatch(setAuthenticating(true));
+    dispatch(setCheckingAuth(true));
     try {
       await Auth.currentAuthenticatedUser();
       dispatch(setAuth(true));
@@ -22,7 +22,7 @@ const checkAuth = () => {
         dispatch(setAuth(false));
       }
     }
-    dispatch(setAuthenticating(false));
+    dispatch(setCheckingAuth(false));
   };
 };
 
@@ -36,6 +36,6 @@ const logout = () => {
 export default {
   setAuth,
   checkAuth,
-  setAuthenticating,
+  setCheckingAuth,
   logout
 };
