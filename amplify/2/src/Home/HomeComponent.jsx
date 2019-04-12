@@ -5,25 +5,15 @@ import './Home.css';
 import { LogoutButton } from '../auth';
 
 export default class Home extends Component {
-  handleLogout = () => {
-    this.props.userHasAuthenticated(false);
-  };
-
   render() {
     return (
       <div className="Home">
         <div>is authenticated: {this.props.isAuthenticated.toString()}</div>
-        Home container {this.props.isAuthenticated && <LogoutButton onLogout={this.handleLogout} />}
+        Home container
         <div>
-          {!this.props.isAuthenticated ? (
-            <Link to="/login" className="btn btn-info btn-lg">
-              Login
-            </Link>
-          ) : (
-            <Link to="/example" className="btn btn-info btn-lg">
-              Example
-            </Link>
-          )}
+          <Link to="/example" className="btn btn-info btn-lg">
+            Auth required route
+          </Link>
         </div>
       </div>
     );
