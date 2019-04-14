@@ -1,9 +1,12 @@
 import React from 'react';
 import { Auth } from 'aws-amplify';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 import config from '../../config';
+import { styles } from './ButtonStyles';
 
-export default class FacebookButton extends React.Component {
+class FacebookButton extends React.Component {
   constructor(props) {
     super(props);
     this.signIn = this.signIn.bind(this);
@@ -71,10 +74,15 @@ export default class FacebookButton extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
       <div>
-        <button onClick={this.signIn}>Sign in with Facebook</button>
+        <Button color="primary" className={classes.button} onClick={this.signIn}>
+          Login
+        </Button>
       </div>
     );
   }
 }
+
+export default withStyles(styles)(FacebookButton);
