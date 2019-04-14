@@ -2,6 +2,6 @@ import React, { Component } from 'react';
 
 export default class Login extends Component {
   render() {
-    return <div>You are signed in</div>;
+    return <div>Example page</div>;
   }
 }
