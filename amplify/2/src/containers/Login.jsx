@@ -10,7 +10,7 @@ export default class Login extends Component {
   render() {
     return (
       <div className="Login">
-        Login page
+        <h4>Login page</h4>
         <FacebookButton onLogin={this.handleFbLogin} />
       </div>
     );

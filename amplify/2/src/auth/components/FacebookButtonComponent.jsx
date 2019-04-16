@@ -74,11 +74,10 @@ class FacebookButton extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
     return (
       <div>
-        <Button color="primary" className={classes.button} onClick={this.signIn}>
-          Login
+        <Button variant="contained" color="primary" onClick={this.signIn}>
+          Login with Facebook
         </Button>
       </div>
     );

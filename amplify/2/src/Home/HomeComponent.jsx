@@ -7,12 +7,10 @@ export default class Home extends Component {
   render() {
     return (
       <div className="Home">
+        <h4>Home page</h4>
         <div>is authenticated: {this.props.isAuthenticated.toString()}</div>
-        Home page
         <div>
-          <Link to="/example" className="btn btn-info btn-lg">
-            Example page (auth required)
-          </Link>
+          <Link to="/example">Example page (auth required)</Link>
         </div>
       </div>
     );

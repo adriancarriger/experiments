@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
 import { LogoutButton } from '../auth';
-import { FacebookButton } from '../auth';
+import LinkButton from './NavbarButton';
 
 const styles = {
   root: {
@@ -36,7 +36,7 @@ function ButtonAppBar(props) {
           <Typography variant="h6" color="inherit" className={classes.grow}>
             News
           </Typography>
-          {!props.isAuthenticated ? <FacebookButton /> : <LogoutButton />}
+          {!props.isAuthenticated ? <LinkButton /> : <LogoutButton />}
         </Toolbar>
       </AppBar>
     </div>
