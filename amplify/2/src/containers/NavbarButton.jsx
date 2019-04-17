@@ -10,13 +10,13 @@ export const styles = theme => ({
   }
 });
 
-const MyLink = props => <Link to="/login" {...props} />;
-
 function NavbarButton(props) {
-  const { classes } = props;
+  const { classes, to } = props;
+  const MyLink = props => <Link to={to} {...props} />;
+
   return (
     <Button color="primary" className={classes.button} component={MyLink}>
-      Login
+      {props.children}
     </Button>
   );
 }

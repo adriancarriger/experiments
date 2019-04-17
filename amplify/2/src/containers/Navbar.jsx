@@ -36,7 +36,7 @@ function ButtonAppBar(props) {
           <Typography variant="h6" color="inherit" className={classes.grow}>
             News
           </Typography>
-          {!props.isAuthenticated ? <LinkButton /> : <LogoutButton />}
+          {!props.isAuthenticated ? <LinkButton to="/login">Login</LinkButton> : <LogoutButton />}
         </Toolbar>
       </AppBar>
     </div>
