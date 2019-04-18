@@ -7,13 +7,13 @@ import { styles } from './ButtonStyles';
 
 function ContainedButtons(props) {
   const { classes } = props;
-  return (
-    <div>
-      <Button color="primary" className={classes.button} onClick={props.onLogout}>
-        Logout
-      </Button>
-    </div>
+  const defaultButton = (
+    <Button color="primary" className={classes.button}>
+      Logout
+    </Button>
   );
+
+  return <div onClick={props.onLogout}>{props.children || defaultButton}</div>;
 }
 
 ContainedButtons.propTypes = {

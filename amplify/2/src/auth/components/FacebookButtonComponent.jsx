@@ -74,13 +74,13 @@ class FacebookButton extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-        <Button variant="contained" color="primary" onClick={this.signIn}>
-          Login with Facebook
-        </Button>
-      </div>
+    const defaultButton = (
+      <Button variant="contained" color="primary">
+        Login with Facebook
+      </Button>
     );
+
+    return <div onClick={this.signIn}>{this.props.children || defaultButton}</div>;
   }
 }
 
