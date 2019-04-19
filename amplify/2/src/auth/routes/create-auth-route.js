@@ -9,9 +9,14 @@ const mapDispatchToProps = dispatch => ({
 });
 const mapStateToProps = state => ({ isAuthenticated: state.auth.isAuthenticated });
 
-export default RouteComponent => {
+/**
+ * @type {any}
+ */
+const AuthRoute = RouteComponent => {
   return connect(
     mapStateToProps,
     mapDispatchToProps
   )(RouteComponent);
 };
+
+export default AuthRoute;

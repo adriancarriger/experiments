@@ -9,6 +9,7 @@ const AuthComponent = ({ component: C, ...rest }) => {
 
   return (
     <Route
+      {...rest}
       render={props =>
         rest.isAuthenticated ? (
           <C {...props} />
