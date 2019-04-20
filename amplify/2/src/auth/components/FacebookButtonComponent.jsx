@@ -1,10 +1,7 @@
 import React from 'react';
 import { Auth } from 'aws-amplify';
-import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 
 import config from '../../config';
-import { styles } from './ButtonStyles';
 
 class FacebookButton extends React.Component {
   constructor(props) {
@@ -74,14 +71,8 @@ class FacebookButton extends React.Component {
   }
 
   render() {
-    const defaultButton = (
-      <Button variant="contained" color="primary">
-        Login with Facebook
-      </Button>
-    );
-
-    return <div onClick={this.signIn}>{this.props.children || defaultButton}</div>;
+    return <div onClick={this.signIn}>{this.props.children}</div>;
   }
 }
 
-export default withStyles(styles)(FacebookButton);
+export default FacebookButton;
