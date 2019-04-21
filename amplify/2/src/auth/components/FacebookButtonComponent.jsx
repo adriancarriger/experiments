@@ -1,8 +1,6 @@
 import React from 'react';
 import { Auth } from 'aws-amplify';
 
-import config from '../../config';
-
 class FacebookButton extends React.Component {
   constructor(props) {
     super(props);
@@ -54,7 +52,7 @@ class FacebookButton extends React.Component {
   }
 
   createScript() {
-    window.fbAsyncInit = this.fbAsyncInit;
+    window.fbAsyncInit = this.fbAsyncInit.bind(this);
     const script = document.createElement('script');
     script.src = 'https://connect.facebook.net/en_US/sdk.js';
     script.async = true;
@@ -63,7 +61,7 @@ class FacebookButton extends React.Component {
 
   fbAsyncInit() {
     window.FB.init({
-      appId: config.social.FB,
+      appId: this.props.config.social.FB,
       cookie: true,
       xfbml: true,
       version: 'v2.11'
