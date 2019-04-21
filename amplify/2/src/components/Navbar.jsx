@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -29,7 +30,16 @@ const styles = {
 };
 
 function ButtonAppBar(props) {
-  const { classes } = props;
+  const { classes, location } = props;
+
+  const routeNames = {
+    '': 'Home page',
+    example: 'Example page',
+    login: 'Login'
+  };
+  const titleKey = location.pathname.split('/')[1];
+  const title = routeNames[titleKey] || location.pathname;
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -38,7 +48,7 @@ function ButtonAppBar(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" color="inherit" className={classes.grow}>
-            News
+            {title}
           </Typography>
           {!props.isAuthenticated ? (
             <LinkButton to="/login">Login</LinkButton>
@@ -59,7 +69,7 @@ ButtonAppBar.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-const NavbarComponent = withStyles(styles)(ButtonAppBar);
+const NavbarComponent = withStyles(styles)(withRouter(ButtonAppBar));
 
 const mapStateToProps = state => {
   return { isAuthenticated: state.auth.isAuthenticated };
