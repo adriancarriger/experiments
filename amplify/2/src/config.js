@@ -9,5 +9,6 @@ export default {
   },
   social: {
     FB: '1617066261730179'
-  }
+  },
+  generated
 };
