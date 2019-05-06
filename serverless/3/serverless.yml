@@ -1,0 +1,25 @@
+service: zip-s3-files-demo
+
+frameworkVersion: '>=1.1.0'
+
+custom:
+  bucket: zip-s3-files-demo
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: dev
+  region: us-west-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:*
+      Resource: 'arn:aws:s3:::${self:custom.bucket}/*'
+
+functions:
+  streamFilesToZip:
+    handler: handler.streamFilesToZip
+    environment:
+      BUCKET: ${self:custom.bucket}
+    timeout: 90
+    memorySize: 2048

@@ -1,0 +1,14 @@
+{
+  "name": "zip-s3-files-demo",
+  "version": "1.0.0",
+  "author": "Adrian Carriger",
+  "license": "MIT",
+  "scripts": {
+    "start": "node run-locally.js",
+    "prepare": "node create-objects.js"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.7.9",
+    "s3-zip": "^3.0.0"
+  }
+}
