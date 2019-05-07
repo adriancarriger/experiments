@@ -21,5 +21,5 @@ functions:
     handler: handler.streamFilesToZip
     environment:
       BUCKET: ${self:custom.bucket}
-    timeout: 90
-    memorySize: 2048
+    timeout: 120
+    memorySize: 3008
