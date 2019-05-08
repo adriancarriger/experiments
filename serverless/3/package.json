@@ -5,10 +5,10 @@
   "license": "MIT",
   "scripts": {
     "start": "node run-locally.js",
-    "prepare": "node create-objects.js"
+    "setup": "node create-objects.js"
   },
   "dependencies": {
-    "aws-sdk": "^2.7.9",
-    "s3-zip": "^3.0.0"
+    "archiver": "^3.0.0",
+    "aws-sdk": "^2.7.9"
   }
 }

@@ -3,11 +3,11 @@ const AWS = require('aws-sdk');
 const s3 = new AWS.S3();
 
 (async () => {
-  await createObjects('test-1', 300);
+  await createObjects('test-1', 60);
 })();
 
 /**
- * Puts about a gigabyte of text files (6.9mb each) in S3
+ * Creates many text files (6.9mb each) in S3
  */
 async function createObjects(directory, numberOfFiles) {
   const fileContents = [...Array(1000000).keys()].join('\n');
