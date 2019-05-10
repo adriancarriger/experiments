@@ -8,13 +8,13 @@
     "start": "jest"
   },
   "dependencies": {
-    "jest": "^23.6.0",
-    "ts-jest": "^23.10.2",
-    "typescript": "^3.1.1"
+    "jest": "^24.8.0",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.4.5"
   },
   "devDependencies": {
-    "@types/jest": "^23.3.2",
-    "@types/mocha": "^5.2.5",
+    "@types/jest": "^24.0.12",
+    "@types/mocha": "^5.2.6",
     "tslint-eslint-rules": "^5.4.0"
   },
   "jest": {
