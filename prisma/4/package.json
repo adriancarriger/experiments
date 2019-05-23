@@ -9,7 +9,7 @@
     "graphql": "0.13.2",
     "react": "16.4.1",
     "react-apollo": "2.1.6",
-    "react-dom": "16.4.1",
+    "react-dom": "16.4.2",
     "react-modal": "3.4.5",
     "react-router-dom": "4.3.1",
     "tachyons": "4.10.0"
