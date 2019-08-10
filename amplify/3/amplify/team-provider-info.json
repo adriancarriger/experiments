@@ -1,0 +1,26 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "a3mlwfe-dev-20190810141636-authRole",
+            "UnauthRoleArn": "arn:aws:iam::872515952951:role/a3mlwfe-dev-20190810141636-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::872515952951:role/a3mlwfe-dev-20190810141636-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "a3mlwfe-dev-20190810141636-deployment",
+            "UnauthRoleName": "a3mlwfe-dev-20190810141636-unauthRole",
+            "StackName": "a3mlwfe-dev-20190810141636",
+            "StackId": "arn:aws:cloudformation:us-east-1:872515952951:stack/a3mlwfe-dev-20190810141636/5f89f1d0-bba3-11e9-916c-0af7a73fd784"
+        }
+    },
+    "staging": {
+        "awscloudformation": {
+            "AuthRoleName": "a3mlwfe-staging-20190810170808-authRole",
+            "UnauthRoleArn": "arn:aws:iam::872515952951:role/a3mlwfe-staging-20190810170808-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::872515952951:role/a3mlwfe-staging-20190810170808-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "a3mlwfe-staging-20190810170808-deployment",
+            "UnauthRoleName": "a3mlwfe-staging-20190810170808-unauthRole",
+            "StackName": "a3mlwfe-staging-20190810170808",
+            "StackId": "arn:aws:cloudformation:us-east-1:872515952951:stack/a3mlwfe-staging-20190810170808/56632f50-bbbb-11e9-9bda-0a82639e0346"
+        }
+    }
+}

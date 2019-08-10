@@ -17,5 +17,17 @@
                 }
             }
         }
+    },
+    "mytesttwo": {
+        "awscloudformation": {
+            "AuthRoleName": "a2e71ds-mytesttwo-20190810140322-authRole",
+            "UnauthRoleArn": "arn:aws:iam::872515952951:role/a2e71ds-mytesttwo-20190810140322-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::872515952951:role/a2e71ds-mytesttwo-20190810140322-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "a2e71ds-mytesttwo-20190810140322-deployment",
+            "UnauthRoleName": "a2e71ds-mytesttwo-20190810140322-unauthRole",
+            "StackName": "a2e71ds-mytesttwo-20190810140322",
+            "StackId": "arn:aws:cloudformation:us-east-1:872515952951:stack/a2e71ds-mytesttwo-20190810140322/869cc2e0-bba1-11e9-b3ff-12545315cab6"
+        }
     }
 }
