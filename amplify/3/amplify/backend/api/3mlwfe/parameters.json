@@ -1,0 +1,11 @@
+{
+    "AppSyncApiName": "3mlwfe",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": "false",
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "auth3mlwfee126700f",
+            "Outputs.UserPoolId"
+        ]
+    }
+}

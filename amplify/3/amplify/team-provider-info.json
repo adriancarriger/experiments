@@ -9,6 +9,13 @@
             "UnauthRoleName": "a3mlwfe-dev-20190810141636-unauthRole",
             "StackName": "a3mlwfe-dev-20190810141636",
             "StackId": "arn:aws:cloudformation:us-east-1:872515952951:stack/a3mlwfe-dev-20190810141636/5f89f1d0-bba3-11e9-916c-0af7a73fd784"
+        },
+        "categories": {
+            "auth": {
+                "3mlwfe92f1c222": {
+                    "hostedUIProviderCreds": "[{\"ProviderName\":\"Google\",\"client_id\":\"506848841707-e3ogh171eh53fjlg689f98576hs3hgbi.apps.googleusercontent.com\",\"client_secret\":\"6hbjmyR-qLePi8TuUx3jzHLc\"}]"
+                }
+            }
         }
     },
     "staging": {
@@ -21,6 +28,36 @@
             "UnauthRoleName": "a3mlwfe-staging-20190810170808-unauthRole",
             "StackName": "a3mlwfe-staging-20190810170808",
             "StackId": "arn:aws:cloudformation:us-east-1:872515952951:stack/a3mlwfe-staging-20190810170808/56632f50-bbbb-11e9-9bda-0a82639e0346"
+        },
+        "categories": {
+            "auth": {
+                "3mlwfee126700f": {
+                    "googleAppIdUserPool": "506848841707-e3ogh171eh53fjlg689f98576hs3hgbi.apps.googleusercontent.com",
+                    "googleAppSecretUserPool": "6hbjmyR-qLePi8TuUx3jzHLc",
+                    "hostedUIProviderCreds": "[{\"ProviderName\":\"Google\",\"client_id\":\"506848841707-e3ogh171eh53fjlg689f98576hs3hgbi.apps.googleusercontent.com\",\"client_secret\":\"6hbjmyR-qLePi8TuUx3jzHLc\"}]"
+                }
+            }
+        }
+    },
+    "local": {
+        "awscloudformation": {
+            "AuthRoleName": "a3mlwfe-local-20190811120214-authRole",
+            "UnauthRoleArn": "arn:aws:iam::872515952951:role/a3mlwfe-local-20190811120214-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::872515952951:role/a3mlwfe-local-20190811120214-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "a3mlwfe-local-20190811120214-deployment",
+            "UnauthRoleName": "a3mlwfe-local-20190811120214-unauthRole",
+            "StackName": "a3mlwfe-local-20190811120214",
+            "StackId": "arn:aws:cloudformation:us-east-1:872515952951:stack/a3mlwfe-local-20190811120214/c4f93b50-bc59-11e9-a24c-120371d9064c"
+        },
+        "categories": {
+            "auth": {
+                "3mlwfee126700f": {
+                    "googleAppIdUserPool": "506848841707-e3ogh171eh53fjlg689f98576hs3hgbi.apps.googleusercontent.com",
+                    "googleAppSecretUserPool": "6hbjmyR-qLePi8TuUx3jzHLc",
+                    "hostedUIProviderCreds": "[{\"ProviderName\":\"Google\",\"client_id\":\"506848841707-e3ogh171eh53fjlg689f98576hs3hgbi.apps.googleusercontent.com\",\"client_secret\":\"6hbjmyR-qLePi8TuUx3jzHLc\"}]"
+                }
+            }
         }
     }
 }

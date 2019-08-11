@@ -1,0 +1,104 @@
+{
+    "identityPoolName": "3mlwfee126700f_identitypool_e126700f",
+    "allowUnauthenticatedIdentities": false,
+    "openIdLambdaRoleName": "3mlwfee126700f_openid_lambda_role",
+    "resourceNameTruncated": "3mlwfee126700f",
+    "userPoolName": "3mlwfee126700f_userpool_e126700f",
+    "autoVerifiedAttributes": [
+        "email"
+    ],
+    "mfaConfiguration": "OFF",
+    "mfaTypes": [
+        "SMS Text Message"
+    ],
+    "smsAuthenticationMessage": "Your authentication code is {####}",
+    "smsVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Your verification code",
+    "emailVerificationMessage": "Your verification code is {####}",
+    "defaultPasswordPolicy": false,
+    "passwordPolicyMinLength": 8,
+    "passwordPolicyCharacters": [],
+    "requiredAttributes": [
+        "email"
+    ],
+    "userpoolClientName": "3mlwfee126700f_app_client",
+    "userpoolClientGenerateSecret": true,
+    "userpoolClientRefreshTokenValidity": 30,
+    "userpoolClientWriteAttributes": [
+        "email"
+    ],
+    "userpoolClientReadAttributes": [
+        "email"
+    ],
+    "mfaLambdaRole": "3mlwfee126700f_totp_lambda_role",
+    "userpoolClientLambdaRole": "3mlwfee126700f_userpoolclient_lambda_role",
+    "userpoolClientSetAttributes": false,
+    "resourceName": "3mlwfee126700f",
+    "authSelections": "identityPoolAndUserPool",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    },
+    "unauthRoleArn": {
+        "Fn::GetAtt": [
+            "UnauthRole",
+            "Arn"
+        ]
+    },
+    "useDefault": "defaultSocial",
+    "hostedUI": true,
+    "additionalQuestions": [
+        "requiredAttributes",
+        "triggers"
+    ],
+    "triggers": "{}",
+    "hostedUIDomainName": "3mlwfee126700f-e126700f",
+    "newCallbackURLs": [
+        "http://localhost:3000/"
+    ],
+    "newLogoutURLs": [
+        "http://localhost:3000/"
+    ],
+    "authProvidersUserPool": [
+        "Google"
+    ],
+    "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
+    "parentStack": {
+        "Ref": "AWS::StackId"
+    },
+    "permissions": [],
+    "dependsOn": [],
+    "AllowedOAuthFlows": [
+        "code"
+    ],
+    "AllowedOAuthScopes": [
+        "phone",
+        "email",
+        "openid",
+        "profile",
+        "aws.cognito.signin.user.admin"
+    ],
+    "CallbackURLs": [
+        "https://d2i2lclnjqq75d.cloudfront.net/"
+    ],
+    "LogoutURLs": [
+        "https://d2i2lclnjqq75d.cloudfront.net/"
+    ],
+    "googleAuthorizeScopes": [
+        "openid email profile"
+    ],
+    "updateFlow": "callbacks",
+    "EditURLS": [],
+    "addCallbackOnUpdate": true,
+    "editLogoutURLs": [],
+    "addLogoutOnUpdate": true,
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://d2i2lclnjqq75d.cloudfront.net/\",\"http://localhost:3000/\"],\"LogoutURLs\":[\"https://d2i2lclnjqq75d.cloudfront.net/\",\"http://localhost:3000/\"]}"
+}
