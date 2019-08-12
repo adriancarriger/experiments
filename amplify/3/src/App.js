@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
+import { Auth, Hub, API, graphqlOperation } from 'aws-amplify';
+
+import { createBlog } from './graphql/mutations';
+import { listBlogs } from './graphql/queries';
 import logo from './logo.svg';
 import './App.css';
-
-import { Auth, Hub } from 'aws-amplify';
 
 function App(props) {
   useEffect(() => {
@@ -17,6 +19,7 @@ function App(props) {
       }
     });
   }, []);
+  listBlogsQuery();
 
   return (
     <div className="App">
@@ -25,6 +28,7 @@ function App(props) {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
+        <code>asdf</code>
         <button onClick={() => Auth.federatedSignIn()}>Sign In</button>
         <button onClick={checkUser}>Check User</button>
         <button onClick={signOut}>Sign Out</button>
@@ -46,6 +50,21 @@ function signOut() {
   Auth.signOut()
     .then(data => console.log(data))
     .catch(err => console.log(err));
+}
+
+async function createBlogMutation() {
+  const todoDetails = {
+    name: 'Party tonight!'
+  };
+
+  const newBlog = await API.graphql(graphqlOperation(createBlog, todoDetails));
+  console.log(newBlog);
+}
+
+async function listBlogsQuery() {
+  console.log('listing allBlogs');
+  const allBlogs = await API.graphql(graphqlOperation(listBlogs));
+  console.log(allBlogs);
 }
 
 export default App;
