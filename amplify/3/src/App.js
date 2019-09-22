@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Auth, Hub, API, graphqlOperation } from 'aws-amplify';
 
-import { createBlog } from './graphql/mutations';
+// import { createBlog } from './graphql/mutations';
 import { listBlogs } from './graphql/queries';
 import logo from './logo.svg';
 import './App.css';
@@ -18,8 +18,14 @@ function App(props) {
         console.log('a user has signed out!');
       }
     });
+
+    (async () => {
+      const blogs = await listBlogsQuery();
+      setBlog(blogs);
+    })();
   }, []);
-  listBlogsQuery();
+
+  const [blogs, setBlog] = useState([]);
 
   return (
     <div className="App">
@@ -28,7 +34,11 @@ function App(props) {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <code>asdf</code>
+        <code>
+          {blogs.map(({ name, id }) => (
+            <div key={id}>{name}</div>
+          ))}
+        </code>
         <button onClick={() => Auth.federatedSignIn()}>Sign In</button>
         <button onClick={checkUser}>Check User</button>
         <button onClick={signOut}>Sign Out</button>
@@ -52,19 +62,19 @@ function signOut() {
     .catch(err => console.log(err));
 }
 
-async function createBlogMutation() {
-  const todoDetails = {
-    name: 'Party tonight!'
-  };
+// async function createBlogMutation() {
+//   const todoDetails = {
+//     name: 'Party tonight!'
+//   };
 
-  const newBlog = await API.graphql(graphqlOperation(createBlog, todoDetails));
-  console.log(newBlog);
-}
+//   const newBlog = await API.graphql(graphqlOperation(createBlog, todoDetails));
+//   console.log(newBlog);
+// }
 
 async function listBlogsQuery() {
-  console.log('listing allBlogs');
-  const allBlogs = await API.graphql(graphqlOperation(listBlogs));
-  console.log(allBlogs);
+  const { data } = await API.graphql(graphqlOperation(listBlogs));
+
+  return data.listBlogs.items;
 }
 
 export default App;
