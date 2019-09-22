@@ -19,9 +19,19 @@ function App(props) {
       }
     });
 
+    Hub.listen('configured', data => {
+      console.log('configured data', data);
+    });
+
     (async () => {
-      const blogs = await listBlogsQuery();
-      setBlog(blogs);
+      try {
+        const user = await Auth.currentAuthenticatedUser();
+        console.log('user', user);
+      } catch (e) {
+        console.log('e', e);
+      }
+      // const blogs = await listBlogsQuery();
+      // setBlog(blogs);
     })();
   }, []);
 
@@ -31,14 +41,9 @@ function App(props) {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <code>
-          {blogs.map(({ name, id }) => (
-            <div key={id}>{name}</div>
-          ))}
-        </code>
+        {blogs.map(({ name, id }) => (
+          <div key={id}>{name}</div>
+        ))}
         <button onClick={() => Auth.federatedSignIn()}>Sign In</button>
         <button onClick={checkUser}>Check User</button>
         <button onClick={signOut}>Sign Out</button>
