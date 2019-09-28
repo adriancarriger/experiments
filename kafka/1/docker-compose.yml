@@ -1,0 +1,14 @@
+---
+version: '3'
+services:
+  consumer:
+    image: ubuntu:18.04
+    build: .
+    container_name: sample
+    volumes:
+      - ./:/home/
+    command: echo 'hello'
+    # ports:
+    #   - "9092:9092"
+    links:
+      - kafka-1
