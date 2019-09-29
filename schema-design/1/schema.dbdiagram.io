@@ -40,6 +40,7 @@ Table message {
   Indexes {
     from
     to
+    twilio_account_id
   }
 }
 
