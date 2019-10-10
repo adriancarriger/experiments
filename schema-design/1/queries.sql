@@ -1,6 +1,7 @@
 -- Get messages (1/2)
 SELECT *
 FROM message
+WHERE message.twilio_account_id IN ('1', '2')
 LIMIT 3;
 
 -- Get messages (2/2);

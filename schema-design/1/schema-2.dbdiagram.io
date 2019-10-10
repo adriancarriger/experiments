@@ -1,4 +1,5 @@
-// ERD: https://dbdiagram.io/d/5d8f4059ff5115114db4b5cd
+// Option 2
+// ERD: https://dbdiagram.io/d/5c6f5e95f7c5bb70c72f16d3
 
 Table user {
   id int [pk]
@@ -14,14 +15,13 @@ Table contact {
 
 Table contact_phone {
   id int [pk]
+  phone_id int [ref: > phone.id]
   contact_id int [ref: > contact.id]
-  phone_number varchar
 }
 
-Table email {
+Table phone {
   id int [pk]
-  address varchar
-  contact_id int [ref: > contact.id]
+  phone_number varchar
 }
 
 Table twilio_account {
