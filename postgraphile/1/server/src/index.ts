@@ -1,5 +1,7 @@
 import express from 'express';
 import postgraphile from 'postgraphile';
+// const PostGraphileNestedMutations = require('postgraphile-plugin-nested-mutations');
+import * as PostGraphileNestedMutations from 'postgraphile-plugin-nested-mutations';
 
 const app = express();
 
@@ -10,7 +12,12 @@ app.use(
     {
       watchPg: true,
       graphiql: true,
-      enhanceGraphiql: true
+      enhanceGraphiql: true,
+      enableCors: true,
+      appendPlugins: [
+        require('postgraphile-plugin-nested-mutations'),
+        require('@graphile-contrib/pg-simplify-inflector')
+      ]
     }
   )
 );

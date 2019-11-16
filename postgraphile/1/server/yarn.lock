@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@graphile-contrib/pg-simplify-inflector@^5.0.0-beta.1":
+  version "5.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@graphile-contrib/pg-simplify-inflector/-/pg-simplify-inflector-5.0.0-beta.1.tgz#f7e890566d33e8ee6796dab5ec75ff9bca040701"
+  integrity sha512-oE1znqxBgGl6WK7t8sO4okQEqlP+GZ7ZYT4m2EB38GGbT3YuzjHTI8TcxJtDZsLPG3kPvZvB4Uc34Kb0/NGUVQ==
+
 "@graphile/lru@4.4.5":
   version "4.4.5"
   resolved "https://registry.yarnpkg.com/@graphile/lru/-/lru-4.4.5.tgz#a0fb6da9fe2002116bc61708f8d49a2a8ac2f206"
@@ -384,7 +389,7 @@ fresh@0.5.2:
   resolved "https://registry.yarnpkg.com/fresh/-/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"
   integrity sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac=
 
-graphile-build-pg@4.4.5:
+graphile-build-pg@4.4.5, graphile-build-pg@^4.2.0:
   version "4.4.5"
   resolved "https://registry.yarnpkg.com/graphile-build-pg/-/graphile-build-pg-4.4.5.tgz#6eeef87e43018629730f15da7ddf08a1d8a4d529"
   integrity sha512-jQzEiAmj8IPNsxXB4KNbr7uXnvg1y34ch4Gp6i48wg1U2Z/d/nfPFyhxQkvxNio2CXySDg+5klt1rXucVB2+Rw==
@@ -727,6 +732,13 @@ postgraphile-core@4.4.5:
   dependencies:
     graphile-build "4.4.5"
     graphile-build-pg "4.4.5"
+
+postgraphile-plugin-nested-mutations@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/postgraphile-plugin-nested-mutations/-/postgraphile-plugin-nested-mutations-1.0.1.tgz#f8eb132f3cd69d5bafcaa2de0322daadcf85fd15"
+  integrity sha512-nL4TZ/WCRRigFhBEeLPOMJxo5OZoKMsCllM2o0Dyvcdzx/z9/I9kXfEBQWUSTBLodgd8eC0cMZXhfesaIxEJzQ==
+  dependencies:
+    graphile-build-pg "^4.2.0"
 
 postgraphile@^4.4.4:
   version "4.4.4"
