@@ -23,7 +23,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export function ContactRow({ contact, handleEdit, handleDelete }) {
-  const firstPhone = contact.contactPhones.edges[0];
+  // const firstPhone = contact.contactPhones.edges[0];
+  const firstPhone = undefined;
   const editContact = () => handleEdit(contact);
   const classes = useStyles({});
 
