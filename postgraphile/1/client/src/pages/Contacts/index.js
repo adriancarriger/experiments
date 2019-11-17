@@ -5,9 +5,8 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import TableHead from '@material-ui/core/TableHead';
-import ApolloClient from 'apollo-boost';
 import { gql } from 'apollo-boost';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery, useApolloClient } from '@apollo/react-hooks';
 
 import { EditDialog } from './EditDialog';
 import { ContactRow } from './ContactRow';
@@ -17,9 +16,9 @@ const GET_CONTACTS = gql`
     contacts(last: 10, condition: $condition) {
       edges {
         node {
+          id
           lastName
           firstName
-          id
           contactPhones {
             edges {
               node {
@@ -34,11 +33,12 @@ const GET_CONTACTS = gql`
   }
 `;
 
-const ADD_CONTACT = gql`
+const CREATE_CONTACT = gql`
   mutation($input: CreateContactInput!) {
     __typename
     createContact(input: $input) {
       contact {
+        id
         firstName
         lastName
         contactPhones {
@@ -61,9 +61,9 @@ const UPDATE_CONTACT = gql`
       __typename
       contact {
         __typename
+        id
         firstName
         lastName
-        id
         contactPhones {
           edges {
             node {
@@ -79,20 +79,25 @@ const UPDATE_CONTACT = gql`
 
 const DELETE_CONTACT = gql`
   mutation($input: DeleteContactInput!) {
+    __typename
     deleteContact(input: $input) {
-      deletedContactNodeId
+      __typename
       contact {
+        __typename
         id
       }
     }
   }
 `;
 
-const useStyles = makeStyles(theme => ({
-  table: {
-    minWidth: 650
-  }
-}));
+const mutations = {
+  GET_CONTACTS,
+  DELETE_CONTACT,
+  UPDATE_CONTACT,
+  CREATE_CONTACT
+};
+
+const useStyles = makeStyles(theme => ({ table: { minWidth: 650 } }));
 
 const defaultModalState = {
   id: undefined,
@@ -101,14 +106,11 @@ const defaultModalState = {
   phones: []
 };
 
-const client = new ApolloClient({
-  uri: 'http://localhost:3000/graphql'
-});
-
 export function Contacts({ modalOpen, setModalOpen }) {
-  const [mutate] = useMutation(UPDATE_CONTACT);
+  const client = useApolloClient();
 
   const [editable, setEditable] = useState(defaultModalState);
+
   const { loading, error, data } = useQuery(GET_CONTACTS, {
     variables: { condition: { userId: 1 } }
   });
@@ -125,83 +127,25 @@ export function Contacts({ modalOpen, setModalOpen }) {
 
   const classes = useStyles({});
 
-  const handleSubmit = async inputs => {
-    console.log('inputs', inputs);
-    // // insert
-    const input = {
-      contact: {
-        userId: 1,
-        firstName: inputs.firstName,
-        lastName: inputs.lastName,
-        contactPhonesUsingId: {
-          create: inputs.phones
-        }
-      }
-    };
-
-    await client.mutate({
-      mutation: ADD_CONTACT,
-      variables: { input }
+  const handleSubmit = inputs => {
+    const type = mutationType(inputs);
+    console.log('asdf', mutations);
+    client.mutate({
+      mutation: mutations[`${type.toUpperCase()}_CONTACT`],
+      variables: createVariables(inputs, type),
+      optimisticResponse: createOptimisticResponse(inputs, type),
+      update: updateContactMutation
     });
-
-    const myFakeId = -(Math.random() * 1000);
-
-    // mutate({
-    //   variables: {
-    //     input: {
-    //       id: inputs.id,
-    //       patch: {
-    //         firstName: inputs.firstName,
-    //         lastName: inputs.lastName
-    //         // contactPhonesUsingId: {
-    //         //   create: { phoneNumber: '8053228444' },
-    //         //   deleteById: { id: 10 },
-    //         //   updateById: { patch: { phoneNumber: '6053228444' }, id: 10 }
-    //         // }
-    //       }
-    //     }
-    //   },
-    //   optimisticResponse: {
-    //     __typename: 'Mutation',
-    //     updateContact: {
-    //       __typename: 'UpdateContactPayload',
-    //       contact: {
-    //         __typename: 'Contact',
-    //         firstName: inputs.firstName,
-    //         lastName: inputs.lastName,
-    //         id: inputs.id,
-    //         contactPhones: inputs.contactPhones
-    //       }
-    //     }
-    //   },
-    //   update: (store, { data: { updateContact } }) => {
-    //     console.log('updateContact', updateContact);
-    //     const contactData = store.readQuery({
-    //       query: GET_CONTACTS,
-    //       variables: { condition: { userId: 1 } }
-    //     });
-
-    //     const index = contactData.contacts.edges.findIndex(
-    //       ({ node }) => node.id === updateContact.contact.id
-    //     );
-    //     contactData[index] = updateContact;
-
-    //     store.writeQuery({
-    //       query: GET_CONTACTS,
-    //       variables: { condition: { userId: 1 } },
-    //       data: contactData
-    //     });
-    //   }
-    // });
   };
 
-  const handleDelete = async ({ id }) => {
-    await client.mutate({
-      mutation: DELETE_CONTACT,
-      variables: { input: { id } },
-      update(store, { data: { deleteContact } }) {
-        console.log('hi', deleteContact.contact.id);
-      }
+  const handleDelete = inputs => {
+    const type = mutationType(inputs);
+    console.log('input', inputs);
+    client.mutate({
+      mutation: mutations[`${type.toUpperCase()}_CONTACT`],
+      variables: createVariables(inputs, type),
+      optimisticResponse: createOptimisticDelete(inputs, type),
+      update: updateContactMutation
     });
   };
 
@@ -250,4 +194,106 @@ export function Contacts({ modalOpen, setModalOpen }) {
       </div>
     </div>
   );
+}
+
+function updateContactMutation(store, { data }) {
+  const contactData = store.readQuery({
+    query: GET_CONTACTS,
+    variables: { condition: { userId: 1 } }
+  });
+
+  if ('updateContact' in data) {
+    const index = contactData.contacts.edges.findIndex(
+      ({ node }) => node.id === data.updateContact.contact.id
+    );
+    contactData[index] = data.updateContact;
+  } else if ('createContact' in data) {
+    contactData.contacts.edges.push({
+      __typename: 'ContactsEdge',
+      node: {
+        ...data.createContact.contact
+      }
+    });
+  } else if ('deleteContact' in data) {
+    const index = contactData.contacts.edges.findIndex(
+      ({ node }) => node.id === data.deleteContact.contact.id
+    );
+
+    if (index >= 0) {
+      contactData.contacts.edges.splice(index, 1);
+    }
+  }
+
+  store.writeQuery({
+    query: GET_CONTACTS,
+    variables: { condition: { userId: 1 } },
+    data: contactData
+  });
+}
+
+function mutationType(inputs) {
+  if (inputs.id) {
+    return Object.keys(inputs).length === 1 ? 'Delete' : 'Update';
+  }
+
+  return 'Create';
+}
+
+function createVariables(inputs, type) {
+  if (type === 'Delete') {
+    return { input: { id: inputs.id } };
+  }
+
+  return {
+    input: {
+      id: inputs.id,
+      [inputs.id ? 'patch' : 'contact']: {
+        userId: 1,
+        firstName: inputs.firstName,
+        lastName: inputs.lastName
+        // contactPhonesUsingId: {
+        //   create: { phoneNumber: '8053228444' },
+        //   deleteById: { id: 10 },
+        //   updateById: { patch: { phoneNumber: '6053228444' }, id: 10 }
+        // }
+      }
+    }
+  };
+}
+
+function createOptimisticDelete({ id }, type) {
+  return {
+    __typename: 'Mutation',
+    deleteContact: {
+      __typename: 'DeleteContactPayload',
+      contact: { __typename: 'Contact', id }
+    }
+  };
+}
+
+function createOptimisticResponse(inputs, type) {
+  const contactPhones = inputs.contactPhones || {
+    __typename: 'ContactPhonesConnection',
+    edges: []
+  };
+
+  const result = {
+    __typename: 'Mutation',
+    [`${type.toLowerCase()}Contact`]: {
+      __typename: `${type}ContactPayload`,
+      contact: {
+        __typename: 'Contact',
+        id: inputs.id || -Math.random(),
+        firstName: inputs.firstName,
+        lastName: inputs.lastName,
+        contactPhones
+      }
+    }
+  };
+
+  if (type === 'Create') {
+    result.id = inputs.id;
+  }
+
+  return result;
 }
