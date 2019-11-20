@@ -1,32 +1,25 @@
-export default paths => {
-  const linkedList = paths.reduce((previous, current, index) => {
-    previous[current[1]] = previous[current[1]] || {};
-    previous[current[1]].previous = paths[index][0];
-    previous[current[0]] = previous[current[0]] || {};
-    previous[current[0]].next = paths[index][1];
+export default (paths: string[][]) => {
+  const routes = {};
+  const destinations = [];
+  const origins = [];
 
-    return previous;
-  }, {});
+  // Hashify
+  paths.forEach(([origin, destination]) => {
+    routes[origin] = destination;
+    destinations.push(destination);
+    origins.push(origin);
+  });
 
-  // Add an initial path to the result
-  const result = [paths[0][0]];
+  // Find starting point
+  const startingPoint = origins.find(origin => !destinations.includes(origin));
 
-  // Add items before initial path
-  while (true) {
-    const firstItem = linkedList[result[0]];
-    if (firstItem.previous === undefined) {
-      break;
-    }
-    result.unshift(firstItem.previous);
-  }
+  // Piece together the routes
+  const result = [startingPoint];
 
-  // Add items after initial path
-  while (true) {
-    const lastItem = linkedList[result[result.length - 1]];
-    if (lastItem.next === undefined) {
-      break;
-    }
-    result.push(lastItem.next);
+  let currentNode = startingPoint;
+  while (currentNode in routes) {
+    currentNode = routes[currentNode];
+    result.push(currentNode);
   }
 
   return result;

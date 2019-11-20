@@ -2,6 +2,7 @@ export function hasPalindromePermutation(theString) {
   const characterCounts = theString.split('').reduce((previous, current) => {
     previous[current] = previous[current] || 0;
     previous[current] += 1;
+
     return previous;
   }, {});
 
@@ -13,6 +14,7 @@ function totalOddCharacters(characterCounts) {
     if (characterCounts[current] % 2 === 1) {
       previous += 1;
     }
+
     return previous;
   }, 0);
 }
