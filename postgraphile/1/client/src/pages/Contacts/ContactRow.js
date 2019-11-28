@@ -23,8 +23,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export function ContactRow({ contact, handleEdit, handleDelete }) {
-  // const firstPhone = contact.contactPhones.edges[0];
-  const firstPhone = undefined;
+  const firstPhone = contact.contactPhones.edges[0];
   const editContact = () => handleEdit(contact);
   const classes = useStyles({});
 
@@ -60,7 +59,7 @@ export function ContactRow({ contact, handleEdit, handleDelete }) {
               <Menu {...bindMenu(popupState)}>
                 <MenuItem
                   onClick={() => {
-                    handleDelete(contact);
+                    handleDelete({ id: contact.id });
                     popupState.close();
                   }}
                 >
