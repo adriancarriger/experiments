@@ -10,7 +10,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { EditDialog } from './EditDialog';
 import { ContactRow } from './ContactRow';
 import graphql from './contacts.graphql';
-import { useResource } from './apollo-formik-transformers';
+import { useResource } from '../../hooks/use-resource';
 
 const useStyles = makeStyles(() => ({ table: { minWidth: 650 } }));
 
