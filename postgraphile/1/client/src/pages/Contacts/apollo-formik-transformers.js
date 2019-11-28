@@ -1,14 +1,11 @@
 import { useState } from 'react';
 import { useApolloClient } from '@apollo/react-hooks';
 
-const defaultInitialValues = {
-  id: undefined,
-  firstName: '',
-  lastName: '',
-  contactPhones: { edges: [] }
-};
-
-export function useResource(resource, { queries, mutations }) {
+export function useResource(
+  resource,
+  { queries, mutations },
+  defaultInitialValues
+) {
   const client = useApolloClient();
 
   const [formikInput, setInitialValues] = useState(
@@ -23,9 +20,9 @@ export function useResource(resource, { queries, mutations }) {
     const type = mutationType(formValues);
     client.mutate({
       mutation: mutations[`${type.toUpperCase()}_${resource.toUpperCase()}`],
-      variables: resourceVariables(formikInput, formValues, type),
-      optimisticResponse: optimisticResponse(formValues, type),
-      update: updateResourceStore(queries)
+      variables: resourceVariables(formikInput, formValues, type, resource),
+      optimisticResponse: optimisticResponse(formValues, type, resource),
+      update: updateResourceStore(queries, resource)
     });
   };
 
@@ -57,39 +54,47 @@ function mapGraphqlToLocalState(resource, resourceName) {
   }, {});
 }
 
-function updateResourceStore(queries) {
+function updateResourceStore(queries, resource) {
+  const resourceLowerCase = resource.toLowerCase();
+  const pluralResource = `${resource}s`;
+  const pluralResourceLowerCase = pluralResource.toLowerCase();
+
+  const query = queries[`GET_${pluralResource.toUpperCase()}`];
+
   return (store, { data }) => {
-    const contactData = store.readQuery({
-      query: queries.GET_CONTACTS,
+    const resourceData = store.readQuery({
+      query,
       variables: { condition: { userId: 1 } }
     });
 
-    if ('updateContact' in data) {
-      const index = contactData.contacts.edges.findIndex(
-        ({ node }) => node.id === data.updateContact.contact.id
+    if (`update${resource}` in data) {
+      const index = resourceData[pluralResourceLowerCase].edges.findIndex(
+        ({ node }) =>
+          node.id === data[`update${resource}`][resourceLowerCase].id
       );
-      contactData[index] = data.updateContact;
-    } else if ('createContact' in data) {
-      contactData.contacts.edges.push({
-        __typename: 'ContactsEdge',
+      resourceData[index] = data[`update${resource}`];
+    } else if (`create${resource}` in data) {
+      resourceData[pluralResourceLowerCase].edges.push({
+        __typename: `${pluralResource}Edge`,
         node: {
-          ...data.createContact.contact
+          ...data[`create${resource}`][resourceLowerCase]
         }
       });
-    } else if ('deleteContact' in data) {
-      const index = contactData.contacts.edges.findIndex(
-        ({ node }) => node.id === data.deleteContact.contact.id
+    } else if (`delete${resource}` in data) {
+      const index = resourceData[pluralResourceLowerCase].edges.findIndex(
+        ({ node }) =>
+          node.id === data[`delete${resource}`][resourceLowerCase].id
       );
 
       if (index >= 0) {
-        contactData.contacts.edges.splice(index, 1);
+        resourceData[pluralResourceLowerCase].edges.splice(index, 1);
       }
     }
 
     store.writeQuery({
-      query: queries.GET_CONTACTS,
+      query,
       variables: { condition: { userId: 1 } },
-      data: contactData
+      data: resourceData
     });
   };
 }
@@ -106,18 +111,27 @@ function mutationType({ id, ...inputs }) {
     : 'Delete';
 }
 
-function resourceVariables(initialValues, { id, ...currentValues }, type) {
+function resourceVariables(
+  initialValues,
+  { id, ...currentValues },
+  type,
+  resource
+) {
   if (type === 'Delete') {
     return { input: { id } };
   }
 
+  const resourceLowerCase = resource.toLowerCase();
+
   return {
     input: {
       id,
-      [id ? 'patch' : 'contact']: Object.keys(currentValues).reduce(
+      [id ? 'patch' : resourceLowerCase]: Object.keys(currentValues).reduce(
         (mutation, key) => {
           if (Array.isArray(currentValues[key])) {
-            mutation.contactPhonesUsingId = createArrayMutations(
+            const itemKey = `${resourceLowerCase}${capitalize(key)}UsingId`;
+            mutation[itemKey] = mutation[itemKey] || {};
+            mutation[itemKey] = createArrayMutations(
               initialValues[key],
               currentValues[key]
             );
@@ -127,16 +141,18 @@ function resourceVariables(initialValues, { id, ...currentValues }, type) {
 
           return mutation;
         },
-        { contactPhonesUsingId: {}, userId: 1 }
+        { userId: 1 }
       )
     }
   };
 }
 
-function optimisticResponse({ id = -Math.random(), ...rest }, type) {
+function optimisticResponse({ id = -Math.random(), ...rest }, type, resource) {
+  const resourceLowerCase = resource.toLowerCase();
+
   const defaultValues = {
-    contactPhones: {
-      __typename: 'ContactPhonesConnection',
+    [`${resourceLowerCase}Phones`]: {
+      __typename: `${resource}PhonesConnection`,
       edges: []
     }
   };
@@ -144,19 +160,21 @@ function optimisticResponse({ id = -Math.random(), ...rest }, type) {
   const result = {
     __typename: 'Mutation',
     id: undefined,
-    [`${type.toLowerCase()}Contact`]: {
-      __typename: `${type}ContactPayload`,
-      contact: {
-        __typename: 'Contact',
+    [`${type.toLowerCase()}${resource}`]: {
+      __typename: `${type}${resource}Payload`,
+      [resourceLowerCase]: {
+        __typename: resource,
         id,
         ...Object.keys(rest).reduce((previous, key) => {
           if (Array.isArray(rest[key])) {
-            previous.contactPhones.edges = rest[key].map(
-              ({ id = -Math.random(), ...item }) => ({
-                __typename: 'ContactPhonesEdge',
-                node: { __typename: 'ContactPhone', id, ...item }
-              })
-            );
+            const itemNamePlural = capitalize(key);
+            const itemName = itemNamePlural.slice(0, -1);
+            previous[`${resourceLowerCase}${itemNamePlural}`].edges = rest[
+              key
+            ].map(({ id = -Math.random(), ...item }) => ({
+              __typename: `${resource}${itemNamePlural}Edge`,
+              node: { __typename: `${resource}${itemName}`, id, ...item }
+            }));
           } else {
             previous[key] = rest[key];
           }
@@ -174,7 +192,6 @@ function optimisticResponse({ id = -Math.random(), ...rest }, type) {
   return result;
 }
 
-// Move this into its own file…
 function createArrayMutations(previous, current) {
   return {
     ...current.reduce(upsertReducer(previous), {
@@ -211,4 +228,8 @@ function hashById(inputs) {
 
     return previous;
   }, {});
+}
+
+function capitalize(key) {
+  return key.charAt(0).toUpperCase() + key.slice(1);
 }

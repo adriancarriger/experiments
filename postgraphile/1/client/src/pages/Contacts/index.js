@@ -14,6 +14,13 @@ import { useResource } from './apollo-formik-transformers';
 
 const useStyles = makeStyles(() => ({ table: { minWidth: 650 } }));
 
+const defaultInitialValues = {
+  id: undefined,
+  firstName: '',
+  lastName: '',
+  contactPhones: { edges: [] }
+};
+
 export function Contacts({ modalOpen, setModalOpen }) {
   const classes = useStyles({});
 
@@ -23,7 +30,8 @@ export function Contacts({ modalOpen, setModalOpen }) {
 
   const { formikInput, setValuesFromApollo, mutateFromFormik } = useResource(
     'Contact',
-    graphql
+    graphql,
+    defaultInitialValues
   );
 
   const handleClose = () => {
