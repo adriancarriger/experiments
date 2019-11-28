@@ -1,40 +1,41 @@
-import React, { createElement, Fragment, useEffect } from "react";
-import { withRouter, Link } from "react-router-dom";
-import clsx from "clsx";
-import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import Drawer from "@material-ui/core/Drawer";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import HomeIcon from "@material-ui/icons/Home";
-import ContactsIcon from "@material-ui/icons/Contacts";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
-import Avatar from "@material-ui/core/Avatar";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
-import * as gravatar from "gravatar";
+import React, { createElement, Fragment, useEffect } from 'react';
+import { withRouter, Link } from 'react-router-dom';
+import clsx from 'clsx';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Drawer from '@material-ui/core/Drawer';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import HomeIcon from '@material-ui/icons/Home';
+import ContactsIcon from '@material-ui/icons/Contacts';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import Avatar from '@material-ui/core/Avatar';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+import * as gravatar from 'gravatar';
+import { useApolloClient } from '@apollo/react-hooks';
 
 const routeHash = {
-  "/": {
-    name: "Home",
+  '/': {
+    name: 'Home',
     icon: HomeIcon
   },
-  "/contacts/": {
-    name: "Contacts",
+  '/contacts/': {
+    name: 'Contacts',
     icon: ContactsIcon
   }
 };
 
-const routes = ["/contacts/"];
+const routes = ['/contacts/'];
 
 const drawerWidth = 240;
 
@@ -45,34 +46,34 @@ const useStyles = makeStyles(theme => ({
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
-    whiteSpace: "nowrap"
+    whiteSpace: 'nowrap'
   },
   drawerOpen: {
     width: drawerWidth,
-    transition: theme.transitions.create("width", {
+    transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
     })
   },
   drawerClose: {
-    transition: theme.transitions.create("width", {
+    transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     }),
-    overflowX: "hidden",
+    overflowX: 'hidden',
     width: theme.spacing(7) + 1,
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up('sm')]: {
       width: theme.spacing(9) + 1
     },
-    "& .add-new": {
-      width: "48px",
-      justifyContent: "left",
-      paddingLeft: "0.2em",
-      overflow: "hidden"
+    '& .add-new': {
+      width: '48px',
+      justifyContent: 'left',
+      paddingLeft: '0.2em',
+      overflow: 'hidden'
     }
   },
   navLink: {
-    paddingLeft: "1.666em"
+    paddingLeft: '1.666em'
   },
   title: {
     flexGrow: 1
@@ -80,19 +81,21 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar,
   fab: {
     margin: `${theme.spacing(2)}px ${theme.spacing(1)}px`,
-    paddingRight: "24px",
-    paddingLeft: "0.5em",
-    textTransform: "none",
-    width: "min-content"
+    paddingRight: '24px',
+    paddingLeft: '0.5em',
+    textTransform: 'none',
+    width: 'min-content'
   },
   extendedIcon: {
     marginRight: theme.spacing(1),
-    height: "48px",
-    fontSize: "3em"
+    height: '48px',
+    fontSize: '3em'
   }
 }));
 
-function NavBar({ auth, location, onModalOpen }) {
+function NavBar({ auth, location }) {
+  const client = useApolloClient();
+
   const classes = useStyles();
   const [drawerOpen, setDrawerOpen] = React.useState(true);
   const [selectedIndex, setSelectedIndex] = React.useState();
