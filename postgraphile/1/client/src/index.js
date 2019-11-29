@@ -1,14 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ApolloProvider } from '@apollo/react-hooks';
-import ApolloClient from 'apollo-boost';
+import ApolloClient, { InMemoryCache } from 'apollo-boost';
 
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { setModal, initialModalState } from './hooks/use-modal';
 
+const cache = new InMemoryCache();
 const client = new ApolloClient({
-  uri: 'http://localhost:3000/graphql'
+  cache,
+  uri: 'http://localhost:3000/graphql',
+  resolvers: {
+    Mutation: {
+      setModal
+    }
+  }
+});
+cache.writeData({
+  data: {
+    ...initialModalState
+  }
 });
 
 ReactDOM.render(

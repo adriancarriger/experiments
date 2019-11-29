@@ -11,6 +11,7 @@ import { EditDialog } from './EditDialog';
 import { ContactRow } from './ContactRow';
 import graphql from './contacts.graphql';
 import { useResource } from '../../hooks/use-resource';
+import { useModal } from '../../hooks/use-modal';
 
 const useStyles = makeStyles(() => ({ table: { minWidth: 650 } }));
 
@@ -21,8 +22,10 @@ const defaultInitialValues = {
   contactPhones: { edges: [] }
 };
 
-export function Contacts({ modalOpen, setModalOpen }) {
+export function Contacts() {
   const classes = useStyles({});
+
+  const { editModalOpen, setModal } = useModal();
 
   const { loading, error, data } = useQuery(graphql.queries.GET_CONTACTS, {
     variables: { condition: { userId: 1 } }
@@ -35,7 +38,7 @@ export function Contacts({ modalOpen, setModalOpen }) {
   );
 
   const handleClose = () => {
-    setModalOpen(false);
+    setModal(false);
     setValuesFromApollo();
   };
 
@@ -72,7 +75,7 @@ export function Contacts({ modalOpen, setModalOpen }) {
                 contact={contact}
                 handleEdit={contact => {
                   setValuesFromApollo(contact);
-                  setModalOpen(true);
+                  setModal(true);
                 }}
                 handleDelete={createMutation}
               />
@@ -83,7 +86,7 @@ export function Contacts({ modalOpen, setModalOpen }) {
 
       <div>
         <EditDialog
-          modalOpen={modalOpen}
+          modalOpen={editModalOpen}
           onSubmit={createMutation}
           onClose={handleClose}
           initialValues={formikInput}

@@ -22,7 +22,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import * as gravatar from 'gravatar';
-import { useApolloClient } from '@apollo/react-hooks';
+
+import { useModal } from '../hooks/use-modal';
 
 const routeHash = {
   '/': {
@@ -94,11 +95,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function NavBar({ auth, location }) {
-  const client = useApolloClient();
-
-  const classes = useStyles();
+  const classes = useStyles({});
   const [drawerOpen, setDrawerOpen] = React.useState(true);
   const [selectedIndex, setSelectedIndex] = React.useState();
+  const { setModal } = useModal();
 
   function handleDrawerToggle() {
     setDrawerOpen(!drawerOpen);
@@ -172,7 +172,7 @@ function NavBar({ auth, location }) {
           color="secondary"
           aria-label="add"
           className={`${classes.fab} add-new`}
-          onClick={onModalOpen}
+          onClick={() => setModal(true)}
           disabled={!auth}
         >
           <AddIcon className={classes.extendedIcon} />

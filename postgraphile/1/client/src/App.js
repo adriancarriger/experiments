@@ -23,17 +23,11 @@ function App() {
 
   const classes = useStyles({});
 
-  const [modalOpen, setModalOpen] = React.useState(false);
-
-  const handleOpen = () => {
-    setModalOpen(true);
-  };
-
   return (
     <Router>
       <div className={classes.root}>
         <CssBaseline />
-        <NavBar auth={auth} onModalOpen={handleOpen} />
+        <NavBar auth={auth} />
 
         <main className={classes.content}>
           <div className={classes.toolbar} />
@@ -43,16 +37,7 @@ function App() {
               <Redirect to="/contacts/" />
             </Route>
             {auth ? (
-              <Route
-                path="/contacts/"
-                render={props => (
-                  <Contacts
-                    {...props}
-                    modalOpen={modalOpen}
-                    setModalOpen={setModalOpen}
-                  />
-                )}
-              />
+              <Route path="/contacts/" render={() => <Contacts />} />
             ) : (
               <Home />
             )}
