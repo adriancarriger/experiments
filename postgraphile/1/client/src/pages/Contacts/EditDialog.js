@@ -27,7 +27,7 @@ export function EditDialog({ modalOpen, onSubmit, initialValues, onClose }) {
               <FieldArray
                 values={values}
                 name="phones"
-                items={[{ key: 'phoneNumber', as: TextField }]}
+                items={[{ key: 'phoneNumber', as: TextField, label: 'Phone' }]}
               />
               <DialogActions>
                 <Button
