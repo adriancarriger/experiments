@@ -1,35 +1,35 @@
 // ERD: https://dbdiagram.io/d/5d8f4059ff5115114db4b5cd
 
-Table user {
+Table users {
   id int [pk]
   username varchar
 }
 
-Table contact {
+Table contacts {
   id int [pk]
   first_name varchar
   last_name varchar
-  user_id int [ref: > user.id]
+  user_id int [ref: > users.id]
 }
 
-Table contact_phone {
+Table contact_phones {
   id int [pk]
   phone_number varchar
-  contact_id int [ref: > contact.id]
+  contact_id int [ref: > contacts.id]
 }
 
-Table twilio_account {
+Table twilio_accounts {
   id int [pk]
-  user_id int [ref: > user.id]
+  user_id int [ref: > users.id]
 }
 
-Table message {
+Table messages {
   id int [pk]
-  status message_status
+  status message_statuses
   body varchar
   from varchar
   to varchar
-  twilio_account_id int [ref: > twilio_account.id]
+  twilio_account_id int [ref: > twilio_accounts.id]
 
   Indexes {
     from
@@ -38,7 +38,7 @@ Table message {
   }
 }
 
-Enum message_status {
+Enum message_statuses {
   accepted
   queued
   sending
