@@ -16,7 +16,8 @@ app.use(
       enableCors: true,
       appendPlugins: [
         require('postgraphile-plugin-nested-mutations'),
-        require('@graphile-contrib/pg-simplify-inflector')
+        require('@graphile-contrib/pg-simplify-inflector'),
+        require('postgraphile-plugin-connection-filter')
       ]
     }
   )

@@ -30,10 +30,17 @@ CREATE TYPE message_status AS ENUM (
   'read'
 );
 
+CREATE TABLE IF NOT EXISTS threads (
+  id TEXT PRIMARY KEY,
+  last_sent TIMESTAMP NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS messages (
   id SERIAL PRIMARY KEY,
   status message_status NOT NULL,
   body TEXT NOT NULL,
   to_number TEXT NOT NULL,
-  from_number TEXT NOT NULL
+  from_number TEXT NOT NULL,
+  date_sent TIMESTAMP NOT NULL,
+  thread_id TEXT NOT NULL REFERENCES threads (id)
 );
