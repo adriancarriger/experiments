@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -6,6 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import './App.css';
 import Home from './pages/Home';
 import { Contacts } from './pages/Contacts/index';
+import { Messages } from './pages/Messages/index';
 import NavBar from './components/NavBar';
 
 const useStyles = makeStyles(theme => ({
@@ -34,10 +35,13 @@ function App() {
 
           <div>
             <Route path="/" exact>
-              <Redirect to="/contacts/" />
+              <Redirect to="/messages/" />
             </Route>
             {auth ? (
-              <Route path="/contacts/" render={() => <Contacts />} />
+              <Fragment>
+                <Route path="/contacts/" render={() => <Contacts />} />
+                <Route path="/messages/" render={() => <Messages />} />
+              </Fragment>
             ) : (
               <Home />
             )}

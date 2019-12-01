@@ -15,6 +15,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import HomeIcon from '@material-ui/icons/Home';
 import ContactsIcon from '@material-ui/icons/Contacts';
+import MessageIcon from '@material-ui/icons/Message';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Avatar from '@material-ui/core/Avatar';
@@ -33,10 +34,14 @@ const routeHash = {
   '/contacts/': {
     name: 'Contacts',
     icon: ContactsIcon
+  },
+  '/messages/': {
+    name: 'Messages',
+    icon: MessageIcon
   }
 };
 
-const routes = ['/contacts/'];
+const routes = ['/contacts/', '/messages/'];
 
 const drawerWidth = 240;
 
