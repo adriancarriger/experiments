@@ -126,7 +126,8 @@ function NavBar({ auth, location }) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title} noWrap>
-            {routeHash[location.pathname].name}
+            {location.pathname in routeHash &&
+              routeHash[location.pathname].name}
           </Typography>
           {auth ? (
             <PopupState variant="popover" popupId="demo-popup-menu">

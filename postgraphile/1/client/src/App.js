@@ -1,5 +1,10 @@
-import React, { useState, Fragment } from 'react';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import React, { useState } from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+  Switch
+} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
@@ -7,6 +12,7 @@ import './App.css';
 import Home from './pages/Home';
 import { Contacts } from './pages/Contacts/index';
 import { Messages } from './pages/Messages/index';
+import { Message } from './pages/Message/index';
 import NavBar from './components/NavBar';
 
 const useStyles = makeStyles(theme => ({
@@ -15,7 +21,8 @@ const useStyles = makeStyles(theme => ({
   },
   toolbar: theme.mixins.toolbar,
   content: {
-    flexGrow: 1
+    flexGrow: 1,
+    width: 'calc(100% - 240px)'
   }
 }));
 
@@ -34,14 +41,13 @@ function App() {
           <div className={classes.toolbar} />
 
           <div>
-            <Route path="/" exact>
-              <Redirect to="/messages/" />
-            </Route>
             {auth ? (
-              <Fragment>
-                <Route path="/contacts/" render={() => <Contacts />} />
-                <Route path="/messages/" render={() => <Messages />} />
-              </Fragment>
+              <Switch>
+                <Redirect exact from="/" to="/messages/" />
+                <Route exact path="/contacts/" render={() => <Contacts />} />
+                <Route exact path="/messages/" render={() => <Messages />} />
+                <Route path="/messages/:id" render={() => <Message />} />
+              </Switch>
             ) : (
               <Home />
             )}

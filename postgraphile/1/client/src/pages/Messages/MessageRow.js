@@ -11,6 +11,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import MenuItem from '@material-ui/core/MenuItem';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+import { Link, withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   row: {
@@ -31,20 +32,26 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export function ThreadRow({ thread }) {
+const ThreadRowComponent = ({ thread, history }) => {
   const { body } = thread.messages.nodes[0];
+
+  const threadRoute = `/messages/${thread.id}`;
+  const viewThread = () => history.push(threadRoute);
+
   const classes = useStyles({});
 
   return (
-    <TableRow hover className={classes.row}>
+    <TableRow onClick={viewThread} hover className={classes.row}>
       <TableCell>{thread.lastSent}</TableCell>
       <TableCell>{thread.id}</TableCell>
       <TableCell className={classes.bodyCell}>{body}</TableCell>
       <TableCell align="right">
         <Tooltip enterDelay={200} title="Edit contact">
-          <IconButton onClick={() => console.log('I do nothing!')}>
-            <EditIcon />
-          </IconButton>
+          <Link to={threadRoute}>
+            <IconButton>
+              <EditIcon />
+            </IconButton>
+          </Link>
         </Tooltip>
         <PopupState variant="popover" popupId="demo-popup-menu">
           {popupState => (
@@ -78,4 +85,6 @@ export function ThreadRow({ thread }) {
       </TableCell>
     </TableRow>
   );
-}
+};
+
+export const ThreadRow = withRouter(ThreadRowComponent);
