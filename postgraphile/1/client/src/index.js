@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient, { InMemoryCache } from 'apollo-boost';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
 
 import './index.css';
 import App from './App';
@@ -11,7 +13,7 @@ import { setModal, initialModalState } from './hooks/use-modal';
 const cache = new InMemoryCache();
 const client = new ApolloClient({
   cache,
-  uri: 'http://localhost:3000/graphql',
+  uri: 'http://localhost:3100/graphql',
   resolvers: {
     Mutation: {
       setModal
@@ -24,9 +26,23 @@ cache.writeData({
   }
 });
 
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#343434'
+    },
+    secondary: {
+      main: '#5cc4ff',
+      contrastText: 'white'
+    }
+  }
+});
+
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <App />
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
   </ApolloProvider>,
   document.getElementById('root')
 );

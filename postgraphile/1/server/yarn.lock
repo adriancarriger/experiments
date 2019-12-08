@@ -2,6 +2,21 @@
 # yarn lockfile v1
 
 
+"@fullstackio/postgraphile-upsert-plugin@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@fullstackio/postgraphile-upsert-plugin/-/postgraphile-upsert-plugin-1.4.0.tgz#b2a0e86c8ba6ebc3009127339f9f08a5b4ba1773"
+  integrity sha512-WXYVwmqizcDvtbPeDIr6iJIt99rq98XWjHU+7TSiuviZuGfkH0JF/3QKcKf2kvvyfmZf031rhCJrcjWKKKgCHQ==
+
+"@graphile-contrib/pg-many-to-many@^1.0.0-beta.12":
+  version "1.0.0-beta.12"
+  resolved "https://registry.yarnpkg.com/@graphile-contrib/pg-many-to-many/-/pg-many-to-many-1.0.0-beta.12.tgz#ca80221c8c3bbf881a47e6054bab52d841dc0a09"
+  integrity sha512-4k3IPqT84PhKyMFMT+r0nRU+/pEqAYCMgjSBOw5oD3pbi2TxCDdg7+e47QINeFtITiBfKd5uvb+pPzFZsKQMDA==
+
+"@graphile-contrib/pg-order-by-related@^1.0.0-beta.6":
+  version "1.0.0-beta.6"
+  resolved "https://registry.yarnpkg.com/@graphile-contrib/pg-order-by-related/-/pg-order-by-related-1.0.0-beta.6.tgz#146f6372658a1aa0c22c5cbfd1ea7a46a3a7d8c9"
+  integrity sha512-NDEDhkjpEmLzVMYsv9LqTNyaMXlL32yiFFk7Lj7WAloe1Dgn9/1zMQILMRC+Q9WmFE/edHtXjBRHrXs9NYr3GA==
+
 "@graphile-contrib/pg-simplify-inflector@^5.0.0-beta.1":
   version "5.0.0-beta.1"
   resolved "https://registry.yarnpkg.com/@graphile-contrib/pg-simplify-inflector/-/pg-simplify-inflector-5.0.0-beta.1.tgz#f7e890566d33e8ee6796dab5ec75ff9bca040701"

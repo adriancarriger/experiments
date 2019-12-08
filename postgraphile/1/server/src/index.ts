@@ -1,7 +1,5 @@
 import express from 'express';
 import postgraphile from 'postgraphile';
-// const PostGraphileNestedMutations = require('postgraphile-plugin-nested-mutations');
-import * as PostGraphileNestedMutations from 'postgraphile-plugin-nested-mutations';
 
 const app = express();
 
@@ -17,12 +15,23 @@ app.use(
       appendPlugins: [
         require('postgraphile-plugin-nested-mutations'),
         require('@graphile-contrib/pg-simplify-inflector'),
+        require('@graphile-contrib/pg-many-to-many'),
         require('postgraphile-plugin-connection-filter')
-      ]
+        // require('@graphile-contrib/pg-order-by-related')
+        // require('@fullstackio/postgraphile-upsert-plugin').PgMutationUpsertPlugin
+      ],
+      pgSettings: async () => ({
+        role: 'medium_user',
+        'user.permissions': 'read:schema',
+        'user.id': 1
+      }),
+      graphileBuildOptions: {
+        connectionFilterRelations: true
+      }
     }
   )
 );
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3100;
 app.listen(port);
-console.log(`http://localhost:${port}`);
+console.log(`http://localhost:${port}/graphiql`);

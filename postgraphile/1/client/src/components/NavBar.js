@@ -46,6 +46,17 @@ const routes = ['/contacts/', '/messages/'];
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
+  '@keyframes widePulsate': {
+    '0%': {
+      transform: 'scale3d(1.03, 1.07, 1)'
+    },
+    '50%': {
+      transform: 'scale3d(1.08, 1.2, 1)'
+    },
+    '100%': {
+      transform: 'scale3d(1.03, 1.07, 1)'
+    }
+  },
   appBar: {
     zIndex: theme.zIndex.drawer + 1
   },
@@ -90,7 +101,29 @@ const useStyles = makeStyles(theme => ({
     paddingRight: '24px',
     paddingLeft: '0.5em',
     textTransform: 'none',
-    width: 'min-content'
+    background: 'linear-gradient(45deg, #5cc4ff, #1ae1bf)',
+    width: 'min-content',
+    '& .MuiFab-label': {
+      zIndex: 1
+    },
+    '& .MuiTouchRipple-root': {
+      overflow: 'initial'
+    },
+    '&.Mui-focusVisible .MuiTouchRipple-ripple': {
+      width: '178px !important',
+      height: '48px !important',
+      top: '0px !important',
+      left: '0px !important',
+      opacity: 0.5
+    },
+    '& .MuiTouchRipple-childPulsate': {
+      background: 'rgb(255, 0, 91)',
+      animation:
+        '$widePulsate 2500ms cubic-bezier(0.4, 0, 0.2, 1) 200ms infinite'
+    },
+    '& .MuiTouchRipple-child': {
+      borderRadius: '2em'
+    }
   },
   extendedIcon: {
     marginRight: theme.spacing(1),
