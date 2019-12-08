@@ -27,8 +27,6 @@ export function Messages() {
     return <div>error => {JSON.stringify(error)}</div>;
   }
 
-  console.log(data);
-
   return (
     <div>
       <Table className={classes.table}>

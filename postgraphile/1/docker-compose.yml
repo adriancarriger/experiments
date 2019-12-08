@@ -14,7 +14,9 @@ services:
     entrypoint: ./entrypoint.sh
   db:
     container_name: "Postgres"
-    image: postgres:alpine
+    image: clkao/postgres-plv8:12-2
+    command:
+      ["postgres", "-c", "log_statement=all", "-c", "client_min_messages=log"]
     ports:
       - "5432:5432"
     volumes:

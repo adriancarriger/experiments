@@ -15,6 +15,7 @@ import { Link, withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   row: {
+    cursor: 'pointer',
     '&:not(:hover)': {
       '& button': {
         visibility: 'hidden'
@@ -41,10 +42,12 @@ const ThreadRowComponent = ({ thread, history }) => {
   const classes = useStyles({});
 
   return (
-    <TableRow onClick={viewThread} hover className={classes.row}>
-      <TableCell>{thread.lastSent}</TableCell>
-      <TableCell>{thread.id}</TableCell>
-      <TableCell className={classes.bodyCell}>{body}</TableCell>
+    <TableRow hover className={classes.row}>
+      <TableCell onClick={viewThread}>{thread.lastMessage}</TableCell>
+      <TableCell onClick={viewThread}>{contactReadable(thread)}</TableCell>
+      <TableCell onClick={viewThread} className={classes.bodyCell}>
+        {body}
+      </TableCell>
       <TableCell align="right">
         <Tooltip enterDelay={200} title="Edit contact">
           <Link to={threadRoute}>
@@ -86,5 +89,23 @@ const ThreadRowComponent = ({ thread, history }) => {
     </TableRow>
   );
 };
+
+function contactReadable(thread) {
+  if (thread.contactThreads.totalCount === 0) {
+    const { direction, toNumber, fromNumber } = thread.messages.nodes[0];
+
+    return direction === 'inbound' ? fromNumber : toNumber;
+  }
+
+  const { firstName, lastName } = thread.contactThreads.nodes[0].contact;
+
+  let readable = `${firstName} ${lastName}`;
+
+  if (thread.contactThreads.totalCount > 1) {
+    readable += ` and ${thread.contactThreads.totalCount - 1} others`;
+  }
+
+  return readable;
+}
 
 export const ThreadRow = withRouter(ThreadRowComponent);
