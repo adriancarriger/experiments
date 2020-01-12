@@ -1,12 +1,13 @@
 import twilio from 'twilio';
 import knexFunction from 'knex';
+import fs from 'fs-extra';
 
 const knex = knexFunction({
   client: 'pg',
   connection: { user: 'docker', password: 'docker', database: 'docker' }
 });
 
-const { ACCOUNT_SID, AUTH_TOKEN, TEST_CONTACT_PHONE } = process.env;
+const { ACCOUNT_SID, AUTH_TOKEN } = process.env;
 
 const client = twilio(ACCOUNT_SID, AUTH_TOKEN);
 
@@ -27,7 +28,7 @@ async function seed() {
   });
 
   console.log('Pulling Twilio messages…');
-  const twilioMessages = await client.messages.list();
+  const twilioMessages = await getMessages();
 
   console.log('Inserting messages…');
   for (const message of twilioMessages) {
@@ -43,14 +44,6 @@ async function seed() {
       user_id: userId
     });
   }
-
-  console.log('Adding fake contact…');
-  await addContactWithPhone({
-    firstName: `Bob-${Math.round(Math.random() * 100)}`,
-    lastName: 'Smith',
-    userId,
-    phoneNumber: TEST_CONTACT_PHONE
-  });
 
   console.log('Seed complete!');
 }
@@ -72,4 +65,18 @@ async function addContactWithPhone({ firstName, lastName, userId, phoneNumber })
     contact_id: contactId,
     phone_number: phoneNumber
   });
+}
+
+async function getMessages() {
+  const cacheDir = 'tmp/cached-messages.json';
+
+  if (await fs.pathExists(cacheDir)) {
+    return JSON.parse(await fs.readFile(cacheDir));
+  }
+
+  const messages = await client.messages.list();
+
+  await fs.outputFile(cacheDir, JSON.stringify(messages, undefined, 2));
+
+  return messages;
 }

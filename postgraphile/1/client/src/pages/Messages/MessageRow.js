@@ -94,7 +94,11 @@ function contactReadable(thread) {
   if (thread.contactThreads.totalCount === 0) {
     const { direction, toNumber, fromNumber } = thread.messages.nodes[0];
 
-    return direction === 'inbound' ? fromNumber : toNumber;
+    if (!['INBOUND', 'OUTBOUND_API'].includes(direction)) {
+      throw Error(`unexpected direction: ${direction}`);
+    }
+
+    return direction === 'INBOUND' ? fromNumber : toNumber;
   }
 
   const { firstName, lastName } = thread.contactThreads.nodes[0].contact;
