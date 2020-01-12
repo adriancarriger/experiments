@@ -79,6 +79,7 @@ create table if not exists contact_threads (
 );
 
 grant select, insert, update, delete on contact_threads to medium_user;
+grant usage, select on sequence contact_threads_id_seq to medium_user;
 alter table contact_threads enable row level security;
 create policy user_contact_threads on contact_threads to medium_user
   using ((select user_id from contacts where contacts.id = contact_id) = current_user_id())
@@ -96,6 +97,7 @@ create table if not exists contact_phones (
 
 create index contact_phones_phone_number_index on contact_phones (phone_number);
 grant select, insert, update, delete on contact_phones to medium_user;
+grant usage, select on sequence contact_phones_id_seq to medium_user;
 
 alter table contact_phones enable row level security;
 create policy user_contact_phones on contact_phones to medium_user
@@ -134,7 +136,8 @@ create table if not exists messages (
 
 create index messages_user_id_index on messages (user_id);
 grant select, insert, update, delete on messages to medium_user;
--- grant usage, select on sequence messages_id_seq to medium_user;
+
+grant usage, select on sequence messages_id_seq to medium_user;
 alter table messages enable row level security;
 create policy user_messages on messages to medium_user
   using (user_id = current_user_id())

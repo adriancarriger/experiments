@@ -1,24 +1,23 @@
-version: "3.7"
+version: '3.7'
 services:
   server:
-    container_name: "Server"
+    container_name: 'Server'
     build: ./server
     command: yarn start
     depends_on:
       - db
     ports:
-      - "8080:8080"
+      - '8080:8080'
     volumes:
       - ./server:/app
       - /app/node_modules
     entrypoint: ./entrypoint.sh
   db:
-    container_name: "Postgres"
-    image: clkao/postgres-plv8:12-2
-    command:
-      ["postgres", "-c", "log_statement=all", "-c", "client_min_messages=log"]
+    container_name: 'Postgres'
+    build: ./postgres
+    command: ['postgres']
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
       - ./postgres/data:/var/lib/postgresql/data
       - ./postgres/src:/var/lib/postgresql/src
