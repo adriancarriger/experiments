@@ -9,11 +9,28 @@ import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import { Auth0Provider } from './auth/react-auth0-spa';
 
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { setModal, initialModalState } from './hooks/use-modal';
+import history from './history';
+
+const config = {
+  domain: 'adriancarriger.auth0.com',
+  clientId: 'Ya53LvzYq4wKz9BL1ZipX9MKEIf4bCiP'
+};
+
+// A function that routes the user to the right place
+// after login
+const onRedirectCallback = appState => {
+  history.push(
+    appState && appState.targetUrl
+      ? appState.targetUrl
+      : window.location.pathname
+  );
+};
 
 const GRAPHQL_URL = 'http://localhost:3100/graphql';
 
@@ -67,11 +84,19 @@ const theme = createMuiTheme({
 });
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
-    <ThemeProvider theme={theme}>
-      <App />
-    </ThemeProvider>
-  </ApolloProvider>,
+  <Auth0Provider
+    domain={config.domain}
+    client_id={config.clientId}
+    redirect_uri={window.location.origin}
+    onRedirectCallback={onRedirectCallback}
+  >
+    <ApolloProvider client={client}>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+      >
+    </ApolloProvider>
+  </Auth0Provider>,
   document.getElementById('root')
 );
 

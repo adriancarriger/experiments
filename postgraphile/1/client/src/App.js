@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function App() {
-  const [auth] = useState(true);
+  const [auth] = useState(false);
 
   const classes = useStyles({});
 

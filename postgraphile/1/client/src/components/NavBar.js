@@ -25,6 +25,7 @@ import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import * as gravatar from 'gravatar';
 
 import { useModal } from '../hooks/use-modal';
+import { useAuth0 } from '../auth/react-auth0-spa';
 
 const routeHash = {
   '/': {
@@ -133,10 +134,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function NavBar({ auth, location }) {
+  const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
   const classes = useStyles({});
   const [drawerOpen, setDrawerOpen] = React.useState(true);
   const [selectedIndex, setSelectedIndex] = React.useState();
   const { setModal } = useModal();
+
+  console.log('the user', user);
 
   function handleDrawerToggle() {
     setDrawerOpen(!drawerOpen);
@@ -162,7 +166,7 @@ function NavBar({ auth, location }) {
             {location.pathname in routeHash &&
               routeHash[location.pathname].name}
           </Typography>
-          {auth ? (
+          {isAuthenticated ? (
             <PopupState variant="popover" popupId="demo-popup-menu">
               {popupState => (
                 <Fragment>
@@ -175,6 +179,7 @@ function NavBar({ auth, location }) {
                     <MenuItem onClick={popupState.close}>My Account</MenuItem>
                     <MenuItem
                       onClick={() => {
+                        logout();
                         popupState.close();
                       }}
                     >
@@ -185,7 +190,11 @@ function NavBar({ auth, location }) {
               )}
             </PopupState>
           ) : (
-            <Button variant="contained" color="secondary">
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => loginWithRedirect({})}
+            >
               Sign In
             </Button>
           )}
