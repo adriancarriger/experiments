@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@apollo/react-common@^3.1.3":
+"@apollo/react-common@^3.0.0", "@apollo/react-common@^3.1.3":
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/@apollo/react-common/-/react-common-3.1.3.tgz#ddc34f6403f55d47c0da147fd4756dfd7c73dac5"
   integrity sha512-Q7ZjDOeqjJf/AOGxUMdGxKF+JVClRXrYBGVq+SuVFqANRpd68MxtVV2OjCWavsFAN0eqYnRqRUrl7vtUCiJqeg==
@@ -1777,7 +1777,7 @@ apollo-client@^2.6.8:
     tslib "^1.10.0"
     zen-observable "^0.8.0"
 
-apollo-link-http-common@^0.2.15:
+apollo-link-http-common@^0.2.0, apollo-link-http-common@^0.2.15:
   version "0.2.15"
   resolved "https://registry.yarnpkg.com/apollo-link-http-common/-/apollo-link-http-common-0.2.15.tgz#304e67705122bf69a9abaded4351b10bc5efd6d9"
   integrity sha512-+Heey4S2IPsPyTf8Ag3PugUupASJMW894iVps6hXbvwtg1aHSNMXUYO5VG7iRHkPzqpuzT4HMBanCTXPjtGzxg==
@@ -8554,6 +8554,16 @@ rc@^1.2.7:
     ini "~1.3.0"
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
+
+react-apollo-network-status@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/react-apollo-network-status/-/react-apollo-network-status-3.0.0.tgz#ff39f6fe9223bc27f061bf41b1c385387e82738b"
+  integrity sha512-VfE+HXHNAs0VQWc82VWtZxy0SJgnhU4akxYvSAMuFMPZDD/hZ0fFtx3DTeKtM1yBotmqqjuq86eM1tviVQ1ANw==
+  dependencies:
+    "@apollo/react-common" "^3.0.0"
+    apollo-link "^1.2.13"
+    apollo-link-http-common "^0.2.0"
+    apollo-utilities "^1.3.0"
 
 react-app-polyfill@^1.0.2:
   version "1.0.2"

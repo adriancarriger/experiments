@@ -23,6 +23,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import * as gravatar from 'gravatar';
+import { useApolloNetworkStatus } from 'react-apollo-network-status';
 
 import { useModal } from '../hooks/use-modal';
 
@@ -137,6 +138,9 @@ function NavBar({ auth, location }) {
   const [drawerOpen, setDrawerOpen] = React.useState(true);
   const [selectedIndex, setSelectedIndex] = React.useState();
   const { setModal } = useModal();
+  const networkStatus = useApolloNetworkStatus();
+  // TODO: add loading bar
+  console.log('networkStatus', networkStatus);
 
   function handleDrawerToggle() {
     setDrawerOpen(!drawerOpen);

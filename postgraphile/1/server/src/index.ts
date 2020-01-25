@@ -5,7 +5,7 @@ import { config as loadEnv } from 'dotenv';
 import { twilioRoute } from './routes/twilio';
 
 const connectionString =
-  process.env.DATABASE_URL || 'postgres://docker:docker@localhost:5432/docker';
+  process.env.DATABASE_URL || 'postgres://docker:docker@localhost:6432/docker';
 
 async function createServer() {
   return express()

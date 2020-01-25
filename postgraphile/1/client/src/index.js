@@ -9,6 +9,7 @@ import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloNetworkStatusProvider } from 'react-apollo-network-status';
 
 import './index.css';
 import App from './App';
@@ -68,9 +69,11 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <ThemeProvider theme={theme}>
-      <App />
-    </ThemeProvider>
+    <ApolloNetworkStatusProvider>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </ApolloNetworkStatusProvider>
   </ApolloProvider>,
   document.getElementById('root')
 );
