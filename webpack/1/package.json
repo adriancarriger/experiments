@@ -12,6 +12,8 @@
     "webpack-cli": "^4.0.0-beta.1"
   },
   "dependencies": {
+    "apply-loader": "^2.0.0",
+    "prettier": "^1.19.1",
     "raw-loader": "^4.0.0"
   }
 }
