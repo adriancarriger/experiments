@@ -1,0 +1,17 @@
+{
+  "name": "1",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "webpack": "webpack"
+  },
+  "devDependencies": {
+    "file-loader": "^5.0.2",
+    "webpack": "^5.0.0-beta.12",
+    "webpack-cli": "^4.0.0-beta.1"
+  },
+  "dependencies": {
+    "raw-loader": "^4.0.0"
+  }
+}
