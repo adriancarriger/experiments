@@ -1,13 +1,13 @@
 const path = require('path');
 
 module.exports = {
-  target: 'node',
+  // target: 'node',
+  mode: 'development',
 
   entry: {
-    app: './src/index.js'
+    app: './example/index.js'
   },
 
-  mode: 'production',
   optimization: {
     minimize: false
   },
@@ -15,9 +15,12 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(png|jpe?g|gif|js)$/i,
-        use: [{ loader: path.resolve('lib/my-loader.js') }]
+        test: /\.js$/,
+        use: [{ loader: path.resolve('src/my-loader.js') }]
       }
     ]
+  },
+  stats: {
+    colors: true
   }
 };
