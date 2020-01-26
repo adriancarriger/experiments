@@ -6,7 +6,7 @@ module.exports = {
   mode: 'development',
 
   entry: {
-    app: './example/index.js'
+    app: './example/index.🤖.js'
   },
 
   optimization: {
@@ -18,10 +18,10 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.🤖.js$/,
         use: [
           { loader: 'babel-loader' },
-          { loader: path.resolve('src/my-loader.js') },
+          { loader: path.resolve('src/🤖.js') },
           {
             loader: 'babel-loader',
             options: {

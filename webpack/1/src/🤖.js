@@ -18,7 +18,10 @@ module.exports = function(source) {
     }
   );
 
-  this.emitFile(url, compiledSource);
+  this.emitFile(
+    url.split('.🤖').join(''),
+    compiledSource.split('.🤖').join('')
+  );
 
   return compiledSource;
 };
