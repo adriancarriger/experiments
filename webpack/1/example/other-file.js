@@ -1,3 +1,5 @@
-module.exports.default = () => `
-  module.exports.default = 'world!';
+const myVar = 'world';
+
+export default () => /* javascript */ `
+  export default '${myVar}!';
 `;

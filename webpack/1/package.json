@@ -12,6 +12,8 @@
     "webpack-cli": "^4.0.0-beta.1"
   },
   "dependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
     "babel-loader": "^8.0.6",
     "prettier": "^1.19.1"
   }

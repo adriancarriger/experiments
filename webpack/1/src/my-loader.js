@@ -1,1 +1,3 @@
-module.exports = source => eval(source)();
+module.exports = source => {
+  return eval(source)();
+};

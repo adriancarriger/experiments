@@ -1,4 +1,5 @@
-module.exports.default = () => `
-  const otherFile = require('./other-file');
-  console.log('Hello, ' + otherFile.default);
+export default () => /* javascript */ `
+  import otherFile from './other-file';
+
+  console.log('Hello, ' + otherFile);
 `;
