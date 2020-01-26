@@ -1,5 +1,5 @@
 export default () => /* javascript */ `
-  import otherFile from './other-file';
+  import otherFile from './other/other-file';
 
   console.log('Hello, ' + otherFile);
 `;

@@ -1,5 +1,5 @@
 const myVar = 'world';
 
 export default () => /* javascript */ `
-  export default '${myVar}!';
+  export default '${myVar}!!';
 `;

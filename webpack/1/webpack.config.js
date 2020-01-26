@@ -1,4 +1,5 @@
 const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   // target: 'node',
@@ -11,6 +12,8 @@ module.exports = {
   optimization: {
     minimize: false
   },
+
+  plugins: [new CleanWebpackPlugin()],
 
   module: {
     rules: [
