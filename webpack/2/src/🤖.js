@@ -4,13 +4,15 @@ const prettier = require('prettier');
 module.exports = function(source) {
   const options = loaderUtils.getOptions(this) || {};
 
-  const compiledSource = compile(source);
+  const basePath = options.basePath ? `${options.basePath}/` : '';
+  const { options: myOptions } = options;
+  console.log('options', JSON.stringify(options));
 
   const context = options.context || this.rootContext;
 
   const url = loaderUtils.interpolateName(
     this,
-    options.name || '[path]/[name].[ext]',
+    options.name || `${basePath}[path]/[name].[ext]`,
     {
       context,
       source,
@@ -18,16 +20,32 @@ module.exports = function(source) {
     }
   );
 
-  this.emitFile(
-    url.split('.🤖').join(''),
-    compiledSource.split('.🤖').join('')
-  );
+  let emitFileName = url.split('.🤖').join('');
 
-  return compiledSource;
+  const parts = emitFileName.split('.');
+
+  const isJavascript = parts.length <= 2;
+  const fileType = isJavascript ? 'babel' : parts[parts.length - 2];
+
+  const compiledSource = compile(source, fileType, myOptions);
+
+  if (!isJavascript) {
+    emitFileName = parts.slice(0, -1).join('.');
+  }
+
+  this.emitFile(emitFileName, compiledSource.split('.🤖').join(''));
+
+  if (isJavascript) {
+    return compiledSource;
+  }
 };
 
-function compile(source) {
-  const compiledSource = eval(source)();
+function compile(source, parser, options) {
+  let compiledSource = eval(source)(options);
 
-  return prettier.format(compiledSource, { parser: 'babel' });
+  if (typeof compiledSource !== 'string') {
+    compiledSource = JSON.stringify(compiledSource);
+  }
+
+  return prettier.format(compiledSource, { parser });
 }

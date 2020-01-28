@@ -1,13 +1,11 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const globby = require('globby');
 
-module.exports = {
-  // target: 'node',
+module.exports = project => ({
   mode: 'development',
 
-  entry: {
-    app: './example/index.🤖.js'
-  },
+  entry: globby.sync(['./example/**/*.🤖.js', './example/**/*.txt']),
 
   optimization: {
     minimize: false
@@ -21,11 +19,28 @@ module.exports = {
         test: /\.🤖.js$/,
         use: [
           { loader: 'babel-loader' },
-          { loader: path.resolve('src/🤖.js') },
+          {
+            loader: path.resolve('src/🤖.js'),
+            options: {
+              basePath: project.name,
+              options: project.options || {}
+            }
+          },
           {
             loader: 'babel-loader',
             options: {
               presets: [['@babel/preset-env', { modules: 'commonjs' }]]
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(png|jpe?g|gif|txt)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: `${project.name}/[path][name].[ext]`
             }
           }
         ]
@@ -35,4 +50,4 @@ module.exports = {
   stats: {
     colors: true
   }
-};
+});
