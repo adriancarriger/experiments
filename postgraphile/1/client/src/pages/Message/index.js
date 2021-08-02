@@ -1,10 +1,10 @@
 import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import { useMutation, useSubscription } from '@apollo/react-hooks';
 import { ChatFeed } from 'react-bell-chat';
 import { useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { GET_THREAD } from './message.graphql';
+import { GET_THREAD, CREATE_MESSAGE } from './message.graphql';
 import { MessageInput } from './message-input';
 
 const useStyles = makeStyles(theme => ({
@@ -17,9 +17,11 @@ export function Message() {
   const { id } = useParams();
   const classes = useStyles({});
 
-  const { loading, error, data } = useQuery(GET_THREAD, {
-    variables: { id: Number(id) }
+  const { loading, error, data } = useSubscription(GET_THREAD, {
+    variables: { threadId: Number(id) }
   });
+
+  const [createMessage] = useMutation(CREATE_MESSAGE);
 
   if (loading) {
     return <div>loading…</div>;
@@ -32,7 +34,7 @@ export function Message() {
   return (
     <div className={classes.chatContainer}>
       <ChatFeed
-        messages={mapGraphqlMessagesToChat(data.thread)}
+        messages={mapGraphqlMessagesToChat(data.query)}
         chatBubbleStyles={{
           text: { whiteSpace: 'inherit', color: 'black' },
           chatBubble: {
@@ -53,14 +55,22 @@ export function Message() {
         maxHeight={'calc(100vh - 12em)'}
       />
       <MessageInput
-        onMessage={message => console.log('mutation here', message)}
+        onMessage={async message => {
+          await createMessage({
+            variables: {
+              body: message,
+              dateSent: new Date().toISOString(),
+              threadId: Number(id)
+            }
+          });
+        }}
       />
     </div>
   );
 }
 
-function mapGraphqlMessagesToChat(thread) {
-  return thread.messages.edges.reduce(
+function mapGraphqlMessagesToChat(query) {
+  return query.messages.edges.reduce(
     (previous, { node: message }) => [
       {
         id: message.id,

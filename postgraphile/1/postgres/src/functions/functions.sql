@@ -72,3 +72,22 @@ $$ language plv8;
 create trigger on_contact_phone after insert or update on contact_phones
   for each row execute procedure on_contact_phone();
 
+-- background jobs
+create or replace function trigger_job() returns trigger as $$
+begin
+  perform graphile_worker.add_job(tg_argv[0], json_build_object(
+    'schema', tg_table_schema,
+    'table', tg_table_name,
+    'op', tg_op,
+    'id', (case when tg_op = 'DELETE' then old.id else new.id end)
+  ));
+  return new;
+end;
+$$  language plpgsql volatile
+    security definer
+        set search_path = graphile_worker, pg_temp;
+
+create trigger send_message
+  after insert on messages
+  for each row
+  execute procedure trigger_job('send-message');
